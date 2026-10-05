@@ -1,0 +1,24 @@
+# Generated output and temporary previews
+**/build/
+**/tmp/
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.xdv
+*.bak
+*.swp
+**/main.pdf
+**/linearSsytem_hw3.pdf
+
+# Local credentials and OS metadata
+.env
+.env.*
+!.env.example
+Thumbs.db
+.DS_Store

@@ -1,0 +1,974 @@
+% !TeX program = xelatex
+% !TeX encoding = UTF-8
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{xeCJK}
+\setCJKmainfont{Microsoft JhengHei}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\makeatletter
+\newcommand{\totalpages}{\@abspage@last}
+\makeatother
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\thepage/\totalpages}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyfoot[C]{\thepage/\totalpages}%
+}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\title{Linear System --- Homework 2}
+\author{葉彥辰\quad P46154345}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{center}Fall 2026\quad Due: Friday, Oct 2\end{center}
+
+\section*{Exercise 1}
+Obtain the $A,B,C,D$ matrices for a state space representation of the following systems:
+
+\textbf{(a)}
+\[
+\begin{aligned}
+u &= a_0q+a_1\dot q+\cdots+a_{n-1}q^{(n-1)}+q^{(n)},\\
+y &= \beta_0q+\beta_1\dot q+\cdots+\beta_{n-1}q^{(n-1)}+\gamma u
+\end{aligned}
+\]
+where $u(t),y(t)\in\mathbb{R}$.
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+
+Let $ x_1 = q,\quad x_2 = \dot q,\quad x_n = q^{(n - 1)} $, then $ \dot x_n = q^{(n)} $ and $\dot x_i = x_{i + 1}, \forall i = 1 \dots n - 1$
+
+Hence, 
+\[
+\begin{cases}
+u &= \displaystyle\sum_{i = 0}^{n - 1} a_ix_{i + 1} + \dot x_n  \\
+y &= \displaystyle\sum_{i = 0}^{n - 1} \beta_i x_{i + 1} + \gamma u
+\end{cases} \Rightarrow \begin{cases}
+\dot x_n &= - \displaystyle\sum_{i = 0}^{n - 1} a_ix_{i + 1} + u \\
+y &= \displaystyle\sum_{i = 0}^{n - 1} \beta_i x_{i + 1} + \gamma u
+\end{cases}
+\]
+
+Eventually, 
+\[
+A = \begin{bmatrix}
+	0 & 1 &   0 &\dots & 0 \\
+	0 & 0 &   1 & \dots &0 \\
+	\vdots & \vdots & \ddots & \dots&\vdots \\
+	0 & 0 & 0 &  \dots  & 1 \\
+	-a_0 & -a_1 & -a_2 & \dots & -a_{n - 1}
+\end{bmatrix}, B = \begin{bmatrix}
+0 \\ 0 \\ \vdots \\ 1
+\end{bmatrix}_{n \times 1}, C = \begin{bmatrix}
+\beta_0 & \beta_1 & \beta_2 & \dots & \beta_{n - 1}
+\end{bmatrix}, D = \begin{bmatrix}
+\gamma
+\end{bmatrix}
+\]
+
+\textbf{(b)}
+\[
+\begin{aligned}
+u(k) &= a_0q(k)+a_1q(k+1)+\cdots+a_{n-1}q(k+n-1)+q(k+n),\\
+y(k) &= \beta_0q(k)+\beta_1q(k+1)+\cdots+\beta_{n-1}q(k+n-1)+\gamma u(k)
+\end{aligned}
+\]
+where $y(k),u(k)\in\mathbb{R}$.
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+
+Let $ x_1(k) = q(k), x_2(k) = q(k +1), \dots x_{n}(k) = q(k + n - 1) $,\newline then $x_i(k + 1) = x_{i + 1}(k), \forall i = 1 \dots n - 1$, and $x_n(k + 1) = q(k + n)$
+
+\[
+\begin{cases}
+	x_n(k + 1) = q(k + n) &= -\displaystyle\sum_{i = 0}^{n - 1} a_i x_{i + 1}(k) + u(k) \\
+	y(k) &=  \displaystyle\sum_{i = 0}^{n - 1} \beta_i x_{i + 1}(k) + \gamma u(k)
+\end{cases}
+\]
+
+Eventually, 
+\[
+A = \begin{bmatrix}
+	0 & 1 &   0 &\dots & 0 \\
+	0 & 0 &   1 & \dots &0 \\
+	\vdots & \vdots & \ddots & \dots&\vdots \\
+	0 & 0 & 0 &  \dots  & 1 \\
+	-a_0 & -a_1 & -a_2 & \dots & -a_{n - 1}
+\end{bmatrix}, B = \begin{bmatrix}
+	0 \\ 0 \\ \vdots \\ 1
+\end{bmatrix}_{n \times 1}, C = \begin{bmatrix}
+	\beta_0 & \beta_1 & \beta_2 & \dots & \beta_{n - 1}
+\end{bmatrix}, D = \begin{bmatrix}
+	\gamma
+\end{bmatrix}
+\]
+
+\textbf{(c)} The `simple structure' with outputs $y_1=q_1$ and $y_2=q_2$.
+
+\[
+\begin{aligned}
+m_1\ddot q_1+(c_1+c_2)\dot q_1+(k_1+k_2)q_1-c_2\dot q_2-k_2q_2 &= u_1,\\
+m_2\ddot q_2-c_2\dot q_1-k_2q_1+c_2\dot q_2+k_2q_2 &= u_2.
+\end{aligned}
+\]
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+
+Let 
+\[
+x = \begin{bmatrix}
+	x_1 \\ x_2 \\ x_3 \\ x_4
+\end{bmatrix} = \begin{bmatrix}
+	q_1 \\ q_2 \\ \dot q_1 \\ \dot q_2
+\end{bmatrix} \Rightarrow \dot x = \begin{bmatrix}
+	\dot x_1 \\ \dot x_2 \\ \dot x_3 \\ \dot x_4
+\end{bmatrix} = \begin{bmatrix}
+\dot q_1 \\ \dot q_2 \\ \ddot q_1 \\ \ddot q_2
+\end{bmatrix} = \begin{bmatrix}
+x_3 \\ x_4 \\ \ddot q_1 \\ \ddot q_2
+\end{bmatrix} \text{and } y = \begin{bmatrix}
+y_1 \\ y_2 
+\end{bmatrix} = \begin{bmatrix}
+q_1 \\ q_2
+\end{bmatrix}
+\]
+
+Rewrite  'simple structure' by state space variable
+\[
+\begin{aligned}
+	&m_1\ddot q_1+(c_1+c_2)\dot q_1+(k_1+k_2)q_1-c_2\dot q_2-k_2q_2 = u_1,\\
+	&m_1 \dot x_3 + (c_1 + c_2) x_3 + (k_1 + k_2) x_1  - c_2 x_4 - k_2x_2 = u_1, \\
+	\Rightarrow \quad &\dot x_3 = -{k_1 + k_2 \over m_1} x_1 + {k_2\over m_1} x_2 - {c_1 + c_2\over m_1} x_3 + {c_2\over m_1} x_4 + {1\over m_1} u_1
+\end{aligned}
+\]
+and
+\[
+\begin{aligned}
+	&m_2\ddot q_2-c_2\dot q_1-k_2q_1+c_2\dot q_2+k_2q_2 = u_2 \\
+	&m_2 \dot x_4 - c_2 x_3 - k_2 x_1 + c_2 x_4 + k_2 x_2 = u_2 \\
+	\Rightarrow \quad & \dot x_4 = {k_2\over m_2} x_1 - {k_2 \over m_2} x_2 + {c_2\over m_2} x_3 - {c_2\over m_2} x_4 + {1\over m_2} u_2
+\end{aligned}
+\]
+Hence, 
+\begin{align*}
+\dot x = \begin{bmatrix}
+	\dot x_1 \\ \dot x_2 \\ \dot x_3 \\ \dot x_4
+\end{bmatrix} &= \begin{bmatrix}
+x_3 \\ x_4 \\
+ -{k_1 + k_2 \over m_1} x_1 + {k_2\over m_1} x_2 - {c_1 + c_2\over m_1} x_3 + {c_2\over m_1} x_4 + {1\over m_1} u_1 \\
+  {k_2\over m_2} x_1 - {k_2 \over m_2} x_2 + {c_2\over m_2} x_3 - {c_2\over m_2} x_4 + {1\over m_2} u_2
+\end{bmatrix} 
+\\&= \begin{bmatrix}
+ 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 1 \\
+ -{k_1 + k_2 \over m_1} & {k_2\over m_1} & - {c_1 + c_2\over m_1} & {c_2\over m_1} \\
+{k_2\over m_2} & {-k_2\over m_2} & {c_2\over m_2} & -{c_2\over m_2}
+\end{bmatrix} x + \begin{bmatrix}
+0 & 0 \\
+0 & 0 \\
+{1\over m_1} & 0 \\
+0 & {1\over m_2}
+\end{bmatrix}u
+\end{align*}
+and
+\[
+y = \begin{bmatrix}
+	y_1 \\ y_2 
+\end{bmatrix} = \begin{bmatrix}
+q_1 \\ q_2
+\end{bmatrix} = \begin{bmatrix}
+x_1 \\ x_2
+\end{bmatrix} = \begin{bmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0
+\end{bmatrix}x + \begin{bmatrix}
+0 &  0 \\ 0 & 0
+\end{bmatrix}u
+\]
+Eventually,
+\[
+A =  \begin{bmatrix}
+	0 & 0 & 1 & 0 \\
+	0 & 0 & 0 & 1 \\
+	-{k_1 + k_2 \over m_1} & {k_2\over m_1} & - {c_1 + c_2\over m_1} & {c_2\over m_1} \\
+	{k_2\over m_2} & {-k_2\over m_2} & {c_2\over m_2} & -{c_2\over m_2}
+\end{bmatrix}, B =  \begin{bmatrix}
+0 & 0 \\
+0 & 0 \\
+{1\over m_1} & 0 \\
+0 & {1\over m_2}
+\end{bmatrix}, C = \begin{bmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0
+\end{bmatrix}, D = \begin{bmatrix}
+0 &  0 \\ 0 & 0
+\end{bmatrix}
+\]
+\par\vspace{1.5cm}
+
+\section*{Exercise 2}
+Linearize (if possible) the following systems about \emph{each} of their equilibrium states (if not possible, state why) and obtain the system matrix for these linearized systems.
+
+\textbf{(a)}
+\[\dot x=x^3\]
+\textbf{Solution}
+% 在這裡撰寫解答。
+
+Equilibrium state $\Rightarrow (x^e)^3 = 0$, therefore $x^e = 0$.
+
+Let $F(x) = x^3$, then $F'(x) = 3x^2$. Hence,
+\[
+A = \left[\left.\frac{\partial F}{\partial x}\right|_{x = x^e}\right]
+= \left[\left.3x^2\right|_{x = 0}\right]
+= \begin{bmatrix}0\end{bmatrix}
+\]
+Let $\delta x = x - x^e$. Eventually, the linearized system is
+\[
+\delta\dot x = A\delta x = 0
+\]
+
+\textbf{(b)}
+\[\dot x=\sqrt{|x|}\]
+\textbf{Solution}
+% 在這裡撰寫解答。
+
+Equilibrium state $\Rightarrow \sqrt{|x^e|} = 0$, therefore $x^e = 0$
+
+Let $F(x) = \sqrt{|x|}$
+\[
+F'(0) = \lim_{x\to0} { \sqrt{|x|} - 0 \over x - 0}, \text{DNE}
+\]
+Hence, it is impossible to linearize the system that $\dot x = \sqrt{|x|}$ 
+
+\par\vspace{1.8cm}
+
+\textbf{(c)} The `first nonlinear system'
+
+The cart with Coulomb (or dry) friction is described by
+\[
+m\dot v=-\mu mg\operatorname{sgm}(v)+u,
+\]
+where $\mu>0$ is the coefficient of friction and $g$ is the gravitational
+acceleration. The signum function is defined by
+\[
+\operatorname{sgm}(v):=
+\begin{cases}
+-1,&v<0,\\
+0,&v=0,\\
+1,&v>0.
+\end{cases}
+\]
+\textbf{Solution}
+% 在這裡撰寫解答。\\
+
+Let $x = v$, then
+\[
+\dot x = \dot v = -\mu g \operatorname{sgm}(x) + { u\over m} \text{, } \Rightarrow F(x, u) = -\mu g \operatorname{sgm}(x) + {u \over m}: \mathbb R^2 \to \mathbb R
+\]
+At equilibrium,
+\[
+F(x^e,u^e)=0 \quad\Rightarrow\quad u^e=\mu mg\operatorname{sgm}(x^e).
+\]
+
+For the three cases,
+\begin{itemize}
+	\item $x^e > 0$, $u^e = \mu mg$
+	\[
+	A = \left[\left.{\partial F\over\partial x}\right|_{(x,u)=(x^e,u^e)}\right]
+	= \left[\left.{\partial\over\partial x}\left(-\mu g+{u\over m}\right)\right|_{(x,u)=(x^e,u^e)}\right]
+	= [0]
+	\]
+	\[
+	\delta \dot x = 0 \delta x + {1\over m} \delta u
+	\]
+	\item $x^e = 0$, $u^e = 0$
+	\[
+	\lim_{h\to0}{F(h,0)-F(0,0)\over h}
+	=\lim_{h\to0}{-\mu g\operatorname{sgm}(h)\over h}
+	=\lim_{h\to0}{-\mu g\over |h|}=-\infty.
+	\]
+	Hence, $\left.{\partial F\over\partial x}\right|_{(x,u)=(0,0)}$
+	does not exist as a finite derivative. The system cannot be linearized
+	at this equilibrium by the Jacobian method, so no system matrix $A$ exists there.
+	\item $x^e < 0$, $ u^e = -\mu mg$
+	\[
+	A = \left[\left.{\partial F\over\partial x}\right|_{(x,u)=(x^e,u^e)}\right]
+	= \left[\left.{\partial\over\partial x}\left(\mu g+{u\over m}\right)\right|_{(x,u)=(x^e,u^e)}\right]
+	= [0]
+	\]
+	\[
+		\delta \dot x = 0 \delta x + {1\over m} \delta u
+	\]
+\end{itemize}
+
+
+\par\vspace{1.8cm}
+
+\textbf{(d)} The `attitude dynamics' system.
+\[
+\begin{aligned}
+I_1\dot\omega_1 &= (I_2-I_3)\omega_2\omega_3\\
+I_2\dot\omega_2 &= (I_3-I_1)\omega_3\omega_1\\
+I_3\dot\omega_3 &= (I_1-I_2)\omega_1\omega_2
+\end{aligned}
+\]
+Consider non-symmetric case $(I_1\neq I_2\neq I_3)$.
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+
+
+\[
+\dot \omega = \begin{bmatrix}
+	\dot \omega_1 \\ \dot \omega_2 \\ \dot \omega_3
+\end{bmatrix} = \begin{bmatrix}
+	{I_2 - I_3 \over I_1} \omega_2 \omega_3 \\
+	{I_3 - I_1 \over I_2} \omega_3 \omega_1  \\
+	{I_1 - I_2 \over I_3} \omega_1 \omega_2
+\end{bmatrix} = F(\omega): \mathcal R^3 \to \mathcal R^3
+\]
+To find the equilibrium state, we let $\dot \omega = 0$, then
+\[
+\omega^e =
+\begin{bmatrix} a \\ 0 \\ 0 \end{bmatrix}
+\quad\text{or}\quad
+\begin{bmatrix} 0 \\ b \\0  \end{bmatrix}
+\quad\text{or}\quad
+\begin{bmatrix} 0 \\ 0\\ c \end{bmatrix},
+\qquad a,b,c\in\mathbb R.
+\]
+Then
+\begin{align*}
+	A &= \begin{bmatrix}
+		{\partial f_1 \over\partial \omega_1} & {\partial f_1 \over\partial \omega_2} & {\partial f_1 \over\partial \omega_3} \\
+		{\partial f_2 \over\partial \omega_1} & {\partial f_2 \over\partial \omega_2} & {\partial f_2 \over\partial \omega_3} \\
+		{\partial f_3 \over\partial \omega_1} & {\partial f_3 \over\partial \omega_2} & {\partial f_3 \over\partial \omega_3} \\
+			\end{bmatrix} \\
+	&= \begin{bmatrix}
+		0 & 	{I_2 - I_3 \over I_1} \omega_3 & 	{I_2 - I_3 \over I_1} \omega_2 \\
+		{I_3 - I_1 \over I_2}\omega_3 & 0 & {I_3 - I_1 \over I_2} \omega_1 \\
+		{I_1 - I_2 \over I_3} \omega_2 & {I_1 - I_2\over I_3} \omega_1 &  0 \\
+	\end{bmatrix}
+\end{align*}
+
+Let $\delta\omega=\omega-\omega^e$. In each case, evaluate the Jacobian at $\omega^e$.
+
+For $\omega^e = \begin{bmatrix}
+	a \\ 0 \\ 0
+\end{bmatrix}$
+
+\[
+\boxed{A = \begin{bmatrix}
+		0 & 0 & 0 \\
+		0 & 0 & {I_3 - I_1 \over I_2} a \\
+		0 & {I_1 - I_2 \over I_3} a & 0 \\
+\end{bmatrix} \Rightarrow \delta \dot \omega = \begin{bmatrix}
+0 & 0 & 0 \\
+0 & 0 & {I_3 - I_1 \over I_2} a \\
+0 & {I_1 - I_2 \over I_3} a & 0 \\
+\end{bmatrix} \delta\omega
+} 
+\]
+
+For $\omega^e = \begin{bmatrix}0\\b\\0\end{bmatrix}$
+\[
+\boxed{
+A=\begin{bmatrix}
+0 & 0 & \frac{I_2-I_3}{I_1}b\\
+0 & 0 & 0\\
+\frac{I_1-I_2}{I_3}b & 0 & 0
+\end{bmatrix}
+\Rightarrow
+\delta\dot\omega=\begin{bmatrix}
+0 & 0 & \frac{I_2-I_3}{I_1}b\\
+0 & 0 & 0\\
+\frac{I_1-I_2}{I_3}b & 0 & 0
+\end{bmatrix}\delta\omega
+}
+\]
+
+For $\omega^e = \begin{bmatrix}0\\0\\c\end{bmatrix}$
+\[
+\boxed{
+A=\begin{bmatrix}
+0 & \frac{I_2-I_3}{I_1}c & 0\\
+\frac{I_3-I_1}{I_2}c & 0 & 0\\
+0 & 0 & 0
+\end{bmatrix}
+\Rightarrow
+\delta\dot\omega=\begin{bmatrix}
+0 & \frac{I_2-I_3}{I_1}c & 0\\
+\frac{I_3-I_1}{I_2}c & 0 & 0\\
+0 & 0 & 0
+\end{bmatrix}\delta\omega
+}
+\]
+The origin is included by setting $a$, $b$, or $c$ to zero, giving $\boxed{A=0_{3\times3}}$.
+
+\section*{Exercise 3}
+\textbf{(a)} Obtain all equilibrium states of the following system:
+\[
+\begin{aligned}
+\dot x_1 &= 2x_2(1-x_1)-x_1\\
+\dot x_2 &= 3x_1(1-x_2)-x_2
+\end{aligned}
+\]
+\textbf{Solution}
+% 在這裡撰寫解答。
+
+Equilibrium state means $\dot x = 0$, 
+\[
+	\dot x = \begin{bmatrix}
+		\dot x_1 \\ \dot x_2
+	\end{bmatrix} = \begin{bmatrix}
+	2 x_2 (1 - x_1) - x_1 \\
+	3 x_1 (1 - x_2) - x_2 
+	\end{bmatrix} = \begin{bmatrix}
+	0 \\ 0
+	\end{bmatrix} 
+\]
+To find $x^e$, we need to solve
+\[
+\begin{cases}
+		2 x_2 (1 - x_1) - x_1 = 0\\
+	3 x_1 (1 - x_2) - x_2 =0
+\end{cases}
+\]
+1. if $x_1 = 0$, then $x_2 = 0$
+
+2. if $x_1 \neq 0$
+\begin{align*}
+x_2 = { x_1 \over 2(1- x_1)}\quad \Rightarrow& 3 x_1 \bigg(1 -  { x_1 \over 2(1- x_1)}\bigg) = { x_1 \over 2(1- x_1)} \\
+& 3 (2 (1 - x_1) - x_1) - 1 = 0 \\
+\Rightarrow x_1 = {5\over9} &\text{ and } x_2 = {{5\over9}\over2(1 - {5\over9})} = {5\over8}
+\end{align*}
+Hence
+\[
+x^e = \begin{bmatrix}
+	0 \\ 0
+\end{bmatrix} \lor \begin{bmatrix}
+5/9 \\ 5/8
+\end{bmatrix}
+\]
+
+\textbf{(b)} Linearize the above system about the zero equilibrium state.
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+Let 
+\[
+f(x) = \begin{bmatrix}
+	f_1(x) \\ f_2(x)
+\end{bmatrix} = \begin{bmatrix}
+	2 x_2 (1 - x_1) - x_1 \\
+3 x_1 (1 - x_2) - x_2 
+\end{bmatrix}
+\]
+\[
+A = \begin{bmatrix}
+	{\partial f_1 \over\partial x_1 } & {\partial f_1 \over\partial x_2 } \\
+	{\partial f_2 \over\partial x_1 } & {\partial f_2 \over\partial x_2 }
+\end{bmatrix} = \begin{bmatrix}
+-2x_2 - 1 & 2 - 2x_1 \\
+3-3x_2 	&	-3x_1 - 1
+\end{bmatrix}
+\]
+At $x^e = \begin{bmatrix}
+	0 \\ 0
+\end{bmatrix}, A \text{ becomes } \begin{bmatrix}
+-1 & 2 \\ 3 & -1
+\end{bmatrix}$
+
+
+Finally
+\[
+	\delta \dot x = \begin{bmatrix}
+		-1 & 2 \\ 3 & -1
+	\end{bmatrix} \delta x
+\]
+
+
+\section*{Exercise 4}
+For each of the following systems, linearize about each equilibrium solution and obtain the system $A$-matrix for a state space representation of these linearized systems.
+
+\textbf{(a)}
+\[\ddot y+(y^2-1)\dot y+y=0.\]
+where $y(t)$ is a scalar.
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+
+Let $x_1 = y$, $x_2 = \dot y$, then $ \dot x_2 = \ddot y $
+
+\[x = 
+\begin{bmatrix}
+	x_1 \\ x_2 
+\end{bmatrix}
+, \dot x = \begin{bmatrix}
+	\dot x_1 \\ \dot x_2 
+\end{bmatrix} = \begin{bmatrix}
+	x_2 \\ -(x_1^2 - 1)x_2 - x_1
+\end{bmatrix} = f(x):\mathcal R^2 \to \mathcal R^2
+\]
+To find the equilibrium state $x^e$, we let $\dot x = 0$, then we got $x_1^e = 0$ and $x_2^e = 0$
+
+\[
+\begin{aligned}
+A &= \begin{bmatrix}
+		{\partial f_1 \over\partial x_1 } & {\partial f_1 \over\partial x_2 } \\
+	{\partial f_2 \over\partial x_1 } & {\partial f_2 \over\partial x_2 }
+\end{bmatrix} \\
+&= \begin{bmatrix}
+	0&  1\\
+	-2x_1x_2 -1& -(x_1^2 - 1)
+\end{bmatrix} \\
+&\overset{\rm equilibrium}{=} \begin{bmatrix}
+	0 & 1 \\ -1  &1
+\end{bmatrix}
+\end{aligned}
+\]
+
+the linearized system became \[
+\delta \dot x = \begin{bmatrix}
+	0 & 1 \\ -1 & 1
+\end{bmatrix}\delta x
+\]
+
+\textbf{(b)}
+\[\ddot y+\dot y+y-y^3=0\]
+where $y(t)$ is a scalar.
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+Let $x_1 = y$, $x_2 = \dot y$, then $ \dot x_2 = \ddot y $
+\[
+x = \begin{bmatrix}
+	x_1 \\ x_2
+\end{bmatrix}, \dot x = \begin{bmatrix}
+	\dot x_1 \\ \dot x_2
+\end{bmatrix} = \begin{bmatrix}
+	x_2 \\ x_1^3 - x_1 - x_2
+\end{bmatrix} = f(x):\mathcal R^2 \to \mathcal R^2
+\] 
+To find the equilibrium state $x^e$, we let $\dot x = 0$, then we got $x_2^e = 0$ and $x_1^e = 0 \lor 1 \lor -1$
+\[
+\begin{aligned}
+	A &= \begin{bmatrix}
+		{\partial f_1 \over\partial x_1 } & {\partial f_1 \over\partial x_2 } \\
+		{\partial f_2 \over\partial x_1 } & {\partial f_2 \over\partial x_2 }
+	\end{bmatrix} \\
+	&= \begin{bmatrix}
+		0 & 1 \\
+		3x_1^2 - 1 & -1
+	\end{bmatrix}
+\end{aligned}
+\]
+case $x_1^e = 0$
+\[
+A = \begin{bmatrix}
+	0 & 1 \\ -1 & -1
+\end{bmatrix}
+\]
+the linearized systems became
+\[
+\delta \dot x = \begin{bmatrix}
+	0 & 1 \\ -1 & -1
+\end{bmatrix} \delta x
+\]
+
+case $x_1^e = 1$
+\[
+A = \begin{bmatrix}
+	0 & 1 \\ 2 & -1
+\end{bmatrix}
+\]
+the linearized systems became
+\[
+\delta \dot x = \begin{bmatrix}
+	0 & 1 \\ 2 & -1
+\end{bmatrix} \delta x
+\]
+
+case $x_1^e = -1$
+
+\[
+A = \begin{bmatrix}
+	0 & 1 \\ 2 & -1
+\end{bmatrix}
+\]
+the linearized systems became
+\[
+\delta \dot x = \begin{bmatrix}
+	0 & 1 \\ 2 & -1
+\end{bmatrix} \delta x
+\]
+
+\textbf{(c)}
+\[
+\begin{aligned}
+(M+m)\ddot y+ml\ddot\theta\cos\theta-ml\dot\theta^2\sin\theta+ky &= 0\\
+ml\ddot y\cos\theta+ml^2\ddot\theta+mgl\sin\theta &= 0
+\end{aligned}
+\]
+where $y(t)$ and $\theta(t)$ are scalars.
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+
+Let $ x = 
+\begin{bmatrix}
+	x_1 \\ x_2 \\ x_3 \\ x_4
+\end{bmatrix}
+=\begin{bmatrix}
+	y \\ \theta \\ \dot y \\ \dot \theta
+\end{bmatrix}$, then $
+\dot x = \begin{bmatrix}
+	\dot y \\ \dot \theta \\  \ddot y \\ \ddot \theta
+\end{bmatrix} = \begin{bmatrix}
+x_3 \\ x_4 \\ \ddot y \\ \ddot \theta
+\end{bmatrix}
+$
+
+From the second equation, for $\cos x_2 \neq 0$,
+\[
+\ddot y = { -l\ddot x_2  -g\sin x_2 \over \cos x_2}
+\]
+
+Push this into the first equation
+
+\[
+(M + m ) { -l\ddot x_2  -g\sin x_2 \over \cos x_2} + ml\ddot\theta\cos x_2 - ml \dot \theta^2\sin x_2+kx_1 = 0
+\]
+\[
+\ddot \theta = { (M+m)g\sin x_2 + ml x_4^2\sin x_2\cos x_2 - kx_1\cos x_2 \over -l(M + m\sin^2 x_2) }
+\]
+
+Since $\ddot x_2 = \ddot\theta$, put this back into $\ddot y$. Then,
+\[
+\begin{aligned}
+\ddot y
+&= {1\over\cos x_2}\left(
+{(M+m)g\sin x_2 + ml x_4^2\sin x_2\cos x_2 - kx_1\cos x_2
+\over M+m\sin^2 x_2} - g\sin x_2\right) \\
+&= {mg\sin x_2\cos^2 x_2 + ml x_4^2\sin x_2\cos x_2 - kx_1\cos x_2
+\over (M+m\sin^2 x_2)\cos x_2} \\
+&= {mg\sin x_2\cos x_2 + ml x_4^2\sin x_2 - kx_1
+\over M+m\sin^2 x_2}
+\end{aligned}
+\]
+The simplified expressions also satisfy the original equations when $\cos x_2=0$.
+
+Hence, 
+\[
+\dot x = \displaystyle\begin{bmatrix}
+	x_3 \\ x_4 \\
+	\displaystyle{mg\sin x_2\cos x_2 + ml x_4^2\sin x_2 - kx_1 \over M+m\sin^2 x_2} \\
+	 \displaystyle{ (M+m)g\sin x_2 + ml x_4^2\sin x_2\cos x_2 - kx_1\cos x_2 \over -l(M + m\sin^2 x_2) }
+\end{bmatrix} = F(x) : \mathcal R^4\to\mathcal R^4
+\]
+
+To find the equilibrium state, it guarantees $x^e_3 = x^e_4 = 0$, then
+\[
+	mg\sin x_2 \cos x_2 = kx_1 
+\] and 
+\[
+	(M + m)g\sin x_2 = kx_1\cos x_2
+\]
+must be quauanteed.
+\[
+\begin{aligned}
+(M + m)g\sin x_2 - mg\sin x_2 \cos^2 x_2 &= 0 \\
+g\sin x_2  ((M + m) - m(1 - \sin^2 x_2) ) &= g\sin x_2 (M + m\sin ^2 x_2) \\ &= 0
+\end{aligned}
+\]
+Hence, 
+\[
+x_2^e = n\pi, \quad n \in \mathbb Z
+\]
+In pshyic world, $n = 0 \lor 1$ 
+
+By $(M + m)g\sin x_2 = kx_1\cos x_2$, we can obtain $x_1$ as $0$.
+
+Eventually,
+\[
+x^e = \begin{bmatrix}
+	0 \\ n\pi \\ 0 \\0
+\end{bmatrix}, n \in \mathbb Z
+\]
+
+To obtain the system A-matrix, let
+\[
+F(x)=[f_1(x),f_2(x),f_3(x),f_4(x)]^T.
+\]
+At $x^e=[0,n\pi,0,0]^T$, $\sin x_2^e=0$ and $\cos x_2^e=(-1)^n$.
+Hence,
+\[
+\begin{aligned}
+\left.{\partial f_3\over\partial x_1}\right|_{x=x^e}
+&= {-k\over M}, &
+\left.{\partial f_3\over\partial x_2}\right|_{x=x^e}
+&= {mg(\cos^2 n\pi-\sin^2 n\pi)\over M}={mg\over M}, \\
+\left.{\partial f_4\over\partial x_1}\right|_{x=x^e}
+&= {k\cos n\pi\over lM}, &
+\left.{\partial f_4\over\partial x_2}\right|_{x=x^e}
+&= -{(M+m)g\cos n\pi\over lM}.
+\end{aligned}
+\]
+Also, $f_3$ and $f_4$ do not contain $x_3$, and their derivatives
+with respect to $x_4$ are zero at $x^e$.
+
+\begin{align*}
+	A &= \left.\begin{bmatrix}
+		{\partial f_1 \over\partial x_1 } & {\partial f_1 \over\partial x_2 } & {\partial f_1 \over\partial x_3 } & {\partial f_1 \over\partial x_4 }  \\
+		{\partial f_2 \over\partial x_1 } & {\partial f_2 \over\partial x_2 }  & {\partial f_2 \over\partial x_3 }  & {\partial f_2 \over\partial x_4 } \\
+		{\partial f_3 \over\partial x_1 } & {\partial f_3 \over\partial x_2 } & {\partial f_3 \over\partial x_3 } & {\partial f_3 \over\partial x_4 } \\
+		{\partial f_4 \over\partial x_1 } &{\partial f_4 \over\partial x_2 } &{\partial f_4 \over\partial x_3 } &{\partial f_4 \over\partial x_4 }  \\
+	\end{bmatrix}\right|_{x=x^e} \\
+	&= \begin{bmatrix}
+		0 & 0 & 1 & 0 \\
+		0 & 0 & 0 & 1 \\
+		{-k\over M} & {mg\over M} & 0 & 0 \\
+		{k(-1)^n\over lM} & -{(M+m)g(-1)^n\over lM} & 0 & 0
+	\end{bmatrix},\quad n\in\mathbb Z.
+\end{align*}
+
+Eventually, let $\delta x=x-x^e$, the linearized system is
+\[
+\delta\dot x=A\delta x.
+\]
+
+\par\vspace{1.5cm}
+
+\textbf{(d)}
+\[\ddot y+0.5\dot y|\dot y|+y=0.\]
+where $y(t)$ is a scalar.
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+
+Let $ x= \begin{bmatrix}
+	x_1 \\ x_2 
+\end{bmatrix} = \begin{bmatrix}
+	y \\ \dot y
+\end{bmatrix}
+$, hence, $\dot x = \begin{bmatrix}
+	\dot y \\ \ddot y
+\end{bmatrix} = \begin{bmatrix}
+x_2 \\ \ddot y 
+\end{bmatrix}$
+
+And 
+\[
+	\ddot y = -0.5 x_2 |x_2| - x_1
+\]
+
+Then
+\[
+\dot x = \begin{bmatrix}
+	x_2 \\ -0.5 x_2 |x_2| - x_1
+\end{bmatrix} \overset{\rm equ}{=} \begin{bmatrix}
+0 \\ 0
+\end{bmatrix}
+\]
+Hence, 
+\[
+x^e = \begin{bmatrix}
+	0 \\ 0
+\end{bmatrix}
+\]
+
+Let 
+\[
+	F(x) = \begin{bmatrix}
+		x_2 \\ -0.5 x_2 |x_2| - x_1
+	\end{bmatrix} : \mathcal R^2 \to \mathcal R^2
+\]
+\begin{align*}
+	A &= \begin{bmatrix}
+	{\partial F_1 \over \partial x_1} & {\partial F_1 \over \partial x_2} \\
+	{\partial F_2 \over \partial x_1} & {\partial F_2 \over \partial x_2}
+	\end{bmatrix} \\
+	&= \begin{bmatrix}
+		0 & 1 \\
+		-1 & - |x_2|
+	\end{bmatrix}
+\end{align*}
+Finally
+\[
+A^e = A \bigg|_{x^e} = \begin{bmatrix}
+	0 & 1 \\ 
+	-1 & 0
+\end{bmatrix}
+\]
+The linearized system is 
+\[
+	\delta \dot x = \begin{bmatrix}
+		0 & 1 \\ -1 & 0
+	\end{bmatrix}\delta x
+\]
+\par\vspace{1.5cm}
+
+\section*{Exercise 5}
+Obtain the transfer function (matrix) of the following system
+\[
+\begin{aligned}
+\ddot y_1+\ddot y_2+y_1+y_2 &= u_1+\dot u_2\\
+2\ddot y_1+3\ddot y_2+y_1-y_2 &= 0
+\end{aligned}
+\]
+\subsection*{Solution}
+% 在這裡撰寫解答。
+
+Taking the Laplace transform with zero initial conditions
+\begin{align*}
+	&\begin{cases}
+		s^2 \hat y_1 + s^2 \hat y_2 + \hat y_1 + \hat y_2 &= \hat u_1 + s\hat u_2 \\
+		2 s^2 \hat y_1 + 3 s^2 \hat y_2 + \hat y_1 - \hat y_2 &= 0
+	\end{cases}
+	\\ \Rightarrow & \begin{cases}
+		 (s^2 + 1) \hat y_1 + (s^2 + 1)\hat y_2& = \hat u_1 + s \hat u_2 \\
+		 (2s^2 + 1) \hat y_1 + (3s^2 -1)\hat y_2 &= 0
+	\end{cases}	 \\
+	\\ \Rightarrow &  \begin{bmatrix}
+		s^2 + 1 & s^2 +1 \\
+		2s^2 + 1 & 3 s^2 - 1
+	\end{bmatrix} \begin{bmatrix}
+	\hat y_1 \\ \hat y_2
+	\end{bmatrix} = \begin{bmatrix}
+	1 & s \\ 0 & 0 
+	\end{bmatrix} \begin{bmatrix}
+	\hat u_1 \\ \hat u_2
+	\end{bmatrix}
+\end{align*}
+
+Let
+\[
+P(s)=\begin{bmatrix}
+s^2+1 & s^2+1 \\
+2s^2+1 & 3s^2-1
+\end{bmatrix}.
+\]
+Then,
+\[
+\begin{aligned}
+\det P(s)
+&=(s^2+1)(3s^2-1)-(s^2+1)(2s^2+1)\\
+&=(s^2+1)(s^2-2).
+\end{aligned}
+\]
+Hence,
+\[
+P(s)^{-1}={1\over (s^2+1)(s^2-2)}
+\begin{bmatrix}
+3s^2-1 & -(s^2+1) \\
+-(2s^2+1) & s^2+1
+\end{bmatrix}.
+\]
+Put this into the equation above,
+\begin{align*}
+\begin{bmatrix}\hat y_1\\\hat y_2\end{bmatrix}
+&=P(s)^{-1}\begin{bmatrix}1&s\\0&0\end{bmatrix}
+\begin{bmatrix}\hat u_1\\\hat u_2\end{bmatrix}\\
+&={1\over (s^2+1)(s^2-2)}
+\begin{bmatrix}
+3s^2-1 & s(3s^2-1)\\
+-(2s^2+1) & -s(2s^2+1)
+\end{bmatrix}
+\begin{bmatrix}\hat u_1\\\hat u_2\end{bmatrix}.
+\end{align*}
+Eventually, the transfer function matrix is
+\[
+G(s)={1\over (s^2+1)(s^2-2)}
+\begin{bmatrix}
+3s^2-1 & s(3s^2-1)\\
+-(2s^2+1) & -s(2s^2+1)
+\end{bmatrix}.
+\]
+
+\section*{Exercise 6}
+Obtain the transfer function of the system with input $u$ and output $y$ described by
+\[
+\begin{aligned}
+\ddot q_1+3\dot q_2+\dot q_1+2q_2 &= \dot u+4u\\
+\ddot q_1+4\dot q_2+3q_2 &= u\\
+y &= q_1+q_2
+\end{aligned}
+\]
+\subsection*{Solution}
+% 在這裡撰寫解答。
+
+After taking the Laplace transform with zero initial conditions,
+\begin{align*}
+	&\begin{cases}
+		s^2 \hat q_1 + 3 s \hat q_2 + s\hat q_1 + 2\hat q_2 &= s \hat u + 4\hat u \\
+		s^2 \hat q_1 + 4 s \hat q_2 + 3 \hat q_2 &= \hat u \\
+	\end{cases} \\
+	&\hat y = \hat q_1 + \hat q_2
+\end{align*}
+
+To Continue, 
+\begin{align*}
+	&\begin{bmatrix}
+		s^2 + s & 3s + 2 \\
+		s^2 & 4s+3
+	\end{bmatrix} \begin{bmatrix}
+	\hat q_1 \\ \hat q_2
+	\end{bmatrix} = \begin{bmatrix}
+	s + 4 \\ 1
+	\end{bmatrix} \hat u \text{, and } \hat y = \begin{bmatrix}
+	1 & 1
+	\end{bmatrix} \begin{bmatrix}
+	\hat q_1 \\ \hat q_2
+	\end{bmatrix} \\
+	\Rightarrow & \begin{bmatrix}
+			\hat q_1 \\ \hat q_2
+	\end{bmatrix} = \begin{bmatrix}
+		s^2 + s & 3s + 2 \\
+s^2 & 4s+3
+	\end{bmatrix}^{-1}\begin{bmatrix}
+	s + 4 \\ 1
+	\end{bmatrix} \hat u \\
+	&= {1\over s(s^2+5s+3)}
+	\begin{bmatrix}
+		4s+3 & -(3s+2) \\
+		-s^2 & s^2+s
+	\end{bmatrix}
+	\begin{bmatrix}s+4\\1\end{bmatrix}\hat u \\
+	&= {1\over s(s^2+5s+3)}
+	\begin{bmatrix}
+		4s^2+16s+10 \\
+		-s^3-3s^2+s
+	\end{bmatrix}\hat u
+\end{align*} 
+\begin{align*}
+	\hat y &= \begin{bmatrix}
+		1 & 1
+	\end{bmatrix} \begin{bmatrix}
+		\hat q_1 \\ \hat q_2
+	\end{bmatrix} \\
+	&=\begin{bmatrix}
+		1 & 1
+	\end{bmatrix}  {1\over s(s^2 + 5s+ 3)} 	\begin{bmatrix}
+	4s^2+16s+10 \\
+	-s^3-3s^2+s
+	\end{bmatrix}\hat u \\
+	&=  { -s^3 + s^2 + 17s + 10 \over s(s^2 + 5s+ 3)} \hat u 
+\end{align*}
+Finally, 
+\[
+G(s) = {\hat y \over \hat u} =  { -s^3 + s^2 + 17s + 10 \over s(s^2 + 5s+ 3)}
+\]
+
+\vspace{8cm}
+\end{document}

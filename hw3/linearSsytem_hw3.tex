@@ -1,0 +1,622 @@
+% !TeX program = xelatex
+% !TeX encoding = UTF-8
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{xeCJK}
+\setCJKmainfont{Microsoft JhengHei}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{needspace}
+
+% Total physical pages; compile twice after page-count changes.
+\makeatletter
+\newcommand{\totalpages}{\@abspage@last}
+\makeatother
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\thepage/\totalpages}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyfoot[C]{\thepage/\totalpages}%
+}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\raggedbottom
+\title{Linear System --- Homework 3}
+\author{葉彥辰\quad P46154345}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{center}Fall 2026\quad Due: Friday, Oct 16\end{center}
+
+% 在各個 Solution 下撰寫解答；作答後可縮短或移除該處的 \vspace。
+\section*{Exercise 1}
+Obtain the transfer function of the following system
+\[
+\begin{aligned}
+\dot x(t) &= -x(t)+2x(t-h)+u(t),\\
+y(t) &= x(t).
+\end{aligned}
+\]
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+
+\begin{align*}
+	&\begin{cases}
+		\dot x(t) &= -x(t) + 2x(t - h) + u(t) \\
+		y(t) &= x(t)
+	\end{cases} \\
+	\Rightarrow &\begin{cases}
+		s\hat x(s) &= -\hat x(s) +2 e^{-sh} \hat x(s) + \hat u(s) \\
+		\hat y(s) &= \hat x(s)
+	\end{cases} \\
+	\Rightarrow &\begin{cases}
+		\hat x(s) &= {1\over s + 1 -2 e^{-sh} } \hat u(s) \\
+		\hat y(s) &= \hat x(s) 
+	\end{cases}
+	\Rightarrow \hat y(s) =  {1\over s + 1 -2 e^{-sh} } \hat u(s) \\
+\end{align*}
+Hence, the transfer function
+\[
+\hat G(s) = {\hat y(s) \over \hat u(s)} = {1\over s + 1 - 2e^{-sh}}
+\]
+
+\newpage
+\section*{Exercise 2}
+Obtain a state space realization (controllable canonical form) of the transfer
+function
+\[
+\hat G(s)=\frac{s^2+3s+2}{s^2+5s+6}.
+\]
+Is your realization minimal?
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+
+\begin{align*}
+	\hat G(s) &= \frac{s^2+3s+2}{s^2+5s+6} \\ 
+	& =  { (s + 1)(s + 2) \over (s + 2) (s + 3) }\\
+	&=  { s + 1 \over s + 3} \\
+	&= {-2 \over s+ 3} + 1\\
+	\text {By} & \text{ Definition} \\
+	&= C(sI - A)^{-1} B + D
+\end{align*}
+Hence
+\[
+A = -3, \quad B = 1, \quad C = -2, \quad D = 1
+\]
+
+\par\nopagebreak\vspace{3cm}
+
+\Needspace{8cm}
+\section*{Exercise 3}
+Obtain a state space representation (controllable canonical form) of the following
+transfer function:
+\[
+\hat G(s)=
+\begin{pmatrix}
+\dfrac{s^2+1}{s^2-1} & \dfrac{2}{s-1}
+\end{pmatrix}.
+\]
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+
+\[
+\hat G(s) = \begin{bmatrix}
+	\frac{s^2+1}{s^2-1} & \frac{2}{s-1}
+\end{bmatrix} = \begin{bmatrix}
+{ s^2 + 1 \over s^2 -1 } & {  2s + 2 \over s^2 -1 }
+\end{bmatrix} = \begin{bmatrix}
+{ 2  \over s^2 -1 } & {  2s + 2 \over s^2 -1 }
+\end{bmatrix} + \begin{bmatrix}
+1 & 0
+\end{bmatrix} \Rightarrow \begin{cases}
+	m &= 2 \\
+	l&= 2
+\end{cases} \Rightarrow n = m \times l = 4
+\]
+
+the deminsion of $I$ is $m \times m = 2 \times 2$, and we can know that $D = \begin{bmatrix}
+	1 & 0
+\end{bmatrix}$, directly.
+
+\[
+\hat G(s) = N(s) \Delta (s)^{-1}  + D\Rightarrow \Delta(s) = s^2 - 1 = \sum_{i = 0}^{l} \Delta_i s^i
+\]
+\[
+N(s) = N_0 + N_1s = \begin{bmatrix}
+	2 & 2
+\end{bmatrix} + \begin{bmatrix}
+0 & 2
+\end{bmatrix}s
+\]
+Hence, 
+\[
+\Delta_0 = -I,\quad \Delta_1 = O, \quad \Delta_2 = I
+\]
+Finally, 
+\[
+A = \begin{bmatrix}
+	O & I \\
+	-\Delta_0 & -\Delta_1
+\end{bmatrix} = \begin{bmatrix}
+	0 & 0 & 1 & 0 \\
+	0 & 0 & 0 & 1 \\
+	1 & 0 & 0 & 0 \\
+	0 & 1 & 0 & 0
+\end{bmatrix}
+\]
+\[
+B = \begin{bmatrix}
+	O_{2\times2} \\ I_2
+\end{bmatrix} = \begin{bmatrix}
+	0 & 0 \\
+	0 & 0 \\
+	1 & 0 \\
+	0 & 1
+\end{bmatrix}
+\]
+\[
+C = \begin{bmatrix}
+	N_0 & N_1
+\end{bmatrix} = \begin{bmatrix}
+2 & 2 & 0 & 2
+\end{bmatrix}
+\]
+\[
+D = \begin{bmatrix}
+	1 & 0
+\end{bmatrix}
+\]
+
+--------------------------------
+
+
+By
+\[
+\hat y(s) = \hat G(s) \hat u(s)\quad\Rightarrow \hat y(s) = {s^2 + 1 \over s^2 - 1} \hat u_1(s) + {2\over s - 1} u_2(s) = \left( 1 + {2\over s^2 - 1} \right) \hat u_1(s) + {2\over s - 1}\hat u_2(s)
+\]
+Let $ \hat q_1(s) = \displaystyle{\hat u_1(s) \over s^2 -1} $, and $ \hat q_2(s) = \displaystyle{\hat u_2(s) \over s - 1} $
+
+then
+\begin{align*}
+	&\begin{cases}
+		(s^2 - 1) \hat q_1(s) &= \hat u_1(s) \\
+		(s -1) \hat q_2(s) &= \hat u_2(s)
+	\end{cases} \\
+	\Rightarrow &\begin{cases}
+		\ddot q_1(t) - q_1(t) &= u_1(t) \\
+		\dot q_2(t) - q_2(t) &= u_2(t)
+	\end{cases}
+\end{align*}
+Let  $x = \begin{bmatrix}
+	x_1 \\ x_2 \\ x_3
+\end{bmatrix}$ with $x_1 = q_1$, $x_2 = \dot q_1$, and $x_3 = q_2$
+
+\begin{align*}
+	&\begin{cases}
+		\dot x_2(t) - x_1(t) &= u_1(t) \\
+		\dot x_3(t) - x_3(t) &=  u_2(t)
+	\end{cases} \\
+	\Rightarrow &\begin{cases}
+		\dot x_1(t) &= x_2(t) \\
+		\dot x_2(t) &= x_1(t) + u_1(t) \\
+		\dot x_3(t) &= x_3(t) + u_2(t) \\
+	\end{cases}
+	\Rightarrow &\begin{bmatrix}
+		\dot x_1 \\ \dot x_2 \\ \dot x_3 
+	\end{bmatrix} = \begin{bmatrix}
+	0 & 1 & 0 \\
+	1 & 0 & 0 \\
+	0 & 0 & 1 
+	\end{bmatrix}\begin{bmatrix}
+	x_1 \\ x_2 \\ x_3
+	\end{bmatrix} + \begin{bmatrix}
+	0 & 0\\
+	1 & 0 \\
+	0 & 1 	
+	\end{bmatrix} \begin{bmatrix}
+	u_1 \\ u_2
+	\end{bmatrix}
+\end{align*}
+Hence, 
+\[
+A = \begin{bmatrix}
+	0 & 1 & 0 \\
+	1 & 0 & 0 \\
+	0 & 0 & 1 
+\end{bmatrix}, \quad B =\begin{bmatrix}
+	0 & 0\\
+	1 & 0 \\
+	0 & 1
+\end{bmatrix}
+\]
+
+By 
+\begin{align*}
+\hat y(s) &= \left( 1 + {2\over s^2 - 1} \right) \hat u_1(s) + {2\over s - 1}\hat u_2(s) \\
+&= \hat u_1(s) + 2 {\hat u_1(s) \over s^2 -1} + 2 {\hat u_2(s) \over s - 1} \\
+&= \hat u_1(s) + 2 \hat q_1(s) + 2 \hat q_2(s) \\
+\Rightarrow y(t) &= 2 q_1(t) + 2 q_2(t) + u_1(t) \\
+&= 2x_1(t) + 2 x_3(t) + u_1(t) \\
+&= \begin{bmatrix}
+	2 & 0 & 2
+\end{bmatrix}\begin{bmatrix}
+x_1 \\ x_2 \\ x_3 
+\end{bmatrix} + \begin{bmatrix}
+1 & 0
+\end{bmatrix} \begin{bmatrix}
+u_1 \\ u_2
+\end{bmatrix}
+\end{align*}
+
+
+
+
+\
+\section*{Exercise 4}
+Obtain a state space realization (controllable canonical form) of the transfer
+function
+\[
+\hat G(s)=
+\begin{pmatrix}
+\dfrac{1}{s-1} & \dfrac{1}{s-1} \\[8pt]
+\dfrac{1}{s+1} & -\dfrac{1}{s+1}
+\end{pmatrix}.
+\]
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+
+\[
+\hat G(s) = \begin{bmatrix}
+	\displaystyle{ s+ 1 \over s^2 - 1} & \displaystyle{s + 1 \over s^2 - 1} \\
+	\displaystyle{s - 1 \over s^2 - 1} & \displaystyle{-s + 1 \over s^2 -1}
+\end{bmatrix}\Rightarrow \begin{cases}
+m &= 2 \\
+l &= 2 \\
+n &= m \times l = 4
+\end{cases}
+\]
+\[
+\hat G(s) = N(s)\Delta(s)^{-1} + D(s), \quad D(s) = O_{2\times2}
+\]
+the deminsion of $I$ is $m \times m = 2 \times 2$
+Hence, 
+\[
+\Delta(s) = \sum_{i = 0}^{l} \Delta_i s^i = s^2 - 1 \Rightarrow\begin{cases}
+	\Delta_0 &= -I \\
+	\Delta_1 &= 0 \\
+	\Delta_2 &= I
+\end{cases}
+\]
+\[
+N(s) = N_0 + sN_1 = \begin{bmatrix}
+	1 & 1 \\
+	-1 & 1 
+\end{bmatrix} + s\begin{bmatrix}
+1 & 1 \\ 1 & -1
+\end{bmatrix} 
+\]
+
+Finally, 
+\[
+A = \begin{bmatrix}
+	O & I \\
+	-\Delta_0 & -\Delta_1
+\end{bmatrix} = \begin{bmatrix}
+	0 & 0 & 1 & 0 \\
+	0 & 0 & 0 & 1 \\
+	1 & 0 & 0 & 0 \\
+	0 & 1 & 0 & 0 
+\end{bmatrix}
+\]
+
+\[B = \begin{bmatrix}
+	O_{2\times2} \\ I_2
+\end{bmatrix} = \begin{bmatrix}
+	0 & 0 \\
+	0 & 0 \\
+	1 & 0 \\
+	0 & 1
+\end{bmatrix}
+\]
+\[
+C = \begin{bmatrix}
+	N_0 & N_1
+\end{bmatrix} = \begin{bmatrix}
+	1 & 1 & 1 & 1 \\
+	-1 & 1 & 1 & -1
+\end{bmatrix}
+\]
+\[
+D = O
+\]
+
+
+\par\nopagebreak\vspace{3cm}
+
+\Needspace{8cm}
+\section*{Exercise 5}
+\textbf{(a)} Obtain a state space realization (controllable canonical form) of the
+following single-input single-output system:
+\[
+\ddot y-3\dot y-4y=\ddot u-2\dot u-8u.
+\]
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+
+Under zero initial conditions, taking the Laplace transform gives
+\[
+(s^2-3s-4)\hat y(s)=(s^2-2s-8)\hat u(s).
+\]
+Hence,
+\begin{align*}
+\hat G(s)
+&=\frac{\hat y(s)}{\hat u(s)}
+ =\frac{s^2-2s-8}{s^2-3s-4}\\
+&=\frac{(s-4)(s+2)}{(s-4)(s+1)}
+ =\frac{s+2}{s+1}
+ =1+\frac{1}{s+1}.
+\end{align*}
+Writing $\hat G(s)=N(s)\Delta(s)^{-1}+D$, we have
+\[
+\Delta(s)=s+1,\qquad N(s)=1,\qquad D=1.
+\]
+The reduced denominator has degree one. Its coefficient is $\alpha_0=1$,
+and the numerator of the strictly proper part is $N_0=1$.
+Thus, a first-order controllable canonical realization is
+\[
+\boxed{A=[-1],\qquad B=[1],\qquad C=[1],\qquad D=[1].}
+\]
+Equivalently,
+\[
+\boxed{\dot x(t)=-x(t)+u(t),\qquad y(t)=x(t)+u(t).}
+\]
+Indeed,
+\[
+C(sI-A)^{-1}B+D=\frac{1}{s+1}+1=\hat G(s).
+\]
+
+\Needspace{8cm}
+\textbf{(b)} Is your realization minimal?
+
+\textbf{Solution}
+
+Yes. After pole-zero cancellation, the reduced transfer function is
+\[
+\hat G(s)=\frac{s+2}{s+1}.
+\]
+Its numerator and denominator have no common factor, and its denominator has
+degree one. Hence, the minimum state dimension is one. Since the realization
+in part (a) has exactly one state, it is minimal.
+
+\Needspace{8cm}
+\section*{Exercise 6}
+Obtain a state space (controllable canonical form) realization of the following
+input-output system:
+\[
+\begin{aligned}
+\dot y_1+y_2 &= \dot u_2+u_1,\\
+\dot y_2+y_1 &= \dot u_1+u_2.
+\end{aligned}
+\]
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+\par\nopagebreak\vspace{3cm}
+
+\Needspace{10cm}
+\section*{Exercise 7}
+Determine whether or not the following system of linear equations has a solution.
+If a solution exists, determine whether or not it is unique, and if not unique,
+obtain an expression for all solutions.
+\[
+\begin{aligned}
+x_1-x_2+2x_3+x_4 &= 5,\\
+x_1-x_2+x_3 &= 3,\\
+-2x_1+2x_2+2x_4 &= -2,\\
+2x_1-2x_2-x_3-3x_4 &= 0.
+\end{aligned}
+\]
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+\par\nopagebreak\vspace{3cm}
+
+\Needspace{14cm}
+\section*{Exercise 8}
+We consider here systems of linear equations of the form
+\[
+Ax=b
+\]
+with
+\[
+x=\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}.
+\]
+For each of the following cases, we present the reduced row echelon form of the
+augmented matrix $[A\ b]$. Determine whether or not the corresponding system of
+linear equations has a solution. If a solution exists, determine whether or not
+it is unique; if not unique, obtain an expression for all solutions and give two
+solutions.
+
+\textbf{(a)}
+\[
+\begin{pmatrix}
+1 & 5 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{pmatrix}
+\]
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+\par\nopagebreak\vspace{3cm}
+
+\Needspace{7cm}
+\textbf{(b)}
+\[
+\begin{pmatrix}
+1 & -2 & 0 & 6\\
+0 & 0 & 1 & 4\\
+0 & 0 & 0 & 0
+\end{pmatrix}
+\]
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+\par\nopagebreak\vspace{3cm}
+
+\Needspace{7cm}
+\textbf{(c)}
+\[
+\begin{pmatrix}
+1 & 2 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 0 & 0
+\end{pmatrix}
+\]
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+\par\nopagebreak\vspace{3cm}
+
+\Needspace{7cm}
+\textbf{(d)}
+\[
+\begin{pmatrix}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{pmatrix}.
+\]
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+\par\nopagebreak\vspace{3cm}
+
+\Needspace{12cm}
+\section*{Exercise 9}
+Consider the three vectors
+\[
+\mathbf{v}_1=\begin{pmatrix}1\\2\\3\end{pmatrix},\quad
+\mathbf{v}_2=\begin{pmatrix}2\\3\\4\end{pmatrix},\quad
+\mathbf{v}_3=\begin{pmatrix}3\\4\\5\end{pmatrix}.
+\]
+
+\textbf{(a)} Express the vector
+\[
+\mathbf{v}=\begin{pmatrix}4\\5\\6\end{pmatrix}
+\]
+as a linear combination of $\mathbf{v}_1$, $\mathbf{v}_2$, and $\mathbf{v}_3$.
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+\par\nopagebreak\vspace{3cm}
+
+\Needspace{8cm}
+\textbf{(b)} Can every vector of the form
+\[
+\mathbf{v}=\begin{pmatrix}a\\b\\c\end{pmatrix}
+\]
+be expressed as a \textbf{linear combination} of $\mathbf{v}_1$, $\mathbf{v}_2$
+and $\mathbf{v}_3$?
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+\par\nopagebreak\vspace{3cm}
+
+\Needspace{4cm}
+\textbf{(c)} Are the vectors $\mathbf{v}_1$, $\mathbf{v}_2$, $\mathbf{v}_3$
+linearly independent?
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+\par\nopagebreak\vspace{2cm}
+
+\Needspace{9cm}
+\section*{Exercise 10}
+\textbf{(a)} Find a basis for the \textbf{null space} of the matrix,
+\[
+A=\begin{pmatrix}
+1 & 2 & 3 & 4\\
+2 & 3 & 4 & 5\\
+3 & 4 & 5 & 6
+\end{pmatrix}.
+\]
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+\par\nopagebreak\vspace{3cm}
+
+\Needspace{4cm}
+\textbf{(b)} What is the \textbf{nullity} of $A$?
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+\par\nopagebreak\vspace{2cm}
+
+\Needspace{9cm}
+\section*{Exercise 11}
+\textbf{(a)} Find a basis for the \textbf{range} of the matrix,
+\[
+A=\begin{pmatrix}
+1 & 2 & 3 & 4\\
+2 & 3 & 4 & 5\\
+3 & 4 & 5 & 6
+\end{pmatrix}.
+\]
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+\par\nopagebreak\vspace{3cm}
+
+\Needspace{4cm}
+\textbf{(b)} What is the \textbf{rank} of $A$?
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+\par\nopagebreak\vspace{2cm}
+
+\Needspace{9cm}
+\section*{Exercise 12}
+Compute the \textbf{eigenvalues} and \textbf{eigenvectors} of the matrix,
+\[
+A=\begin{pmatrix}
+2 & -3 & 0\\
+2 & -3 & 0\\
+3 & -5 & 1
+\end{pmatrix}.
+\]
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+\par\nopagebreak\vspace{3cm}
+
+\Needspace{9cm}
+\section*{Exercise 13}
+Compute the \textbf{eigenvalues} and \textbf{eigenvectors} of the following matrix.
+\[
+A=\begin{pmatrix}
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1\\
+1 & 0 & 0 & 0
+\end{pmatrix}
+\]
+
+\textbf{Solution}
+% 在這裡撰寫解答。
+\par\nopagebreak\vspace{3cm}
+
+\end{document}
