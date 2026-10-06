@@ -430,6 +430,63 @@ x_1-x_2+x_3 &= 3,\\
 
 \textbf{Solution}
 % 在這裡撰寫解答。
+
+Transform into the augmented matrix.
+\begin{align*}
+	&\begin{bmatrix}
+		1 & -1 & 2 & 1 & 5 \\
+		1 & -1 & 1 & 0 & 3 \\
+		-2 & 2 & 0 & 2 & -2 \\
+		2 & -2 & -1 & -3 & 0 
+	\end{bmatrix} \\
+	\overset{r_2 \leftarrow r_2 - r_1}{\longrightarrow} &\begin{bmatrix}
+		1 & -1 & 2 & 1 & 5 \\
+		0 & 0 & -1 & -1 & -2 \\
+		-2 & 2 & 0 & 2 & -2 \\
+		2 & -2 & -1 & -3 & 0 
+	\end{bmatrix} \\
+	\overset{\substack{r_3 \leftarrow r_3 + 2r_1 \\ r_4 \leftarrow r_4 - 2r_1}}{\longrightarrow} &\begin{bmatrix}
+		1 & -1 & 2 & 1 & 5 \\
+		0 & 0 & -1 & -1 & -2 \\
+		0 & 0 & 4 & 4 & 8 \\
+		0 & 0 & -5 & -5 & -10 
+	\end{bmatrix} \\
+	\overset{r_2 \leftarrow -r_2}{\longrightarrow} &\begin{bmatrix}
+		1 & -1 & 2 & 1 & 5 \\
+		0 & 0 & 1 & 1 & 2 \\
+		0 & 0 & 4 & 4 & 8 \\
+		0 & 0 & -5 & -5 & -10 
+	\end{bmatrix} \\
+	\overset{\substack{r_1 \leftarrow r_1 - 2r_2 \\ r_3 \leftarrow r_3 - 4r_2 \\ r_4 \leftarrow r_4 + 5r_2}}{\longrightarrow} &\begin{bmatrix}
+		1 & -1 & 0 & -1 & 1 \\
+		0 & 0 & 1 & 1 & 2 \\
+		0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 
+	\end{bmatrix}
+\end{align*}
+
+
+From the reduced row echelon form (RREF), there are no contradictory rows (such as $[0 \ \ 0 \ \ 0 \ \ 0 \mid c]$ with $c \neq 0$), so \textbf{a solution exists}. 
+
+Since there are $2$ pivot variables ($x_1, x_3$) and $2$ free variables ($x_2, x_4$), \textbf{the solution is not unique} (there are infinitely many solutions).
+
+Rewriting the non-zero rows as equations gives:
+\[
+\begin{aligned}
+	x_1 - x_2 - x_4 &= 1 \implies x_1 = 1 + x_2 + x_4, \\
+	x_3 + x_4 &= 2 \implies x_3 = 2 - x_4.
+\end{aligned}
+\]
+
+Let $x_2 = s$ and $x_4 = t$, where $s, t \in \mathbb{R}$. The general solution is:
+\[
+\begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ x_4 \end{bmatrix} 
+= \begin{bmatrix} 1 + s + t \\ s \\ 2 - t \\ t \end{bmatrix} 
+= \begin{bmatrix} 1 \\ 0 \\ 2 \\ 0 \end{bmatrix} 
++ s \begin{bmatrix} 1 \\ 1 \\ 0 \\ 0 \end{bmatrix} 
++ t \begin{bmatrix} 1 \\ 0 \\ -1 \\ 1 \end{bmatrix}, \quad s, t \in \mathbb{R}.
+\]
+
 \par\nopagebreak\vspace{3cm}
 
 \Needspace{14cm}
@@ -459,6 +516,9 @@ solutions.
 
 \textbf{Solution}
 % 在這裡撰寫解答。
+
+this solution of the corresponding system doesn't exist, because the pivot of the last conponent is 
+
 \par\nopagebreak\vspace{3cm}
 
 \Needspace{7cm}
@@ -521,8 +581,41 @@ Consider the three vectors
 as a linear combination of $\mathbf{v}_1$, $\mathbf{v}_2$, and $\mathbf{v}_3$.
 
 \textbf{Solution}
-% 在這裡撰寫解答。
-\par\nopagebreak\vspace{3cm}
+
+Let $c_1\mathbf{v}_1 + c_2\mathbf{v}_2 + c_3\mathbf{v}_3 = \mathbf{v}$. We form the augmented matrix and reduce it to RREF:
+\begin{align*}
+	&\begin{bmatrix}
+		1 & 2 & 3 & 4 \\
+		2 & 3 & 4 & 5 \\
+		3 & 4 & 5 & 6
+	\end{bmatrix} \\
+	\overset{\substack{r_2 \leftarrow r_2 - 2r_1 \\ r_3 \leftarrow r_3 - 3r_1}}{\longrightarrow} &\begin{bmatrix}
+		1 & 2 & 3 & 4 \\
+		0 & -1 & -2 & -3 \\
+		0 & -2 & -4 & -6
+	\end{bmatrix} \\
+	\overset{r_2 \leftarrow -r_2}{\longrightarrow} &\begin{bmatrix}
+		1 & 2 & 3 & 4 \\
+		0 & 1 & 2 & 3 \\
+		0 & -2 & -4 & -6
+	\end{bmatrix} \\
+	\overset{\substack{r_1 \leftarrow r_1 - 2r_2 \\ r_3 \leftarrow r_3 + 2r_2}}{\longrightarrow} &\begin{bmatrix}
+		1 & 0 & -1 & -2 \\
+		0 & 1 & 2 & 3 \\
+		0 & 0 & 0 & 0
+	\end{bmatrix}
+\end{align*}
+
+From the RREF, we have $c_1 - c_3 = -2$ and $c_2 + 2c_3 = 3$. Let $c_3 = t \in \mathbb{R}$, then $c_1 = -2 + t$ and $c_2 = 3 - 2t$. Thus,
+\[
+\mathbf{v} = (-2 + t)\mathbf{v}_1 + (3 - 2t)\mathbf{v}_2 + t\mathbf{v}_3, \quad \forall t \in \mathbb{R}.
+\]
+In particular, choosing $t = 0$ gives:
+\[
+\mathbf{v} = -2\mathbf{v}_1 + 3\mathbf{v}_2 + 0\mathbf{v}_3.
+\]
+
+\par\nopagebreak\vspace{1cm}
 
 \Needspace{8cm}
 \textbf{(b)} Can every vector of the form
@@ -533,18 +626,57 @@ be expressed as a \textbf{linear combination} of $\mathbf{v}_1$, $\mathbf{v}_2$
 and $\mathbf{v}_3$?
 
 \textbf{Solution}
-% 在這裡撰寫解答。
-\par\nopagebreak\vspace{3cm}
+
+\textbf{No.} Let $A = \begin{bmatrix} \mathbf{v}_1 & \mathbf{v}_2 & \mathbf{v}_3 \end{bmatrix}$. Computing the determinant of $A$:
+\begin{align*}
+	\det \begin{bmatrix}
+		1 & 2 & 3 \\
+		2 & 3 & 4 \\
+		3 & 4 & 5
+	\end{bmatrix} &= 1\begin{vmatrix} 3 & 4 \\ 4 & 5 \end{vmatrix} - 2\begin{vmatrix} 2 & 4 \\ 3 & 5 \end{vmatrix} + 3\begin{vmatrix} 2 & 3 \\ 3 & 4 \end{vmatrix} \\
+	&= 1(-1) - 2(-2) + 3(-1) \\
+	&= -1 + 4 - 3 = 0.
+\end{align*}
+
+Since $\det(A) = 0$ (and $\operatorname{rank}(A) = 2 < 3$ from part (a)), the vectors do not span $\mathbb{R}^3$:
+\[
+\operatorname{span}\{\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3\} \subsetneq \mathbb{R}^3.
+\]
+Specifically, reducing the general augmented matrix gives:
+\[
+\begin{bmatrix}
+	1 & 2 & 3 & a \\
+	2 & 3 & 4 & b \\
+	3 & 4 & 5 & c
+\end{bmatrix}
+\longrightarrow
+\begin{bmatrix}
+	1 & 0 & -1 & -3a + 2b \\
+	0 & 1 & 2 & 2a - b \\
+	0 & 0 & 0 & a - 2b + c
+\end{bmatrix}.
+\]
+Whenever $a - 2b + c \neq 0$ (for example, $\mathbf{v} = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}$), the system has no solution. Hence, \textbf{not every vector} in $\mathbb{R}^3$ can be expressed as a linear combination of $\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3$.
+
+\par\nopagebreak\vspace{1cm}
 
 \Needspace{4cm}
 \textbf{(c)} Are the vectors $\mathbf{v}_1$, $\mathbf{v}_2$, $\mathbf{v}_3$
 linearly independent?
 
 \textbf{Solution}
-% 在這裡撰寫解答。
-\par\nopagebreak\vspace{2cm}
 
-\Needspace{9cm}
+\textbf{No, they are linearly dependent.}
+
+From part (b), $\det \begin{bmatrix} \mathbf{v}_1 & \mathbf{v}_2 & \mathbf{v}_3 \end{bmatrix} = 0$, which directly implies that the three vectors are linearly dependent. 
+
+Alternatively, from the RREF in part (a), the homogeneous system $c_1\mathbf{v}_1 + c_2\mathbf{v}_2 + c_3\mathbf{v}_3 = \mathbf{0}$ has a free variable $c_3 = t$. Setting $t = 1$ gives the non-trivial relation:
+\[
+\mathbf{v}_1 - 2\mathbf{v}_2 + \mathbf{v}_3 = \mathbf{0}.
+\]
+Since there exist scalars not all zero satisfying this equation, $\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3$ are linearly dependent.
+
+
 \section*{Exercise 10}
 \textbf{(a)} Find a basis for the \textbf{null space} of the matrix,
 \[
@@ -601,6 +733,59 @@ A=\begin{pmatrix}
 
 \textbf{Solution}
 % 在這裡撰寫解答。
+
+\begin{align*}
+	\det(sI - A) &= \begin{vmatrix}
+		s - 2 & 3 & 0 \\
+		-2 & s + 3 & 0 \\
+		-3 & 5 & s - 1
+	\end{vmatrix} \\
+	&= (s - 1)\big((s - 2)(s + 3) - (-2)\cdot 3\big) \\
+	&= (s - 1)(s^2 + s - 6 + 6) \\
+	&= (s - 1)(s^2 + s) \\
+	&= s(s - 1)(s + 1) = 0.
+\end{align*}
+
+The eigenvalue is $ 0 \lor 1 \lor -1$
+
+for $s = 0$
+
+\begin{align*}
+	sI - A = \begin{bmatrix}
+		-2 & 3 & 0 \\
+		-2 & 3 & 0 \\
+		-3 & 5 & -1
+	\end{bmatrix} \Rightarrow {\bf v} = \begin{bmatrix}
+	3 \\ 2 \\ 1
+	\end{bmatrix}
+\end{align*}
+
+for $ s=1$
+
+\begin{align*}
+	sI - A = \begin{bmatrix}
+		-1 & 3 & 0 \\
+		-2 & 4 & 0 \\
+		-3 & 5 & 0
+	\end{bmatrix} \Rightarrow {\bf v} = \begin{bmatrix}
+		0 \\ 0 \\1
+	\end{bmatrix}
+\end{align*}
+
+for $ s=2$
+
+\begin{align*}
+	sI - A = \begin{bmatrix}
+		-3 & 3 & 0 \\
+		-2 & 2 & 0 \\
+		-3 & 5 & -2
+	\end{bmatrix} \Rightarrow {\bf v} = \begin{bmatrix}
+		1\\1\\1
+	\end{bmatrix}
+\end{align*}
+
+
+
 \par\nopagebreak\vspace{3cm}
 
 \Needspace{9cm}
@@ -617,6 +802,8 @@ A=\begin{pmatrix}
 
 \textbf{Solution}
 % 在這裡撰寫解答。
+
+
 \par\nopagebreak\vspace{3cm}
 
 \end{document}
