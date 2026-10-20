@@ -1,0 +1,338 @@
+% !TeX program = xelatex
+% !TeX encoding = UTF-8
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{xeCJK}
+\setCJKmainfont{Microsoft JhengHei}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{needspace}
+\makeatletter
+\newcommand{\totalpages}{\@abspage@last}
+\makeatother
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\thepage/\totalpages}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyfoot[C]{\thepage/\totalpages}%
+}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\raggedbottom
+\title{Linear System --- Homework 4}
+\author{葉彥辰\quad P46154345}
+\date{}
+\begin{document}
+\maketitle
+\begin{center}Fall 2026\quad Due: Friday, Oct 23\end{center}
+
+\section*{Exercise 1}
+Determine whether or not the following matrix is nondefective.
+\[
+A=\begin{pmatrix}0&1&0\\0&0&1\\-1&1&1\end{pmatrix}
+\]
+\subsection*{Solution}
+% 在這裡撰寫解答。
+
+\begin{align*}
+	\det (A-sI) &= \begin{bmatrix}
+		-s & 1 & 0 \\
+		0 & -s & 1 \\
+		-1 & 1 & 1 - s
+	\end{bmatrix} \\
+	&= -s \bigg( s(s-1) -1 \bigg ) + (-1)\cdot 1  \\
+	&= -s(s^2 -s -1) - 1 \\
+	&= -s^3 + s^2 + s - 1 \\
+	&= -(s-1)^2(s+1) 
+\end{align*}
+
+for $s = 1$
+\begin{align*}
+	A - sI = \begin{bmatrix}
+		-1 & 1 & 0 \\
+		0 & -1 & 1 \\
+		-1 & 1 & 0
+	\end{bmatrix} \Rightarrow \mathbf v = \begin{bmatrix}
+	1 \\ 1\\1
+	\end{bmatrix}
+\end{align*}
+Hence, for eigenvalue $s = 1$, AM = 2, and GM = 1
+
+ 
+for $s = -1$
+\begin{align*}
+	A - sI = \begin{bmatrix}
+		1 & 1 & 0 \\
+		0 & 1 & 1 \\
+		-1 & 1 & 2\\
+	\end{bmatrix} \Rightarrow \mathbf v = \begin{bmatrix}
+	1 \\ -1 \\ 1
+	\end{bmatrix}
+\end{align*}
+
+Hence, for eigenvalue $ s= -1$, AM = 1, and GM = 1
+
+Therefore, matrix $A$ is defective.
+\vspace{3cm}
+
+\section*{Exercise 2}
+What is the companion matrix whose eigenvalues are $-1$, $-2$, and $-3$?
+\subsection*{Solution}
+% 在這裡撰寫解答。
+
+\begin{align*}
+	p(s) &= (s + 1 )(s + 2) (s + 3) \\
+	&= a_3 s^3 + a_2 s^2 + a_1s + a_0 \\
+	&= s^3 + 6s^2 + 11 s + 6 \\
+\end{align*}
+Hence, companion matrix is 
+\begin{align*}
+	A &= \begin{bmatrix}
+		0 & 1 & 0 \\
+		0 & 0 & 1 \\
+		-a_0 & -a_1 & -a_2
+	\end{bmatrix} \\
+	&= \begin{bmatrix}
+		0 & 1 & 0 \\
+		0 & 0 & 1 \\
+		-6 & -11 & -6
+	\end{bmatrix}
+\end{align*}
+
+\section*{Exercise 3}
+What is the real $2\times2$ companion matrix with eigenvalues $1+j$, $1-j$?
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\begin{align*}
+	p(s) &= (s - (1 + j)) (s - (1 - j)) \\
+	&= a_2 s^2 + a_1 s + a_0 \\
+	&=  s^2 - 2s + 2
+\end{align*}
+Hence, companion matrix is  
+\begin{align*}
+	A &= \begin{bmatrix}
+		0 & 1 \\
+		-a_0 & -a_1
+	\end{bmatrix} \\
+	&= \begin{bmatrix}
+		0 & 1 \\
+		-2 & 2
+	\end{bmatrix}
+\end{align*}
+
+\vspace{3cm}
+
+\section*{Exercise 4}
+Suppose $A$ is a real square matrix and the vectors
+\[
+\begin{pmatrix}1\\-1\\1\\-1\end{pmatrix},\qquad
+\begin{pmatrix}1\\2\\4\\8\end{pmatrix},\qquad
+\begin{pmatrix}1\\j\\-1\\-j\end{pmatrix}
+\]
+are eigenvectors of $A$ corresponding to eigenvalues $-1$, $2$, and $j$, respectively. What is the response $x(t)$ of the system
+\[\dot{x}=Ax\]
+to the following initial conditions?
+
+\textbf{(a)} $x(0)=\begin{pmatrix}2\\-2\\2\\-2\end{pmatrix}$
+\subsection*{Solution}
+% 在這裡撰寫解答。
+
+Since $\mathbf v_1$ is an eigenvector corresponding to eigenvalue $\lambda_1=-1$,
+\begin{align*}
+	x(0) &= \begin{bmatrix}2\\-2\\2\\-2\end{bmatrix}
+	= 2\begin{bmatrix}1\\-1\\1\\-1\end{bmatrix}
+	= 2\mathbf v_1 \triangleq \mathbf v \\
+\end{align*}
+\[
+A\mathbf v = \lambda \mathbf v \Leftrightarrow x(t)  = e^{\lambda t} \mathbf v= e^{\lambda t} x(0)
+\]
+\begin{align*}
+	x(t) &= e^{\lambda_1 t} x(0) \\
+	 &= e^{\lambda_1 t} \mathbf v \\
+		&= e^{-t} \cdot 2 \mathbf v_1 \\
+		&= \begin{bmatrix}2e^{-t}\\-2e^{-t}\\2e^{-t}\\-2e^{-t}\end{bmatrix}.
+\end{align*}
+
+
+\textbf{(b)} $x(0)=\begin{pmatrix}-1\\-2\\-4\\-8\end{pmatrix}$
+\subsection*{Solution}
+% 在這裡撰寫解答。
+
+\[
+x(0) = \begin{bmatrix}
+	-1 \\ -2 \\ -4 \\ -8 
+\end{bmatrix} = -\begin{bmatrix}
+	1 \\ 2 \\ 4 \\ 8
+\end{bmatrix} = -\mathbf v_2 \text{ which corresponding to eigenvalue is } 2
+\]
+\[
+A \mathbf v = \lambda \mathbf v \Leftrightarrow x(t) = e^{\lambda t} x(0) = e^{\lambda t} \mathbf v
+\]
+\begin{align*}
+	x(t) &= e^{\lambda t} x(0) \\
+	&= e^{\lambda t} \mathbf v \\
+	&= e^{\lambda t} \cdot - \mathbf v_2 \\
+	&= e^{2t} \begin{bmatrix}
+		-1 \\ -2 \\ -4 \\ -8 
+	\end{bmatrix} = \begin{bmatrix}
+	-e^{2t} \\ -2 e^{2t} \\ -4 e^{2t} \\ -8 e^{2t}
+	\end{bmatrix}
+\end{align*}
+
+\textbf{(c)} $x(0)=\begin{pmatrix}0\\3\\3\\9\end{pmatrix}$
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\[
+x(0) = \mathbf v = \begin{bmatrix}
+	0 \\ 3 \\ 3 \\ 9
+\end{bmatrix} = -\begin{bmatrix}
+1 \\ -1 \\ 1 \\ -1
+\end{bmatrix} + \begin{bmatrix}
+1 \\ 2 \\ 4 \\8
+\end{bmatrix} = -\mathbf v_1 + \mathbf v_2
+\]
+with linear combination
+\begin{align*}
+	x(t) &= -e^{\lambda_1 t}\mathbf v_1 + e^{\lambda_2 t} \mathbf v_2 \\
+	&= \begin{bmatrix}
+		-e^{-t} + e^{2t} \\ e^{-t}+2e^{2t} \\ -e^{-t }+4e^{2t} \\ e^{-t} + 8e^{2t}
+	\end{bmatrix} 
+\end{align*}
+
+\textbf{(d)} $x(0)=\begin{pmatrix}1\\1\\-1\\-1\end{pmatrix}$
+\subsection*{Solution}
+% 在這裡撰寫解答。
+
+\[
+\mathbf v_3 = \begin{bmatrix}
+	1 \\ j \\ -1 \\ j
+\end{bmatrix} = \mathbf u_3 + j \mathbf p_3 = \begin{bmatrix}
+1 \\ 0 \\ -1 \\ 0
+\end{bmatrix} + j \begin{bmatrix}
+0 \\ 1 \\ 0 \\ 1 
+\end{bmatrix} \Rightarrow \mathbf u_3 = \begin{bmatrix}
+1 \\ 0 \\ -1 \\ 0
+\end{bmatrix}, \quad \mathbf p_3 = \begin{bmatrix}
+0 \\ 1 \\ 0 \\ 1 
+\end{bmatrix}
+\]
+\[
+\lambda_3 = \alpha + j \omega = j \Rightarrow \alpha = 0, \quad \omega = 1
+\]
+
+\begin{align*}
+	x(t) &= e^{\lambda t} \math
+\end{align*}
+\vspace{3cm}
+
+\section*{Exercise 5}
+Consider a discrete-time LTI system described by
+\[x(k+1)=Ax(k).\]
+\textbf{(a)} Suppose that the vectors
+\[
+\begin{pmatrix}1\\-1\\1\\-1\end{pmatrix}\qquad\text{and}\qquad
+\begin{pmatrix}1\\1\\1\\1\end{pmatrix}
+\]
+are eigenvectors of $A$ corresponding to eigenvalues $-2$ and $3$, respectively. What is the response $x(k)$ of the system to the initial condition
+\[x(0)=\begin{pmatrix}1\\0\\1\\0\end{pmatrix}?\]
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+
+\textbf{(b)} Suppose $A$ is a real matrix and the vector
+\[\begin{pmatrix}1\\j\\-1\\-j\end{pmatrix}\]
+is an eigenvector of $A$ corresponding to the eigenvalue $2+3j$. What is the response $x(k)$ of the system to the initial condition
+\[x(0)=\begin{pmatrix}1\\0\\-1\\0\end{pmatrix}?\]
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+
+\section*{Exercise 6}
+Consider a $5\times5$ matrix
+\[A=vw^T\]
+where $v$ and $w$ are $5\times1$ matrices.
+
+\textbf{(a)} What is the rank of $A$?
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+
+\textbf{(b)} What is the nullity of $A$?
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+
+\textbf{(c)} What are the eigenvalues of $A$ if $w^Tv\neq0$?
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+
+\clearpage
+\textbf{For Exercise 7 and 8, please use Matlab/Python to illustrate the time history plot. Please don't plot $y$, $\theta_1$, $\theta_2$ in the same plot, separate them!}
+
+\section*{Exercise 7}
+Recall the 2 pendulum cart system.
+\begin{align*}
+&(m_0+m_1+m_2)\ddot{y}-m_1l\cos\theta_1\,\ddot{\theta}_1-m_2l\cos\theta_2\,\ddot{\theta}_2\\
+&\qquad{}+m_1l\sin\theta_1\,\dot{\theta}_1^2+m_2l\sin\theta_2\,\dot{\theta}_2^2=u\\
+&-m_1l\cos\theta_1\,\ddot{y}+m_1l^2\ddot{\theta}_1+m_1lg\sin\theta_1=0\\
+&-m_2l\cos\theta_2\,\ddot{y}+m_2l^2\ddot{\theta}_2+m_2lg\sin\theta_2=0
+\end{align*}
+Consider the equilibrium configurations defined by $u^e=0$ and
+\[E1:\qquad(y^e,\theta_1^e,\theta_2^e)=(0,0,0)\]
+and
+\[E2:\qquad(y^e,\theta_1^e,\theta_2^e)=(0,\pi,\pi).\]
+Consider state space representations of the linearizations corresponding to the following combinations of parameters and equilibrium conditions:
+\begin{center}
+\begin{tabular}{c|c|c}
+ & Parameter & Equilibrium\\\hline
+$L1$ & $P1$ & $E1$\\
+$L2$ & $P1$ & $E2$\\
+$L3$ & $P2$ & $E1$\\
+$L4$ & $P2$ & $E2$\\
+$L5$ & $P3$ & $E1$\\
+$L6$ & $P3$ & $E2$\\
+$L7$ & $P4$ & $E1$\\
+$L8$ & $P4$ & $E2$
+\end{tabular}
+\end{center}
+
+\textbf{(a)} Determine the eigenvalues of all the \textbf{\textit{linearized systems}} L1--L8.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+
+\textbf{(b)} Compare the behavior of the nonlinear system with that of the linearized system for cases L7 and L8. Illustrate your results using different initial condition with time histories of $y$, $\theta_1$, and $\theta_2$. Plesae write paragraph to analysis the comparison between nonlinear and linearized system.
+
+Initial conditions for case L7: $\pm0$ deg, $\pm1$ deg, $\pm10$ deg, $\pm90$ deg, $\pm180$ deg.
+
+Initial conditions for case L8: $\pm1$ deg.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+
+\section*{Exercise 8}
+This exercise refers to linearizations L7 and L8 of the two pendulum cart system.
+
+\textbf{(a)} For L7 choose an initial state for the linearized system which results in a periodic solution for the linearized system.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+
+\textbf{(b)} For L8 choose an initial state for the linearized system which results in a solution which asymptotically decays to zero for the linearized system.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+
+\textbf{(c)} For L8 choose an initial state for the linearized system which results in a solution whose magnitude grows exponentially for the linearized system.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+
+In each case, simulate both the linearized system and the nonlinear system with initial conditions corresponding to your chosen initial state for the linearized system.
+\end{document}

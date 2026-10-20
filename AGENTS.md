@@ -12,7 +12,7 @@
 - 題目來源優先採用使用者指定的檔案，其次依目標作業子目錄中的原始作業 PDF（例如 linearsys_hwN.pdf）及其內容判斷。不要把自行產生的解答 PDF（例如 main.pdf、linearSsytem_hw3.pdf）或 build/ 內的 PDF 當成原始題目。
 - 作業編號以使用者明確指定或題目文件標示為準，檔名與資料夾名稱僅作輔助。若有多份候選題目、編號衝突或無法確認，先釐清；可先完成不依賴該資訊的骨架，不自行猜選或合併。
 - 標題使用 Linear System --- Homework N，將 N 換成已確認的作業編號；尚未確認時先用 Linear System --- Homework，並標註待確認。
-- 主檔名稱優先遵照使用者指定並保留拼法；既有作業沿用原主檔，不自行重新命名。新作業未指定檔名時可使用 main.tex。目前 hw1 與 hw2 使用 main.tex，hw3 使用 linearSsytem_hw3.tex。
+- 主檔名稱優先遵照使用者指定並保留拼法；既有作業沿用原主檔，不自行重新命名。新作業未指定檔名時，統一沿用 linearSsytem_hwN.tex（N 為已確認的作業編號），保留 linearSsytem 的既有拼法。目前 hw1 與 hw2 使用 main.tex，hw3 使用 linearSsytem_hw3.tex，hw4 使用 linearSsytem_hw4.tex。使用者要求重新命名時，同步更新該作業 README 的主檔名稱、編譯指令與 PDF 路徑。
 
 ## 初次準備流程
 1. 先檢查目標作業子目錄的目前檔案，確認主檔；若主檔已存在，保留使用者已寫內容，只補缺少部分，不重新覆蓋整份文件，也不另外建立重複主檔。
