@@ -412,6 +412,31 @@ $L8$ & $P4$ & $E2$
 \textbf{(a)} Determine the eigenvalues of all the \textbf{\textit{linearized systems}} L1--L8.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+For equilibrium 1 that $ E1: (y^e,\quad \theta_1^e, \quad \theta_2^e ) = (0, \quad0, \quad0) $
+Near the equilibrium
+\[
+\sin \theta_i \approx \theta_i, \quad \cos\theta_i \approx 1
+\]
+and $ \sin \theta_i \dot \theta_i^2 $ are elimitiated due to high order xxx.
+
+
+Then the original equation becames
+\[
+\begin{cases}
+	(m_0 + m_1 + m_2)\ddot y - m_1l\ddot \theta_1 - m_2l\ddot \theta_2 &= u \\
+	-m_1l\ddot y + m_1l\ddot \theta_1 &= 0 \\
+	-m_2l\ddot y + m_2l^2\ddot \theta_2  &= 0
+\end{cases}
+\]
+
+Let 
+\[
+q = \begin{bmatrix}
+	y \\ \theta_1 \\ \theta_2
+\end{bmatrix}
+\]
+
 \vspace{3cm}
 
 \clearpage
