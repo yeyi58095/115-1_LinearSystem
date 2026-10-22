@@ -425,18 +425,65 @@ Then the original equation becames
 \[
 \begin{cases}
 	(m_0 + m_1 + m_2)\ddot y - m_1l\ddot \theta_1 - m_2l\ddot \theta_2 &= u \\
-	-m_1l\ddot y + m_1l\ddot \theta_1 &= 0 \\
-	-m_2l\ddot y + m_2l^2\ddot \theta_2  &= 0
+	-m_1l\ddot y + m_1l^2\ddot \theta_1 + m_1lg\theta_1&= 0 \\
+	-m_2l\ddot y + m_2l^2\ddot \theta_2  +m_2lg\theta_2&= 0
 \end{cases}
 \]
 
 Let 
 \[
-q = \begin{bmatrix}
-	y \\ \theta_1 \\ \theta_2
+x = \begin{bmatrix}
+	x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \\ x_6
+\end{bmatrix} = \begin{bmatrix}
+	y \\ \theta_1 \\ \theta_2 \\ \dot y \\ \dot \theta_1 \\ \dot \theta_2
+\end{bmatrix}, \Rightarrow \dot x = \begin{bmatrix}
+	\dot y \\ \dot \theta_1 \\ \dot \theta_2 \\ \ddot y \\ \ddot \theta_1 \\ \ddot \theta_2
+\end{bmatrix} = \begin{bmatrix}
+x_4 \\ x_5 \\ x_6 \\ \ddot y \\ \ddot \theta_1 \\ \ddot \theta_2
 \end{bmatrix}
 \]
+obtained with rewritten equation
+\[
+\ddot \theta_1 = { \ddot y - g\theta_1  \over l }, \text{ and } \ddot \theta_2 = { \ddot y - g\theta_2 \over l} 
+\]
+then, go to the first equation to furthermore solve. 
+\begin{align*}
+	(m_0 + m_1 + m_2)\ddot y - m_1l\ddot \theta_1 - m_2l\ddot \theta_2 &= 	(m_0 + m_1 + m_2)\ddot y - m_1l{ \ddot y - g\theta_1  \over l } - m_2l{ \ddot y - g\theta_2 \over l}  \\
+	&= (m_0 + m_1 + m_2)\ddot y - m_1{ \ddot y + m_1g\theta_1 } - m_2{ \ddot y + m_2g\theta_2} \\
+	&= m_0 \ddot y+ m_1g\theta_1 + m_2 g\theta_2 = u
+\end{align*}
+\[
+\ddot y = { -m_1g\theta_1 - m_2g\theta_2 + u \over m_0} 
+\]
+Hence, 
+\begin{align*}
+	\ddot \theta_1 &=  {  { -m_1g\theta_1 - m_2g\theta_2 + u \over m_0} - g\theta_1  \over l } = {-m_0 g\theta_1 - m_1g\theta_1 - m_2g\theta_2 + u \over m_0l} = {-(m_0 + m_1)g\theta_1 - m_2g\theta_2 + u \over m_0l}  \\
+	\ddot \theta_2 &=   { { -m_1g\theta_1 - m_2g\theta_2 + u \over m_0}  - g\theta_2 \over l}  = { -m_0 g\theta_2 - m_1g\theta_1 - m_2g\theta_2  + u\over m_0l} = {  - m_1g\theta_1 - (m_0 + m_2)g\theta_2  + u\over m_0l}
+\end{align*}
 
+\begin{align*}
+	\dot x &=  \begin{bmatrix}
+		x_4 \\ x_5 \\ x_6 \\ \ddot y \\ \ddot \theta_1 \\ \ddot \theta_2
+	\end{bmatrix} = \begin{bmatrix}
+	x_4 \\ x_5 \\ x_6 \\
+	{-m_1g\over m_0}x_2 - {m_2g\over m_0}x_3 + {1\over m_0}u \\
+	{-(m_0 + m_1)g \over m_0l}x_2- {m_2g \over m_0l}x_3 + {1\over m_0l}u \\
+	{-m_1g\over m_0l}x_2 - {(m_0 + m_2)g\over m_0l}x_3 + {1\over m_0l}u
+	\end{bmatrix}  \\ 
+	&= \begin{bmatrix}
+		0 & 0 & 0 & 1 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 1 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 1 \\
+		0 & {-m_1g\over m_0} & {-m_2g\over m_0} & 0 & 0 & 0 \\
+		0 & {-(m_0 + m_1)g \over m_0l} & {-m_2g\over m_0l} & 0 & 0 &0\\
+		0 & {-m_1g\over m_0 l} & {-(m_0 + m_2)g\over m_0l} & 0 & 0 & 0 
+	\end{bmatrix} \begin{bmatrix}
+	x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \\ x_6
+	\end{bmatrix} + \begin{bmatrix}
+	0 \\ 0 \\ 0 \\ {1\over m_0} \\ {1\over m_0l} \\ {1\over m_0l}
+	\end{bmatrix}u \\
+	&= Ax + Bu
+\end{align*}
 \vspace{3cm}
 
 \clearpage
@@ -448,7 +495,7 @@ Initial conditions for case L8: $\pm1$ deg.
 \subsection*{Solution}
 % 在這裡撰寫解答。
 \vspace{3cm}
-\input{simulation-ex7.tex}
+%\input{simulation-ex7.tex}
 
 \clearpage
 \section*{Exercise 8}
@@ -458,14 +505,14 @@ This exercise refers to linearizations L7 and L8 of the two pendulum cart system
 \subsection*{Solution}
 % 在這裡撰寫解答（推導）。
 \vspace{3cm}
-\input{simulation-ex8a_L7_periodic.tex}
+%\input{simulation-ex8a_L7_periodic.tex}
 
 \clearpage
 \textbf{(b)} For L8 choose an initial state for the linearized system which results in a solution which asymptotically decays to zero for the linearized system.
 \subsection*{Solution}
 % 在這裡撰寫解答（推導）。
 \vspace{3cm}
-\input{simulation-ex8b_L8_decay.tex}
+%\input{simulation-ex8b_L8_decay.tex}
 
 \clearpage
 \textbf{(c)} For L8 choose an initial state for the linearized system which results in a solution whose magnitude grows exponentially for the linearized system.
@@ -474,7 +521,7 @@ This exercise refers to linearizations L7 and L8 of the two pendulum cart system
 \vspace{3cm}
 
 In each case, simulate both the linearized system and the nonlinear system with initial conditions corresponding to your chosen initial state for the linearized system.
-\input{simulation-ex8c_L8_growth.tex}
+%\input{simulation-ex8c_L8_growth.tex}
 
 \clearpage
 \section*{MATLAB Source Code}
