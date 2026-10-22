@@ -524,13 +524,27 @@ A &= \begin{bmatrix}
 	0  -1/2  -3/2   0    0    0
 	];
 
-	lambda = eig(A);
+	lambda = eig(A)
 	
 	
 	
 \end{lstlisting}
 
-Hence, $\lambda = 0 \lor 0 \lor -i \lor i\lor -\sqrt2 i \lor \sqrt2i$
+\textbf{MATLAB output:}
+\begin{lstlisting}[language={}]
+lambda =
+
+   0.0000 + 0.0000i
+   0.0000 + 0.0000i
+   0.0000 + 1.4142i
+   0.0000 - 1.4142i
+  -0.0000 + 1.0000i
+  -0.0000 - 1.0000i
+\end{lstlisting}
+The displayed $-0.0000$ values are numerical roundoff.
+
+
+Hence, the eigenvalues (including multiplicities) are $0,0,\pm j,\pm\sqrt{2}j$.
 
 \vspace{3cm}
 
@@ -547,7 +561,32 @@ A_{L3}=\begin{bmatrix}
 0 & -\frac{50}{99} & -\frac{50}{33} & 0 & 0 & 0
 \end{bmatrix}.
 \]
-% 在這裡計算特徵值。
+\begin{lstlisting}
+A = [
+0 0 0 1 0 0;
+0 0 0 0 1 0;
+0 0 0 0 0 1;
+0 -1/2 -1/2 0 0 0;
+0 -3/2 -1/2 0 0 0;
+0 -50/99 -50/33 0 0 0
+];
+format short
+lambda = eig(A)
+\end{lstlisting}
+
+\textbf{MATLAB output:}
+\begin{lstlisting}[language={}]
+lambda =
+
+   0.0000 + 0.0000i
+   0.0000 + 0.0000i
+  -0.0000 + 1.4178i
+  -0.0000 - 1.4178i
+   0.0000 + 1.0025i
+   0.0000 - 1.0025i
+\end{lstlisting}
+Hence, the eigenvalues are approximately $0,0,\pm 1.0025j,\pm 1.4178j$.
+
 \vspace{3cm}
 
 \Needspace{5cm}
@@ -563,7 +602,32 @@ A_{L5}=\begin{bmatrix}
 0 & -\frac{1}{2} & -\frac{5}{4} & 0 & 0 & 0
 \end{bmatrix}.
 \]
-% 在這裡計算特徵值。
+\begin{lstlisting}
+A = [
+0 0 0 1 0 0;
+0 0 0 0 1 0;
+0 0 0 0 0 1;
+0 -1/2 -1/4 0 0 0;
+0 -3/2 -1/4 0 0 0;
+0 -1/2 -5/4 0 0 0
+];
+format short
+lambda = eig(A)
+\end{lstlisting}
+
+\textbf{MATLAB output:}
+\begin{lstlisting}[language={}]
+lambda =
+
+   0.0000 + 0.0000i
+   0.0000 + 0.0000i
+  -0.0000 + 1.3229i
+  -0.0000 - 1.3229i
+   0.0000 + 1.0000i
+   0.0000 - 1.0000i
+\end{lstlisting}
+Hence, the eigenvalues are approximately $0,0,\pm 1.0000j,\pm 1.3229j$.
+
 \vspace{3cm}
 
 \Needspace{5cm}
@@ -579,13 +643,89 @@ A_{L7}=\begin{bmatrix}
 0 & -1 & -3 & 0 & 0 & 0
 \end{bmatrix}.
 \]
-% 在這裡計算特徵值。
+\begin{lstlisting}
+A = [
+0 0 0 1 0 0;
+0 0 0 0 1 0;
+0 0 0 0 0 1;
+0 -1/2 -1/2 0 0 0;
+0 -3/2 -1/2 0 0 0;
+0 -1 -3 0 0 0
+];
+format short
+lambda = eig(A)
+\end{lstlisting}
+
+\textbf{MATLAB output:}
+\begin{lstlisting}[language={}]
+lambda =
+
+   0.0000 + 0.0000i
+   0.0000 + 0.0000i
+  -0.0000 + 1.8113i
+  -0.0000 - 1.8113i
+   0.0000 + 1.1042i
+   0.0000 - 1.1042i
+\end{lstlisting}
+Hence, the eigenvalues are approximately $0,0,\pm 1.1042j,\pm 1.8113j$.
+
 \vspace{3cm}
 
 \subsubsection*{E2: $(y^e,\theta_1^e,\theta_2^e)=(0,\pi,\pi)$}
 \textbf{Construction of the state-space model.}
-% 在這裡撰寫解答。
-\vspace{3cm}
+Let $\delta\theta_i=\theta_i-\pi$ and $\delta u=u-u^e=u$.
+Near E2,
+\[
+\sin\theta_i\approx-\delta\theta_i,\qquad
+\cos\theta_i\approx-1.
+\]
+Neglecting higher-order terms in the perturbations gives
+\[
+\begin{cases}
+(m_0+m_1+m_2)\delta\ddot y
+ +m_1l_1\delta\ddot\theta_1+m_2l_2\delta\ddot\theta_2=\delta u,\\
+m_1l_1\delta\ddot y+m_1l_1^2\delta\ddot\theta_1
+ -m_1l_1g\delta\theta_1=0,\\
+m_2l_2\delta\ddot y+m_2l_2^2\delta\ddot\theta_2
+ -m_2l_2g\delta\theta_2=0.
+\end{cases}
+\]
+As in E1, solve the last two equations for the angular accelerations
+and substitute into the first equation:
+\begin{align*}
+\delta\ddot\theta_i&=\frac{-\delta\ddot y+g\delta\theta_i}{l_i},
+\qquad i=1,2,\\
+\delta\ddot y&=\frac{-m_1g\delta\theta_1-m_2g\delta\theta_2+\delta u}{m_0}.
+\end{align*}
+Thus,
+\begin{align*}
+\delta\ddot\theta_1
+ &=\frac{(m_0+m_1)g\delta\theta_1+m_2g\delta\theta_2-\delta u}{m_0l_1},\\
+\delta\ddot\theta_2
+ &=\frac{m_1g\delta\theta_1+(m_0+m_2)g\delta\theta_2-\delta u}{m_0l_2}.
+\end{align*}
+Define the perturbation state
+\[
+\delta x=x-x^e=
+\begin{bmatrix}
+y&\theta_1-\pi&\theta_2-\pi&\dot y&\dot\theta_1&\dot\theta_2
+\end{bmatrix}^{T}.
+\]
+Then $\delta\dot x=A_{E2}\delta x+B_{E2}\delta u$, where
+\[
+A_{E2}=\begin{bmatrix}
+0&0&0&1&0&0\\
+0&0&0&0&1&0\\
+0&0&0&0&0&1\\
+0&-\frac{m_1g}{m_0}&-\frac{m_2g}{m_0}&0&0&0\\
+0&\frac{(m_0+m_1)g}{m_0l_1}&\frac{m_2g}{m_0l_1}&0&0&0\\
+0&\frac{m_1g}{m_0l_2}&\frac{(m_0+m_2)g}{m_0l_2}&0&0&0
+\end{bmatrix},
+\qquad
+B_{E2}=\begin{bmatrix}
+0\\0\\0\\\frac{1}{m_0}\\-\frac{1}{m_0l_1}\\-\frac{1}{m_0l_2}
+\end{bmatrix}.
+\]
 
 \Needspace{5cm}
 \paragraph*{L2 (P1) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,1,1,1,1)$}
