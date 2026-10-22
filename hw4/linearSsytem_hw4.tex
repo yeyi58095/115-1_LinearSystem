@@ -45,11 +45,11 @@ A=\begin{pmatrix}0&1&0\\0&0&1\\-1&1&1\end{pmatrix}
 % 在這裡撰寫解答。
 
 \begin{align*}
-	\det (A-sI) &= \begin{bmatrix}
+	\det (A-sI) &= \begin{vmatrix}
 		-s & 1 & 0 \\
 		0 & -s & 1 \\
 		-1 & 1 & 1 - s
-	\end{bmatrix} \\
+	\end{vmatrix} \\
 	&= -s \bigg( s(s-1) -1 \bigg ) + (-1)\cdot 1  \\
 	&= -s(s^2 -s -1) - 1 \\
 	&= -s^3 + s^2 + s - 1 \\
@@ -83,7 +83,7 @@ for $s = -1$
 Hence, for eigenvalue $ s= -1$, AM = 1, and GM = 1
 
 Therefore, matrix $A$ is defective.
-\vspace{3cm}
+\vspace{0.25cm}
 
 \section*{Exercise 2}
 What is the companion matrix whose eigenvalues are $-1$, $-2$, and $-3$?
@@ -130,7 +130,7 @@ Hence, companion matrix is
 	\end{bmatrix}
 \end{align*}
 
-\vspace{3cm}
+\vspace{0.25cm}
 
 \section*{Exercise 4}
 Suppose $A$ is a real square matrix and the vectors
@@ -154,7 +154,7 @@ Since $\mathbf v_1$ is an eigenvector corresponding to eigenvalue $\lambda_1=-1$
 	= 2\mathbf v_1 \triangleq \mathbf v \\
 \end{align*}
 \[
-A\mathbf v = \lambda \mathbf v \Leftrightarrow x(t)  = e^{\lambda t} \mathbf v= e^{\lambda t} x(0)
+A\mathbf v = \lambda_1\mathbf v,\quad x(0)=\mathbf v\quad\Rightarrow\quad x(t)=e^{\lambda_1t}\mathbf v
 \]
 \begin{align*}
 	x(t) &= e^{\lambda_1 t} x(0) \\
@@ -176,12 +176,12 @@ x(0) = \begin{bmatrix}
 \end{bmatrix} = -\mathbf v_2 \text{ which corresponding to eigenvalue is } 2
 \]
 \[
-A \mathbf v = \lambda \mathbf v \Leftrightarrow x(t) = e^{\lambda t} x(0) = e^{\lambda t} \mathbf v
+\mathbf v:=x(0)=-\mathbf v_2,\quad A\mathbf v=2\mathbf v\quad\Rightarrow\quad x(t)=e^{2t}\mathbf v
 \]
 \begin{align*}
-	x(t) &= e^{\lambda t} x(0) \\
-	&= e^{\lambda t} \mathbf v \\
-	&= e^{\lambda t} \cdot - \mathbf v_2 \\
+	x(t) &= e^{2t} x(0) \\
+	&= e^{2t} \mathbf v \\
+	&= e^{2t} \cdot - \mathbf v_2 \\
 	&= e^{2t} \begin{bmatrix}
 		-1 \\ -2 \\ -4 \\ -8 
 	\end{bmatrix} = \begin{bmatrix}
@@ -214,17 +214,9 @@ with linear combination
 % 在這裡撰寫解答。
 
 \[
-\mathbf v_3 = \begin{bmatrix}
-	1 \\ j \\ -1 \\ -j
-\end{bmatrix} = \mathbf u_3 + j \mathbf p_3 = \begin{bmatrix}
-1 \\ 0 \\ -1 \\ 0
-\end{bmatrix} + j \begin{bmatrix}
-0 \\ 1 \\ 0 \\ -1 
-\end{bmatrix} \Rightarrow \mathbf u_3 = \begin{bmatrix}
-1 \\ 0 \\ -1 \\ 0
-\end{bmatrix}, \quad \mathbf p_3 = \begin{bmatrix}
-0 \\ 1 \\ 0 \\ -1
-\end{bmatrix}
+\mathbf v_3=\mathbf u_3+j\mathbf p_3,\qquad
+\mathbf u_3=\begin{bmatrix}1\\0\\-1\\0\end{bmatrix},\qquad
+\mathbf p_3=\begin{bmatrix}0\\1\\0\\-1\end{bmatrix}.
 \]
 \[
 \lambda_3 = \alpha + j \omega = j \Rightarrow \alpha = 0, \quad \omega = 1
@@ -233,9 +225,9 @@ with linear combination
 \begin{align*}
 	x(0) &= \mathbf{u} + \mathbf p \\
 	x(t) &= x_u(t) + x_p(t) \\
-	&= e^{\alpha t} \bigg( \cos (\omega t)\cdot \mathbf u - \sin(\omega t) \cdot \mathbf p \bigg) + e^{\alpha t} \bigg( \sin(\omega t)\cdot \mathbf u + \cos(\omega t) \cdot \mathbf p \bigg)
+	&= e^{\alpha t} \bigg( \cos (\omega t)\cdot \mathbf u - \sin(\omega t) \cdot \mathbf p \bigg) \\ &\quad{}+ e^{\alpha t} \bigg( \sin(\omega t)\cdot \mathbf u + \cos(\omega t) \cdot \mathbf p \bigg)
 \end{align*}
-with $\alpha = 0,\quad \omega = 1$
+Here $\mathbf u=\mathbf u_3$, $\mathbf p=\mathbf p_3$, $\alpha=0$, and $\omega=1$.
 \begin{align*}
 	x(t) &= \mathbf u \cdot (\cos t + \sin t) + \mathbf p \cdot (\cos t - \sin t) \\
 	&= \begin{bmatrix}
@@ -352,17 +344,17 @@ thus,
 \]
 but if $v$ or $w$ is $0$, $\operatorname{rank}A=0$
 
-\vspace{1cm}
+\vspace{0.25cm}
 \textbf{(b)} What is the nullity of $A$?
 \subsection*{Solution}
 % 在這裡撰寫解答。
-if $v$ or $w \neq 0$ 
+If $v\neq0$ and $w\neq0$,
 \[
-\operatorname{null} A = \operatorname{dim} A - \operatorname{rank} A = 5 - 1 = 4
+\operatorname{nullity}(A)=5-\operatorname{rank}(A)=5-1=4
 \]
 else
 \[
-\operatorname{null}A = 5
+\operatorname{nullity}(A)=5
 \]
 \textbf{(c)} What are the eigenvalues of $A$ if $w^Tv\neq0$?
 \subsection*{Solution}
@@ -377,7 +369,7 @@ Since the nullity of $A$ is $4$, there are four linearly independent eigenvector
 \[
 w^Tv,\quad 0, \quad 0, \quad 0, \quad 0
 \]
-\vspace{3cm}
+\vspace{0.25cm}
 
 \clearpage
 \textbf{For Exercise 7 and 8, please use Matlab/Python to illustrate the time history plot. Please don't plot $y$, $\theta_1$, $\theta_2$ in the same plot, separate them!}
@@ -490,7 +482,7 @@ Hence,
 	&= Ax + Bu
 \end{align*}
 
-\Needspace{3cm}
+\Needspace{2cm}
 \paragraph*{L1 (P1) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,1,1,1,1)$}
 % 在這裡撰寫解答。
 
@@ -525,9 +517,6 @@ A &= \begin{bmatrix}
 	];
 
 	lambda = eig(A)
-	
-	
-	
 \end{lstlisting}
 
 \textbf{MATLAB output:}
@@ -548,7 +537,7 @@ Hence, the eigenvalues (including multiplicities) are $0,0,\pm j,\pm\sqrt{2}j$.
 
 \vspace{0.3cm}
 
-\Needspace{3cm}
+\Needspace{2cm}
 \paragraph*{L3 (P2) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,1,1,0.99,1)$}
 
 \[
@@ -589,7 +578,7 @@ Hence, the eigenvalues are approximately $0,0,\pm 1.0025j,\pm 1.4178j$.
 
 \vspace{0.3cm}
 
-\Needspace{3cm}
+\Needspace{2cm}
 \paragraph*{L5 (P3) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,0.5,1,1,1)$}
 
 \[
@@ -630,7 +619,7 @@ Hence, the eigenvalues are approximately $0,0,\pm 1.0000j,\pm 1.3229j$.
 
 \vspace{0.3cm}
 
-\Needspace{3cm}
+\Needspace{2cm}
 \paragraph*{L7 (P4) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,1,1,0.5,1)$}
 
 \[
@@ -727,7 +716,7 @@ B_{E2}=\begin{bmatrix}
 \end{bmatrix}.
 \]
 
-\Needspace{3cm}
+\Needspace{2cm}
 \paragraph*{L2 (P1) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,1,1,1,1)$}
 
 \[
@@ -769,7 +758,7 @@ Hence, the eigenvalues are $0,0,\pm1,\pm\sqrt{2}$.
 
 \vspace{0.3cm}
 
-\Needspace{3cm}
+\Needspace{2cm}
 \paragraph*{L4 (P2) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,1,1,0.99,1)$}
 
 \[
@@ -811,7 +800,7 @@ Hence, the eigenvalues are approximately $0,0,\pm1.0025,\pm1.4178$.
 
 \vspace{0.3cm}
 
-\Needspace{3cm}
+\Needspace{2cm}
 \paragraph*{L6 (P3) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,0.5,1,1,1)$}
 
 \[
@@ -853,7 +842,7 @@ Hence, the eigenvalues are $0,0,\pm1,\pm\sqrt{7}/2$.
 
 \vspace{0.3cm}
 
-\Needspace{3cm}
+\Needspace{2cm}
 \paragraph*{L8 (P4) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,1,1,0.5,1)$}
 
 \[
@@ -903,8 +892,6 @@ Initial conditions for case L7: $\pm0$ deg, $\pm1$ deg, $\pm10$ deg, $\pm90$ deg
 Initial conditions for case L8: $\pm1$ deg.
 \subsection*{Solution}
 % 在這裡撰寫解答。
-\input{simulation-ex7.tex}
-
 \par\medskip
 \textbf{Comparison.}
 For L7, the linearized and nonlinear responses agree closely for small
@@ -914,6 +901,9 @@ system remains at another equilibrium, which the model linearized about E1
 does not capture. For L8, even a small initial deviation grows due to
 instability, so the linear approximation loses accuracy as the motion
 moves away from E2.
+
+
+\input{simulation-ex7.tex}
 
 \clearpage
 \section*{Exercise 8}
