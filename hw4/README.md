@@ -1,8 +1,26 @@
 # Linear System — Homework 4
 
 - 題目來源：`linearsys_hw4.pdf`，共 3 頁、8 題；截止日為 Friday, Oct 23。
-- LaTeX 主檔：`linearSsytem_hw4.tex`。沿用先前作業格式，已填姓名、學號，所有 Solution 保留空白。
-- 原題僅引用參數組 P1–P4，未列出其數值；本檔忠實保留原題，未自行補入參數。
+- LaTeX 主檔：`linearSsytem_hw4.tex`。保留既有解答；第 7(b)、8 題附 MATLAB 圖表、實際模擬初值，文末附完整程式碼原文。未代寫手算推導與文字分析。
+- 原題僅引用參數組 P1–P4，且運動方程只寫一個 l。經使用者確認，模擬沿用 hw1 的 P1–P4 與兩個擺長 l1、l2；原題文字保持不變。
+
+## MATLAB 執行與工作區
+
+不需要另外建立 MATLAB Project。在 MATLAB 將 Current Folder 設為本資料夾，開啟 `hw4_ex7_ex8.m` 後按 Run，或輸入：
+
+```matlab
+hw4_ex7_ex8
+```
+
+- 主程式：`hw4_ex7_ex8.m`；同資料夾的模型函式：`cart_pendulum_model.m`。
+- 會產生 9 組模擬、27 張獨立圖表，存於 `figures/`（PNG 與可編輯的 FIG）；每張比較同一變數的線性與非線性結果。
+- `hw4_workspace.mat` 儲存參數 `P`、8 組模型 `models`、供自行核對的 `eigenvalues`、各組資料 `results` 與求解器設定。工作區可用 `load('hw4_workspace.mat')` 還原；本檔沒有把第 7(a) 的書面答案填入作業。
+- `results(k)` 包含 `t`、`A`、`xe`、`z0`、`x0`、`zLinear`、`xNonlinear`、`zNonlinear` 等資料。`z=x-xe` 為偏差狀態；E2 的實際角度須加回 π。
+- 第 7(b) 依確認使用相反方向角度偏移，L7 為 0、1、10、90、180 deg，L8 為 1 deg；初始小車位置與速度均為零。
+- 第 8(a) 選振盪模態；(b)、(c) 分別選負／正實特徵值模態。角度初值縮放至最大絕對值 1 deg；書面選取理由仍留白。衰減模態以純模態指數式計算，避免浮點誤差混入不穩定模態。
+- 圖表一律畫偏差，角度顯示為度數，不做 ±180° 折返。L7 的 180° 是精確設定，不自行加擾動。
+- `simulation-*.tex` 由 MATLAB 產生並由主檔引用；已產生的圖表保留後即可獨立編譯，不需每次重跑 MATLAB。
+- 問老師的疑點及目前設定整理於 `questions-for-professor.md`。
 
 ## XeLaTeX 編譯
 
@@ -17,6 +35,8 @@ if ($LASTEXITCODE -ne 0) { throw '第二次編譯失敗' }
 ```
 
 輸出為 `build/linearSsytem_hw4.pdf`。頁碼改變後需編譯兩次。
+
+本次已用本機 XeLaTeX 直接在此資料夾編譯兩次，最新完整 PDF 為主檔旁的 `linearSsytem_hw4.pdf`（26 頁）；未更新 build 內的同名 PDF。Codex 內建編譯器目前無法載入本文件的外部 `simulation-*.tex` 引用，故請以本機完整 PDF 為準。
 
 ## TeXstudio
 

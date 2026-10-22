@@ -5,10 +5,15 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{xeCJK}
 \setCJKmainfont{Microsoft JhengHei}
+\setCJKmonofont{Microsoft JhengHei}
 \usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
 \usepackage{fancyhdr}
 \usepackage{needspace}
+\usepackage{listings}
+\lstset{language=Matlab,basicstyle=\ttfamily\scriptsize,breaklines=true,
+  columns=fullflexible,keepspaces=true,showstringspaces=false,
+  frame=single,tabsize=4}
 \makeatletter
 \newcommand{\totalpages}{\@abspage@last}
 \makeatother
@@ -210,15 +215,15 @@ with linear combination
 
 \[
 \mathbf v_3 = \begin{bmatrix}
-	1 \\ j \\ -1 \\ j
+	1 \\ j \\ -1 \\ -j
 \end{bmatrix} = \mathbf u_3 + j \mathbf p_3 = \begin{bmatrix}
 1 \\ 0 \\ -1 \\ 0
 \end{bmatrix} + j \begin{bmatrix}
-0 \\ 1 \\ 0 \\ 1 
+0 \\ 1 \\ 0 \\ -1 
 \end{bmatrix} \Rightarrow \mathbf u_3 = \begin{bmatrix}
 1 \\ 0 \\ -1 \\ 0
 \end{bmatrix}, \quad \mathbf p_3 = \begin{bmatrix}
-0 \\ 1 \\ 0 \\ 1 
+0 \\ 1 \\ 0 \\ -1
 \end{bmatrix}
 \]
 \[
@@ -226,10 +231,20 @@ with linear combination
 \]
 
 \begin{align*}
-	x(t) &= e^{\lambda t} \math
+	x(0) &= \mathbf{u} + \mathbf p \\
+	x(t) &= x_u(t) + x_p(t) \\
+	&= e^{\alpha t} \bigg( \cos (\omega t)\cdot \mathbf u - \sin(\omega t) \cdot \mathbf p \bigg) + e^{\alpha t} \bigg( \sin(\omega t)\cdot \mathbf u + \cos(\omega t) \cdot \mathbf p \bigg)
 \end{align*}
-\vspace{3cm}
-
+with $\alpha = 0,\quad \omega = 1$
+\begin{align*}
+	x(t) &= \mathbf u \cdot (\cos t + \sin t) + \mathbf p \cdot (\cos t - \sin t) \\
+	&= \begin{bmatrix}
+		\cos t + \sin t \\
+		\cos t - \sin t \\
+		-\cos t - \sin t \\
+		-\cos t + \sin t
+	\end{bmatrix}
+\end{align*}
 \section*{Exercise 5}
 Consider a discrete-time LTI system described by
 \[x(k+1)=Ax(k).\]
@@ -242,7 +257,27 @@ are eigenvectors of $A$ corresponding to eigenvalues $-2$ and $3$, respectively.
 \[x(0)=\begin{pmatrix}1\\0\\1\\0\end{pmatrix}?\]
 \subsection*{Solution}
 % 在這裡撰寫解答。
-\vspace{3cm}
+
+\[
+x(0)  = {1\over 2} \left( \begin{bmatrix}
+	1 \\ -1 \\ 1 \\ -1 
+\end{bmatrix} + \begin{bmatrix}
+	1 \\ 1\\1\\1
+\end{bmatrix} \right)=\mathbf v= {1\over 2} (\mathbf v_1 + \mathbf v_2)
+\]
+
+\begin{align*}
+	x(k) &= A^k \left( \frac{1}{2}\mathbf{v}_1 + \frac{1}{2}\mathbf{v}_2 \right) \\
+	&= \frac{1}{2} A^k \mathbf{v}_1 + \frac{1}{2} A^k \mathbf{v}_2 \\
+	&= \frac{1}{2} \lambda_1^k \mathbf{v}_1 + \frac{1}{2} \lambda_2^k \mathbf{v}_2 \\
+	&= \frac{1}{2} (-2)^k \begin{bmatrix} 1 \\ -1 \\ 1 \\ -1 \end{bmatrix} + \frac{1}{2} (3)^k \begin{bmatrix} 1 \\ 1 \\ 1 \\ 1 \end{bmatrix} \\
+	&= \frac{1}{2} \begin{bmatrix}
+		(-2)^k + 3^k \\
+		-(-2)^k + 3^k \\
+		(-2)^k + 3^k \\
+		-(-2)^k + 3^k
+	\end{bmatrix}
+\end{align*}
 
 \textbf{(b)} Suppose $A$ is a real matrix and the vector
 \[\begin{pmatrix}1\\j\\-1\\-j\end{pmatrix}\]
@@ -250,7 +285,47 @@ is an eigenvector of $A$ corresponding to the eigenvalue $2+3j$. What is the res
 \[x(0)=\begin{pmatrix}1\\0\\-1\\0\end{pmatrix}?\]
 \subsection*{Solution}
 % 在這裡撰寫解答。
-\vspace{3cm}
+\[
+\mathbf v = \begin{bmatrix}
+	1 \\ 0 \\ -1 \\ 0
+\end{bmatrix} + j\begin{bmatrix}
+0 \\ 1 \\ 0 \\ -1
+\end{bmatrix} = \mathbf u + j\mathbf p
+\]
+\[
+x(0) = \begin{bmatrix}
+	1 \\ 0 \\ -1 \\ 0
+\end{bmatrix} = \operatorname{Re}(\mathbf v) = \mathbf u
+\]
+Let $r=\sqrt{13}$ and $\theta=\arctan(3/2)$, so that
+$2+3j=r(\cos\theta+j\sin\theta)$. Since $A$ is real,
+\begin{align*}
+	x(k) &= A^k x(0)
+    = A^k\operatorname{Re}(\mathbf v) \\
+    &= \operatorname{Re}(A^k\mathbf v)
+    = \operatorname{Re}\bigl((2+3j)^k\mathbf v\bigr) \\
+    &= r^k\operatorname{Re}\bigl[
+        (\cos(k\theta)+j\sin(k\theta))\mathbf v
+       \bigr] \\
+    &= r^k\operatorname{Re}\bigl[
+        (\cos(k\theta)+j\sin(k\theta))(\mathbf u+j\mathbf p)
+       \bigr] \\
+    &= r^k\bigl(\cos(k\theta)\mathbf u-\sin(k\theta)\mathbf p\bigr).
+\end{align*}
+
+ \begin{align*}
+ 	x(k) &= \sqrt{13}^k \left(  \cos (k \arctan(3/2)) \begin{bmatrix}
+ 		1 \\ 0 \\ -1 \\ 0 
+ 	\end{bmatrix} - \sin(k \arctan(3/2)) \begin{bmatrix}
+ 	0 \\ 1 \\ 0 \\ -1 
+ 	\end{bmatrix} \right) \\
+ 	&= \begin{bmatrix}
+ 		\sqrt{13}^k \cos (k \arctan (3/2)) \\
+ 		-\sqrt{13}^k \sin(k \arctan (3/2)) \\
+ 		-\sqrt{13}^k \cos (k \arctan(3/2)) \\
+ 		\sqrt{13}^k \sin (k \arctan(3/2))
+ 	\end{bmatrix}
+ \end{align*}
 
 \section*{Exercise 6}
 Consider a $5\times5$ matrix
@@ -260,16 +335,48 @@ where $v$ and $w$ are $5\times1$ matrices.
 \textbf{(a)} What is the rank of $A$?
 \subsection*{Solution}
 % 在這裡撰寫解答。
-\vspace{3cm}
+for $v, w \neq 0$
+ \[
+ A = vw^T = \begin{bmatrix}
+ 	w_1v & w_2v & w_3v & w_4v & w_5v
+ \end{bmatrix}
+ \]
+ Hence, 
+\[
+\operatorname{range}(A) = \operatorname{span}\{v\}
+\]
 
+thus, 
+\[
+\operatorname{rank} A = \operatorname{dim} (\operatorname{range} (A))= 1
+\]
+but if $v$ or $w$ is $0$, $\operatorname{rank}A=0$
+
+\vspace{1cm}
 \textbf{(b)} What is the nullity of $A$?
 \subsection*{Solution}
 % 在這裡撰寫解答。
-\vspace{3cm}
-
+if $v$ or $w \neq 0$ 
+\[
+\operatorname{null} A = \operatorname{dim} A - \operatorname{rank} A = 5 - 1 = 4
+\]
+else
+\[
+\operatorname{null}A = 5
+\]
 \textbf{(c)} What are the eigenvalues of $A$ if $w^Tv\neq0$?
 \subsection*{Solution}
 % 在這裡撰寫解答。
+\[
+A = vw^T \Rightarrow Av = v(w^Tv)_{1\times1} = (w^Tv)v = \lambda v
+\]
+
+Hence, the eigenvalue is $w^Tv$
+
+Since the nullity of $A$ is $4$, there are four linearly independent eigenvectors corresponding to eigenvalue $0$. Therefore, the eigenvalues are 
+\[
+w^Tv,\quad 0, \quad 0, \quad 0, \quad 0
+\]
 \vspace{3cm}
 
 \clearpage
@@ -307,6 +414,7 @@ $L8$ & $P4$ & $E2$
 % 在這裡撰寫解答。
 \vspace{3cm}
 
+\clearpage
 \textbf{(b)} Compare the behavior of the nonlinear system with that of the linearized system for cases L7 and L8. Illustrate your results using different initial condition with time histories of $y$, $\theta_1$, and $\theta_2$. Plesae write paragraph to analysis the comparison between nonlinear and linearized system.
 
 Initial conditions for case L7: $\pm0$ deg, $\pm1$ deg, $\pm10$ deg, $\pm90$ deg, $\pm180$ deg.
@@ -315,24 +423,40 @@ Initial conditions for case L8: $\pm1$ deg.
 \subsection*{Solution}
 % 在這裡撰寫解答。
 \vspace{3cm}
+\input{simulation-ex7.tex}
 
+\clearpage
 \section*{Exercise 8}
 This exercise refers to linearizations L7 and L8 of the two pendulum cart system.
 
 \textbf{(a)} For L7 choose an initial state for the linearized system which results in a periodic solution for the linearized system.
 \subsection*{Solution}
-% 在這裡撰寫解答。
+% 在這裡撰寫解答（推導）。
 \vspace{3cm}
+\input{simulation-ex8a_L7_periodic.tex}
 
+\clearpage
 \textbf{(b)} For L8 choose an initial state for the linearized system which results in a solution which asymptotically decays to zero for the linearized system.
 \subsection*{Solution}
-% 在這裡撰寫解答。
+% 在這裡撰寫解答（推導）。
 \vspace{3cm}
+\input{simulation-ex8b_L8_decay.tex}
 
+\clearpage
 \textbf{(c)} For L8 choose an initial state for the linearized system which results in a solution whose magnitude grows exponentially for the linearized system.
 \subsection*{Solution}
 % 在這裡撰寫解答。
 \vspace{3cm}
 
 In each case, simulate both the linearized system and the nonlinear system with initial conditions corresponding to your chosen initial state for the linearized system.
+\input{simulation-ex8c_L8_growth.tex}
+
+\clearpage
+\section*{MATLAB Source Code}
+The following listings reproduce the source files used to generate the figures.
+\subsection*{Main script}
+\lstinputlisting{hw4_ex7_ex8.m}
+\clearpage
+\subsection*{Model function}
+\lstinputlisting{cart_pendulum_model.m}
 \end{document}

@@ -1,0 +1,15 @@
+\clearpage
+\subsection*{MATLAB time histories}
+Parameters P1--P4 follow Homework 1. The two pendulum lengths are $l_1$ and $l_2$; for P4, $l_1=1$, $l_2=0.5$.
+
+State order: $x=[y,\theta_1,\theta_2,\dot y,\dot\theta_1,\dot\theta_2]^T$. Both models start from the same physical state $x(0)=x^e+z(0)$, with $u=0$. Plots show deviations $z=x-x^e$; angles are in degrees and are not wrapped.
+
+For Exercise 7(b), $z(0)=[0,-\alpha,+\alpha,0,0,0]^T$ (angular entries converted from degrees to radians). L7 uses $\alpha=0,1,10,90,180$ deg and L8 uses $\alpha=1$ deg. L7 is simulated for 30 s and L8 for 5 s.
+
+Nonlinear simulation: \texttt{ode45}, relative tolerance $10^{-10}$, absolute tolerance $10^{-12}$, maximum step 0.02 s. Linear responses use the matrix exponential.
+\input{simulation-ex7_L7_000deg.tex}
+\input{simulation-ex7_L7_001deg.tex}
+\input{simulation-ex7_L7_010deg.tex}
+\input{simulation-ex7_L7_090deg.tex}
+\input{simulation-ex7_L7_180deg.tex}
+\input{simulation-ex7_L8_001deg.tex}
