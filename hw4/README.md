@@ -9,7 +9,8 @@
 不需要另外建立 MATLAB Project。在 MATLAB 將 Current Folder 設為本資料夾，開啟 `hw4_ex7_ex8.m` 後按 Run，或輸入：
 
 ```matlab
-hw4_ex7_ex8
+hw4_ex7_ex8(7) % 只重新產生第 7 題；不修改第 8 題輸出。
+% hw4_ex7_ex8 % 同時產生第 7、8 題。
 ```
 
 - 主程式：`hw4_ex7_ex8.m`；同資料夾的模型函式：`cart_pendulum_model.m`。
@@ -41,3 +42,5 @@ if ($LASTEXITCODE -ne 0) { throw '第二次編譯失敗' }
 ## TeXstudio
 
 開啟本資料夾的 `linearSsytem_hw4.tex`，確認預設編譯器為 XeLaTeX，按 F5 編譯並預覽。若未設定輸出目錄，PDF 會產生於主檔旁的 `linearSsytem_hw4.pdf`，而非 `build/linearSsytem_hw4.pdf`。
+
+第 7(b) 題依 L7 的 0、±1、±10、±90、±180 度及 L8 的 ±1 度分組，每組先呈現三張獨立比較圖，再附對應程式碼；尚未撰寫比較分析段落。± 表示兩擺分別為 -alpha、+alpha，其餘初始偏移與初速為零。

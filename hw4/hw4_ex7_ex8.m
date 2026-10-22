@@ -1,4 +1,8 @@
-clear; clc; close all;
+function hw4_ex7_ex8(exercise)
+% Use hw4_ex7_ex8(7) to regenerate Exercise 7 only.
+if nargin < 1, exercise = 0; end
+assert(ismember(exercise, [0 7]), 'Use 0 (all) or 7 (Exercise 7 only).');
+clc;
 % Homework 4, Exercises 7(b) and 8: nonlinear/linear comparisons.
 % Run this script, with cart_pendulum_model.m in the same folder.
 rootDir = fileparts(mfilename('fullpath'));
@@ -44,6 +48,7 @@ results(end+1) = simulate_case(models{8}, z0, 5, ...
     'ex7_L8_001deg', options);
 
 %% Exercise 8: select modes numerically, leaving written derivations blank.
+if exercise ~= 7
 % 8(a): real part of an oscillatory mode, scaled to 1 degree peak angle.
 [V7, D7] = eig(models{7}.A);
 lambda7 = diag(D7);
@@ -82,6 +87,8 @@ for signChoice = [-1 1]
     r.mode = lambda8(j); results(end+1) = r;
 end
 
+end
+
 %% Export separate plots, report fragments, and a reloadable workspace.
 for k = 1:numel(results)
     export_case(results(k), outputDir, rootDir);
@@ -107,10 +114,17 @@ for k = 1:6
     fprintf(fid, '\\input{simulation-%s.tex}\n', results(k).id);
 end
 fclose(fid);
-save(fullfile(rootDir, 'hw4_workspace.mat'), ...
+if exercise == 7
+    workspaceFile = fullfile('build', 'hw4_ex7_workspace.mat');
+    if ~exist(fullfile(rootDir, 'build'), 'dir'), mkdir(fullfile(rootDir, 'build')); end
+else
+    workspaceFile = 'hw4_workspace.mat';
+end
+save(fullfile(rootDir, workspaceFile), ...
     'P', 'models', 'eigenvalues', 'results', 'options');
 fprintf('Finished: %d cases, %d separate plots.\n', numel(results), 3*numel(results));
-fprintf('Workspace saved to %s\n', fullfile(rootDir, 'hw4_workspace.mat'));
+fprintf('Workspace saved to %s\n', fullfile(rootDir, workspaceFile));
+end
 
 function z = scale_angles(v, degrees)
 z = v*(deg2rad(degrees)/max(abs(v(2:3))));
@@ -142,7 +156,19 @@ labels = {'\Delta y (m)', '\Delta\theta_1 (deg)', '\Delta\theta_2 (deg)'};
 captionNames = {'$\Delta y$', '$\Delta\theta_1$', '$\Delta\theta_2$'};
 fid = fopen(fullfile(rootDir, ['simulation-' r.id '.tex']), 'w');
 assert(fid ~= -1);
-fprintf(fid, '\\clearpage\n\\subsection*{\\texttt{%s}}\n', strrep(r.id, '_', '\_'));
+if startsWith(r.id, 'ex7')
+    tokens = regexp(r.id, 'ex7_L(\d+)_(\d+)deg', 'tokens', 'once');
+    caseNumber = str2double(tokens{1});
+    alpha = str2double(tokens{2});
+    if alpha == 0
+        angleTitle = '0';
+    else
+        angleTitle = sprintf('\\pm%d', alpha);
+    end
+    fprintf(fid, '\\clearpage\n\\subsubsection*{L%d: $%s^\\circ$}\n', caseNumber, angleTitle);
+else
+    fprintf(fid, '\\clearpage\n\\subsection*{\\texttt{%s}}\n', strrep(r.id, '_', '\_'));
+end
 fprintf(fid, 'Initial deviation $z(0)$ (radians for angles, SI units otherwise):\n');
 fprintf(fid, '\\begin{center}\\scriptsize\\texttt{[');
 fprintf(fid, '%.7g, ', r.z0(1:5)); fprintf(fid, '%.7g]}\\end{center}\n', r.z0(6));
@@ -172,6 +198,20 @@ for j = 1:3
     fprintf(fid, '\\begin{figure}[!ht]\n\\centering\n');
     fprintf(fid, '\\includegraphics[width=0.94\\linewidth]{figures/%s_%s.png}\n', r.id, names{j});
     fprintf(fid, '\\caption{%s: nonlinear and linearized time histories.}\n\\end{figure}\n', captionNames{j});
+end
+if startsWith(r.id, 'ex7')
+    fprintf(fid, '\\clearpage\n\\textbf{MATLAB code for L%d, $%s^\\circ$:}\n', caseNumber, angleTitle);
+    fprintf(fid, ['The following case-specific block uses the common local functions ' ...
+        '\\texttt{simulate\\_case} and \\texttt{export\\_case} listed in the source appendix.\n']);
+    fprintf(fid, '\\begin{lstlisting}\n');
+    fprintf(fid, 'p = [2 1 1 1 0.5 1]; %% [m0 m1 m2 l1 l2 g]\n');
+    fprintf(fid, 'model = cart_pendulum_model(p, %d);\n', 1 + (caseNumber == 8));
+    fprintf(fid, 'alpha = %d; %% degrees\n', alpha);
+    fprintf(fid, 'z0 = [0; -deg2rad(alpha); deg2rad(alpha); 0; 0; 0];\n');
+    fprintf(fid, 'options = odeset(''RelTol'',1e-10,''AbsTol'',1e-12,''MaxStep'',0.02);\n');
+    fprintf(fid, 'r = simulate_case(model, z0, %g, ''%s'', options);\n', r.t(end), r.id);
+    fprintf(fid, 'export_case(r, outputDir, rootDir);\n');
+    fprintf(fid, '\\end{lstlisting}\n');
 end
 fclose(fid);
 end
