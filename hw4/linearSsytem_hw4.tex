@@ -905,31 +905,86 @@ Initial conditions for case L8: $\pm1$ deg.
 % 在這裡撰寫解答。
 \input{simulation-ex7.tex}
 
+\par\medskip
+\textbf{Comparison.}
+For L7, the linearized and nonlinear responses agree closely for small
+angular deviations, while larger deviations produce greater differences
+because higher-order terms become important. At $180^\circ$, the nonlinear
+system remains at another equilibrium, which the model linearized about E1
+does not capture. For L8, even a small initial deviation grows due to
+instability, so the linear approximation loses accuracy as the motion
+moves away from E2.
+
 \clearpage
 \section*{Exercise 8}
 This exercise refers to linearizations L7 and L8 of the two pendulum cart system.
 
 \textbf{(a)} For L7 choose an initial state for the linearized system which results in a periodic solution for the linearized system.
 \subsection*{Solution}
-% 在這裡撰寫解答（推導）。
-\vspace{3cm}
-%\input{simulation-ex8a_L7_periodic.tex}
+Following the eigenvector method in the class notes, let
+\[
+\omega=\sqrt{\frac{9-\sqrt{17}}{4}}\approx1.1042,\qquad
+r=2\omega^2-3,\qquad a=\frac{1+r}{2\omega^2},\qquad c=\frac{\pi}{180}.
+\]
+The factor $c$ sets the maximum initial angular deviation to $1^\circ$.
+For L7, choose the eigenvalue $\lambda=j\omega$ and its eigenvector
+\[
+v=\begin{bmatrix}a&1&r&j\omega a&j\omega&j\omega r\end{bmatrix}^{T},
+\qquad A_{L7}v=j\omega v.
+\]
+Choose $z(0)=c\operatorname{Re}(v)=c[a,1,r,0,0,0]^T$. Since $A_{L7}$ is real,
+\[
+z(t)=c\operatorname{Re}(e^{j\omega t}v)
+=c\begin{bmatrix}
+a\cos\omega t\\\cos\omega t\\r\cos\omega t\\
+-a\omega\sin\omega t\\-\omega\sin\omega t\\-r\omega\sin\omega t
+\end{bmatrix}.
+\]
+Hence, the solution is periodic with $T=2\pi/\omega\approx5.6903$ s.
+The nonlinear simulation uses $x(0)=x^e+z(0)$ with $x^e=0$.
+\input{simulation-ex8a_L7_periodic.tex}
+
 
 \clearpage
 \textbf{(b)} For L8 choose an initial state for the linearized system which results in a solution which asymptotically decays to zero for the linearized system.
 \subsection*{Solution}
-% 在這裡撰寫解答（推導）。
-\vspace{3cm}
-%\input{simulation-ex8b_L8_decay.tex}
+For L8, choose the negative eigenvalue $\lambda_-=-\omega$ and
+\[
+v_-=\begin{bmatrix}-a&1&r&\omega a&-\omega&-\omega r\end{bmatrix}^{T},
+\qquad A_{L8}v_-=-\omega v_-.
+\]
+Choose $z(0)=cv_-$. Then
+\[
+z(t)=ce^{-\omega t}v_-\longrightarrow0\qquad(t\to\infty).
+\]
+Thus the linearized state decays asymptotically to zero.
+For the nonlinear model, use $x(0)=x^e+cv_-$, where
+$x^e=[0,\pi,\pi,0,0,0]^T$.
+The linear response below is evaluated as a single eigenmode to avoid
+numerical contamination by unstable modes. The nonlinear response need not
+remain on this linear stable eigendirection.
+\input{simulation-ex8b_L8_decay.tex}
+
 
 \clearpage
 \textbf{(c)} For L8 choose an initial state for the linearized system which results in a solution whose magnitude grows exponentially for the linearized system.
 \subsection*{Solution}
-% 在這裡撰寫解答。
-\vspace{3cm}
+For L8, choose the positive eigenvalue $\lambda_+=\omega$ and
+\[
+v_+=\begin{bmatrix}-a&1&r&-\omega a&\omega&\omega r\end{bmatrix}^{T},
+\qquad A_{L8}v_+=\omega v_+.
+\]
+Choose $z(0)=cv_+$. Then
+\[
+z(t)=ce^{\omega t}v_+,
+\]
+whose magnitude grows exponentially. The nonlinear model starts from
+$x(0)=x^e+cv_+$ with $x^e=[0,\pi,\pi,0,0,0]^T$.
+\input{simulation-ex8c_L8_growth.tex}
+
 
 In each case, simulate both the linearized system and the nonlinear system with initial conditions corresponding to your chosen initial state for the linearized system.
-%\input{simulation-ex8c_L8_growth.tex}
+
 
 \clearpage
 \section*{MATLAB Source Code}

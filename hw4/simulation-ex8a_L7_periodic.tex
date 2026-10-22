@@ -1,5 +1,5 @@
-\clearpage
-\subsection*{\texttt{ex8a\_L7\_periodic}}
+\par\medskip
+\textbf{Comparison plots.}
 Initial deviation $z(0)$ (radians for angles, SI units otherwise):
 \begin{center}\scriptsize\texttt{[0.003138205, 0.01745329, -0.009800946, -1.197667e-19, 7.378286e-18, -2.67647e-18]}\end{center}
 $x^e=[0,0,0,0,0,0]^T$, $x(0)=x^e+z(0)$.
@@ -19,3 +19,18 @@ The initial state is selected numerically from an eigenmode; see the source code
 \includegraphics[width=0.94\linewidth]{figures/ex8a_L7_periodic_theta2.png}
 \caption{$\Delta\theta_2$: nonlinear and linearized time histories.}
 \end{figure}
+\Needspace{5cm}
+\textbf{MATLAB code:}
+\begin{lstlisting}
+p = [2 1 1 1 0.5 1];
+model = cart_pendulum_model(p, 1);
+[V,D] = eig(model.A); lambda = diag(D);
+idx = find(imag(lambda)>1e-8);
+[~,j] = min(imag(lambda(idx))); j=idx(j);
+v=V(:,j); [~,k]=max(abs(v(1:3)));
+v=v*exp(-1i*angle(v(k)));
+z0=scale_angles(real(v),1);
+T=2*pi/imag(lambda(j));
+r=simulate_case(model,z0,4*T,'ex8a_L7_periodic',options);
+export_case(r,outputDir,rootDir);
+\end{lstlisting}

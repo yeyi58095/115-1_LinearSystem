@@ -1,7 +1,7 @@
 function hw4_ex7_ex8(exercise)
 % Use hw4_ex7_ex8(7) to regenerate Exercise 7 only.
 if nargin < 1, exercise = 0; end
-assert(ismember(exercise, [0 7]), 'Use 0 (all) or 7 (Exercise 7 only).');
+assert(ismember(exercise, [0 7 8]), 'Use 0 (all), 7, or 8.');
 clc;
 % Homework 4, Exercises 7(b) and 8: nonlinear/linear comparisons.
 % Run this script, with cart_pendulum_model.m in the same folder.
@@ -37,6 +37,7 @@ results = struct('id', {}, 'p', {}, 'A', {}, 'xe', {}, 'z0', {}, ...
     'zNonlinear', {}, 'mode', {});
 
 %% Exercise 7(b): opposite angular deviations from the equilibrium.
+if exercise ~= 8
 angles = [0 1 10 90 180];
 for alpha = angles
     z0 = [0; deg2rad(-alpha); deg2rad(alpha); 0; 0; 0];
@@ -47,7 +48,9 @@ z0 = [0; deg2rad(-1); deg2rad(1); 0; 0; 0];
 results(end+1) = simulate_case(models{8}, z0, 5, ...
     'ex7_L8_001deg', options);
 
-%% Exercise 8: select modes numerically, leaving written derivations blank.
+end
+
+%% Exercise 8: select eigenmodes as in the class notes.
 if exercise ~= 7
 % 8(a): real part of an oscillatory mode, scaled to 1 degree peak angle.
 [V7, D7] = eig(models{7}.A);
@@ -93,6 +96,7 @@ end
 for k = 1:numel(results)
     export_case(results(k), outputDir, rootDir);
 end
+if exercise ~= 8
 fid = fopen(fullfile(rootDir, 'simulation-ex7.tex'), 'w');
 assert(fid ~= -1);
 fprintf(fid, '\\subsection*{MATLAB time histories}\n');
@@ -114,8 +118,12 @@ for k = 1:6
     fprintf(fid, '\\input{simulation-%s.tex}\n', results(k).id);
 end
 fclose(fid);
+end
 if exercise == 7
     workspaceFile = fullfile('build', 'hw4_ex7_workspace.mat');
+    if ~exist(fullfile(rootDir, 'build'), 'dir'), mkdir(fullfile(rootDir, 'build')); end
+elseif exercise == 8
+    workspaceFile = fullfile('build', 'hw4_ex8_workspace.mat');
     if ~exist(fullfile(rootDir, 'build'), 'dir'), mkdir(fullfile(rootDir, 'build')); end
 else
     workspaceFile = 'hw4_workspace.mat';
@@ -167,7 +175,7 @@ if startsWith(r.id, 'ex7')
     end
     fprintf(fid, '\\clearpage\n\\subsubsection*{L%d: $%s^\\circ$}\n', caseNumber, angleTitle);
 else
-    fprintf(fid, '\\clearpage\n\\subsection*{\\texttt{%s}}\n', strrep(r.id, '_', '\_'));
+    fprintf(fid, '\\par\\medskip\n\\textbf{Comparison plots.}\n');
 end
 fprintf(fid, 'Initial deviation $z(0)$ (radians for angles, SI units otherwise):\n');
 fprintf(fid, '\\begin{center}\\scriptsize\\texttt{[');
@@ -212,6 +220,25 @@ if startsWith(r.id, 'ex7')
     fprintf(fid, 'r = simulate_case(model, z0, %g, ''%s'', options);\n', r.t(end), r.id);
     fprintf(fid, 'export_case(r, outputDir, rootDir);\n');
     fprintf(fid, '\\end{lstlisting}\n');
+end
+if startsWith(r.id, 'ex8')
+    fprintf(fid, '\\Needspace{5cm}\n\\textbf{MATLAB code:}\n\\begin{lstlisting}\n');
+    fprintf(fid, 'p = [2 1 1 1 0.5 1];\n');
+    isPeriodic = startsWith(r.id, 'ex8a');
+    fprintf(fid, 'model = cart_pendulum_model(p, %d);\n', 2-isPeriodic);
+    fprintf(fid, '[V,D] = eig(model.A); lambda = diag(D);\n');
+    if isPeriodic
+        fprintf(fid, 'idx = find(imag(lambda)>1e-8);\n[~,j] = min(imag(lambda(idx))); j=idx(j);\n');
+        fprintf(fid, 'v=V(:,j); [~,k]=max(abs(v(1:3)));\nv=v*exp(-1i*angle(v(k)));\nz0=scale_angles(real(v),1);\n');
+        fprintf(fid, 'T=2*pi/imag(lambda(j));\nr=simulate_case(model,z0,4*T,''%s'',options);\n', r.id);
+    else
+        signChoice = 1; if startsWith(r.id, 'ex8b'), signChoice = -1; end
+        fprintf(fid, 'idx=find(%d*real(lambda)>1e-8 & abs(imag(lambda))<1e-8);\n', signChoice);
+        fprintf(fid, '[~,j]=min(abs(real(lambda(idx)))); j=idx(j);\n');
+        fprintf(fid, 'v=real(V(:,j)); [~,k]=max(abs(v(2:3))); k=k+1;\nif v(k)<0, v=-v; end\nz0=scale_angles(v,1);\n');
+        fprintf(fid, 'r=simulate_case(model,z0,%g,''%s'',options,real(lambda(j)));\n', r.t(end), r.id);
+    end
+    fprintf(fid, 'export_case(r,outputDir,rootDir);\n\\end{lstlisting}\n');
 end
 fclose(fid);
 end
