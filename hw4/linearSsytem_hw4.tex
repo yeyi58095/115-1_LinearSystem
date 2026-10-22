@@ -729,22 +729,170 @@ B_{E2}=\begin{bmatrix}
 
 \Needspace{5cm}
 \paragraph*{L2 (P1) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,1,1,1,1)$}
-% 在這裡撰寫解答。
+
+\[
+A_{L2}=\begin{bmatrix}
+0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 \\
+0 & -\frac{1}{2} & -\frac{1}{2} & 0 & 0 & 0 \\
+0 & \frac{3}{2} & \frac{1}{2} & 0 & 0 & 0 \\
+0 & \frac{1}{2} & \frac{3}{2} & 0 & 0 & 0
+\end{bmatrix}.
+\]
+
+\begin{lstlisting}
+A = [
+0 0 0 1 0 0;
+0 0 0 0 1 0;
+0 0 0 0 0 1;
+0 -1/2 -1/2 0 0 0;
+0 3/2 1/2 0 0 0;
+0 1/2 3/2 0 0 0
+];
+format short
+lambda = eig(A)
+\end{lstlisting}
+
+\textbf{MATLAB output:}
+\begin{lstlisting}[language={}]
+lambda =
+
+         0
+         0
+   -1.4142
+   -1.0000
+    1.4142
+    1.0000
+\end{lstlisting}
+Hence, the eigenvalues are $0,0,\pm1,\pm\sqrt{2}$.
+
 \vspace{3cm}
 
 \Needspace{5cm}
 \paragraph*{L4 (P2) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,1,1,0.99,1)$}
-% 在這裡撰寫解答。
+
+\[
+A_{L4}=\begin{bmatrix}
+0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 \\
+0 & -\frac{1}{2} & -\frac{1}{2} & 0 & 0 & 0 \\
+0 & \frac{3}{2} & \frac{1}{2} & 0 & 0 & 0 \\
+0 & \frac{50}{99} & \frac{50}{33} & 0 & 0 & 0
+\end{bmatrix}.
+\]
+
+\begin{lstlisting}
+A = [
+0 0 0 1 0 0;
+0 0 0 0 1 0;
+0 0 0 0 0 1;
+0 -1/2 -1/2 0 0 0;
+0 3/2 1/2 0 0 0;
+0 50/99 50/33 0 0 0
+];
+format short
+lambda = eig(A)
+\end{lstlisting}
+
+\textbf{MATLAB output:}
+\begin{lstlisting}[language={}]
+lambda =
+
+         0
+         0
+    1.4178
+    1.0025
+   -1.4178
+   -1.0025
+\end{lstlisting}
+Hence, the eigenvalues are approximately $0,0,\pm1.0025,\pm1.4178$.
+
 \vspace{3cm}
 
 \Needspace{5cm}
 \paragraph*{L6 (P3) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,0.5,1,1,1)$}
-% 在這裡撰寫解答。
+
+\[
+A_{L6}=\begin{bmatrix}
+0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 \\
+0 & -\frac{1}{2} & -\frac{1}{4} & 0 & 0 & 0 \\
+0 & \frac{3}{2} & \frac{1}{4} & 0 & 0 & 0 \\
+0 & \frac{1}{2} & \frac{5}{4} & 0 & 0 & 0
+\end{bmatrix}.
+\]
+
+\begin{lstlisting}
+A = [
+0 0 0 1 0 0;
+0 0 0 0 1 0;
+0 0 0 0 0 1;
+0 -1/2 -1/4 0 0 0;
+0 3/2 1/4 0 0 0;
+0 1/2 5/4 0 0 0
+];
+format short
+lambda = eig(A)
+\end{lstlisting}
+
+\textbf{MATLAB output:}
+\begin{lstlisting}[language={}]
+lambda =
+
+         0
+         0
+   -1.3229
+   -1.0000
+    1.0000
+    1.3229
+\end{lstlisting}
+Hence, the eigenvalues are $0,0,\pm1,\pm\sqrt{7}/2$.
+
 \vspace{3cm}
 
 \Needspace{5cm}
 \paragraph*{L8 (P4) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,1,1,0.5,1)$}
-% 在這裡撰寫解答。
+
+\[
+A_{L8}=\begin{bmatrix}
+0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 \\
+0 & -\frac{1}{2} & -\frac{1}{2} & 0 & 0 & 0 \\
+0 & \frac{3}{2} & \frac{1}{2} & 0 & 0 & 0 \\
+0 & 1 & 3 & 0 & 0 & 0
+\end{bmatrix}.
+\]
+
+\begin{lstlisting}
+A = [
+0 0 0 1 0 0;
+0 0 0 0 1 0;
+0 0 0 0 0 1;
+0 -1/2 -1/2 0 0 0;
+0 3/2 1/2 0 0 0;
+0 1 3 0 0 0
+];
+format short
+lambda = eig(A)
+\end{lstlisting}
+
+\textbf{MATLAB output:}
+\begin{lstlisting}[language={}]
+lambda =
+
+         0
+         0
+    1.8113
+    1.1042
+   -1.8113
+   -1.1042
+\end{lstlisting}
+Hence, the eigenvalues are approximately $0,0,\pm1.1042,\pm1.8113$.
+
 \vspace{3cm}
 
 \clearpage
