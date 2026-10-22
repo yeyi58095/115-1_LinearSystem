@@ -385,10 +385,10 @@ w^Tv,\quad 0, \quad 0, \quad 0, \quad 0
 \section*{Exercise 7}
 Recall the 2 pendulum cart system.
 \begin{align*}
-&(m_0+m_1+m_2)\ddot{y}-m_1l\cos\theta_1\,\ddot{\theta}_1-m_2l\cos\theta_2\,\ddot{\theta}_2\\
-&\qquad{}+m_1l\sin\theta_1\,\dot{\theta}_1^2+m_2l\sin\theta_2\,\dot{\theta}_2^2=u\\
-&-m_1l\cos\theta_1\,\ddot{y}+m_1l^2\ddot{\theta}_1+m_1lg\sin\theta_1=0\\
-&-m_2l\cos\theta_2\,\ddot{y}+m_2l^2\ddot{\theta}_2+m_2lg\sin\theta_2=0
+&(m_0+m_1+m_2)\ddot{y}-m_1l_1\cos\theta_1\,\ddot{\theta}_1-m_2l_2\cos\theta_2\,\ddot{\theta}_2\\
+&\qquad{}+m_1l_1\sin\theta_1\,\dot{\theta}_1^2+m_2l_2\sin\theta_2\,\dot{\theta}_2^2=u\\
+&-m_1l_1\cos\theta_1\,\ddot{y}+m_1l_1^2\ddot{\theta}_1+m_1l_1g\sin\theta_1=0\\
+&-m_2l_2\cos\theta_2\,\ddot{y}+m_2l_2^2\ddot{\theta}_2+m_2l_2g\sin\theta_2=0
 \end{align*}
 Consider the equilibrium configurations defined by $u^e=0$ and
 \[E1:\qquad(y^e,\theta_1^e,\theta_2^e)=(0,0,0)\]
@@ -414,7 +414,7 @@ $L8$ & $P4$ & $E2$
 % 在這裡撰寫解答。
 
 \subsubsection*{E1: $(y^e,\theta_1^e,\theta_2^e)=(0,0,0)$}
-\textbf{Construction of the state-space model (equal lengths $l_1=l_2=l$).}
+\textbf{Construction of the state-space model.}
 Near the equilibrium
 \[
 \sin \theta_i \approx \theta_i, \quad \cos\theta_i \approx 1
@@ -425,9 +425,9 @@ The terms $\sin\theta_i\,\dot\theta_i^2$ are neglected because they are higher-o
 The linearized equations become
 \[
 \begin{cases}
-	(m_0 + m_1 + m_2)\ddot y - m_1l\ddot \theta_1 - m_2l\ddot \theta_2 &= u \\
-	-m_1l\ddot y + m_1l^2\ddot \theta_1 + m_1lg\theta_1&= 0 \\
-	-m_2l\ddot y + m_2l^2\ddot \theta_2  +m_2lg\theta_2&= 0
+	(m_0 + m_1 + m_2)\ddot y - m_1l_1\ddot \theta_1 - m_2l_2\ddot \theta_2 &= u \\
+	-m_1l_1\ddot y + m_1l_1^2\ddot \theta_1 + m_1l_1g\theta_1&= 0 \\
+	-m_2l_2\ddot y + m_2l_2^2\ddot \theta_2  +m_2l_2g\theta_2&= 0
 \end{cases}
 \]
 
@@ -445,7 +445,7 @@ x_4 \\ x_5 \\ x_6 \\ \ddot y \\ \ddot \theta_1 \\ \ddot \theta_2
 \]
 obtained with rewritten equation
 \[
-\ddot \theta_1 = { \ddot y - g\theta_1  \over l }, \text{ and } \ddot \theta_2 = { \ddot y - g\theta_2 \over l} 
+\ddot \theta_1 = { \ddot y - g\theta_1  \over l_1 }, \text{ and } \ddot \theta_2 = { \ddot y - g\theta_2 \over l_2}
 \]
 Substituting into the first equation gives
 \begin{align*}
@@ -459,11 +459,11 @@ Substituting into the first equation gives
 Hence,
 \begin{align*}
 \ddot\theta_1
- &=\frac{\ddot y-g\theta_1}{l}
- =\frac{-(m_0+m_1)g\theta_1-m_2g\theta_2+u}{m_0l},\\
+ &=\frac{\ddot y-g\theta_1}{l_1}
+ =\frac{-(m_0+m_1)g\theta_1-m_2g\theta_2+u}{m_0l_1},\\
 \ddot\theta_2
- &=\frac{\ddot y-g\theta_2}{l}
- =\frac{-m_1g\theta_1-(m_0+m_2)g\theta_2+u}{m_0l}.
+ &=\frac{\ddot y-g\theta_2}{l_2}
+ =\frac{-m_1g\theta_1-(m_0+m_2)g\theta_2+u}{m_0l_2}.
 \end{align*}
 
 \begin{align*}
@@ -472,28 +472,23 @@ Hence,
 	\end{bmatrix} = \begin{bmatrix}
 	x_4 \\ x_5 \\ x_6 \\
 	{-m_1g\over m_0}x_2 - {m_2g\over m_0}x_3 + {1\over m_0}u \\
-	{-(m_0 + m_1)g \over m_0l}x_2- {m_2g \over m_0l}x_3 + {1\over m_0l}u \\
-	{-m_1g\over m_0l}x_2 - {(m_0 + m_2)g\over m_0l}x_3 + {1\over m_0l}u
+	{-(m_0 + m_1)g \over m_0l_1}x_2- {m_2g \over m_0l_1}x_3 + {1\over m_0l_1}u \\
+	{-m_1g\over m_0l_2}x_2 - {(m_0 + m_2)g\over m_0l_2}x_3 + {1\over m_0l_2}u
 	\end{bmatrix}  \\ 
 	&= \begin{bmatrix}
 		0 & 0 & 0 & 1 & 0 & 0 \\
 		0 & 0 & 0 & 0 & 1 & 0 \\
 		0 & 0 & 0 & 0 & 0 & 1 \\
 		0 & {-m_1g\over m_0} & {-m_2g\over m_0} & 0 & 0 & 0 \\
-		0 & {-(m_0 + m_1)g \over m_0l} & {-m_2g\over m_0l} & 0 & 0 &0\\
-		0 & {-m_1g\over m_0 l} & {-(m_0 + m_2)g\over m_0l} & 0 & 0 & 0 
+		0 & {-(m_0 + m_1)g \over m_0l_1} & {-m_2g\over m_0l_1} & 0 & 0 &0\\
+		0 & {-m_1g\over m_0 l_2} & {-(m_0 + m_2)g\over m_0l_2} & 0 & 0 & 0
 	\end{bmatrix} \begin{bmatrix}
 	x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \\ x_6
 	\end{bmatrix} + \begin{bmatrix}
-	0 \\ 0 \\ 0 \\ {1\over m_0} \\ {1\over m_0l} \\ {1\over m_0l}
+	0 \\ 0 \\ 0 \\ {1\over m_0} \\ {1\over m_0l_1} \\ {1\over m_0l_2}
 	\end{bmatrix}u \\
 	&= Ax + Bu
 \end{align*}
-
-For the parameter sets inherited from Homework 1, the lengths may differ.
-Use $l_1$ in the equation for $\ddot\theta_1$ and $l_2$ in the equation
-for $\ddot\theta_2$. Accordingly, replace $l$ by $l_1$ in row 5 of $A,B$
-and by $l_2$ in row 6; the other rows are unchanged.
 
 \Needspace{5cm}
 \paragraph*{L1 (P1) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,1,1,1,1)$}
