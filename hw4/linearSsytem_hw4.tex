@@ -413,7 +413,8 @@ $L8$ & $P4$ & $E2$
 \subsection*{Solution}
 % 在這裡撰寫解答。
 
-For equilibrium 1 that $ E1: (y^e,\quad \theta_1^e, \quad \theta_2^e ) = (0, \quad0, \quad0) $
+\subsubsection*{E1: $(y^e,\theta_1^e,\theta_2^e)=(0,0,0)$}
+\textbf{Construction of the state-space model (equal lengths $l_1=l_2=l$).}
 Near the equilibrium
 \[
 \sin \theta_i \approx \theta_i, \quad \cos\theta_i \approx 1
@@ -421,7 +422,7 @@ Near the equilibrium
 The terms $\sin\theta_i\,\dot\theta_i^2$ are neglected because they are higher-order terms in the perturbations.
 
 
-Then the original equation becames
+The linearized equations become
 \[
 \begin{cases}
 	(m_0 + m_1 + m_2)\ddot y - m_1l\ddot \theta_1 - m_2l\ddot \theta_2 &= u \\
@@ -446,19 +447,23 @@ obtained with rewritten equation
 \[
 \ddot \theta_1 = { \ddot y - g\theta_1  \over l }, \text{ and } \ddot \theta_2 = { \ddot y - g\theta_2 \over l} 
 \]
-then, go to the first equation to furthermore solve. 
+Substituting into the first equation gives
 \begin{align*}
-	(m_0 + m_1 + m_2)\ddot y - m_1l\ddot \theta_1 - m_2l\ddot \theta_2 &= 	(m_0 + m_1 + m_2)\ddot y - m_1l{ \ddot y - g\theta_1  \over l } - m_2l{ \ddot y - g\theta_2 \over l}  \\
-	&= (m_0 + m_1 + m_2)\ddot y - m_1{ \ddot y + m_1g\theta_1 } - m_2{ \ddot y + m_2g\theta_2} \\
-	&= m_0 \ddot y+ m_1g\theta_1 + m_2 g\theta_2 = u
+ u &= (m_0+m_1+m_2)\ddot y
+      -m_1(\ddot y-g\theta_1)-m_2(\ddot y-g\theta_2) \\
+   &=m_0\ddot y+m_1g\theta_1+m_2g\theta_2.
 \end{align*}
 \[
 \ddot y = { -m_1g\theta_1 - m_2g\theta_2 + u \over m_0} 
 \]
-Hence, 
+Hence,
 \begin{align*}
-	\ddot \theta_1 &=  {  { -m_1g\theta_1 - m_2g\theta_2 + u \over m_0} - g\theta_1  \over l } = {-m_0 g\theta_1 - m_1g\theta_1 - m_2g\theta_2 + u \over m_0l} = {-(m_0 + m_1)g\theta_1 - m_2g\theta_2 + u \over m_0l}  \\
-	\ddot \theta_2 &=   { { -m_1g\theta_1 - m_2g\theta_2 + u \over m_0}  - g\theta_2 \over l}  = { -m_0 g\theta_2 - m_1g\theta_1 - m_2g\theta_2  + u\over m_0l} = {  - m_1g\theta_1 - (m_0 + m_2)g\theta_2  + u\over m_0l}
+\ddot\theta_1
+ &=\frac{\ddot y-g\theta_1}{l}
+ =\frac{-(m_0+m_1)g\theta_1-m_2g\theta_2+u}{m_0l},\\
+\ddot\theta_2
+ &=\frac{\ddot y-g\theta_2}{l}
+ =\frac{-m_1g\theta_1-(m_0+m_2)g\theta_2+u}{m_0l}.
 \end{align*}
 
 \begin{align*}
@@ -484,6 +489,55 @@ Hence,
 	\end{bmatrix}u \\
 	&= Ax + Bu
 \end{align*}
+
+For the parameter sets inherited from Homework 1, the lengths may differ.
+Use $l_1$ in the equation for $\ddot\theta_1$ and $l_2$ in the equation
+for $\ddot\theta_2$. Accordingly, replace $l$ by $l_1$ in row 5 of $A,B$
+and by $l_2$ in row 6; the other rows are unchanged.
+
+\Needspace{5cm}
+\paragraph*{L1 (P1) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,1,1,1,1)$}
+% 在這裡撰寫解答。
+\vspace{3cm}
+
+\Needspace{5cm}
+\paragraph*{L3 (P2) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,1,1,0.99,1)$}
+% 在這裡撰寫解答。
+\vspace{3cm}
+
+\Needspace{5cm}
+\paragraph*{L5 (P3) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,0.5,1,1,1)$}
+% 在這裡撰寫解答。
+\vspace{3cm}
+
+\Needspace{5cm}
+\paragraph*{L7 (P4) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,1,1,0.5,1)$}
+% 在這裡撰寫解答。
+\vspace{3cm}
+
+\subsubsection*{E2: $(y^e,\theta_1^e,\theta_2^e)=(0,\pi,\pi)$}
+\textbf{Construction of the state-space model.}
+% 在這裡撰寫解答。
+\vspace{3cm}
+
+\Needspace{5cm}
+\paragraph*{L2 (P1) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,1,1,1,1)$}
+% 在這裡撰寫解答。
+\vspace{3cm}
+
+\Needspace{5cm}
+\paragraph*{L4 (P2) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,1,1,0.99,1)$}
+% 在這裡撰寫解答。
+\vspace{3cm}
+
+\Needspace{5cm}
+\paragraph*{L6 (P3) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,0.5,1,1,1)$}
+% 在這裡撰寫解答。
+\vspace{3cm}
+
+\Needspace{5cm}
+\paragraph*{L8 (P4) --- $(m_0,m_1,m_2,l_1,l_2,g)=(2,1,1,1,0.5,1)$}
+% 在這裡撰寫解答。
 \vspace{3cm}
 
 \clearpage
