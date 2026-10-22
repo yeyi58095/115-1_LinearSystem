@@ -95,7 +95,7 @@ for k = 1:numel(results)
 end
 fid = fopen(fullfile(rootDir, 'simulation-ex7.tex'), 'w');
 assert(fid ~= -1);
-fprintf(fid, '\\clearpage\n\\subsection*{MATLAB time histories}\n');
+fprintf(fid, '\\subsection*{MATLAB time histories}\n');
 fprintf(fid, ['Parameters P1--P4 follow Homework 1. ' ...
     'The two pendulum lengths are $l_1$ and $l_2$; for P4, ' ...
     '$l_1=1$, $l_2=0.5$.\n\n']);
@@ -200,7 +200,7 @@ for j = 1:3
     fprintf(fid, '\\caption{%s: nonlinear and linearized time histories.}\n\\end{figure}\n', captionNames{j});
 end
 if startsWith(r.id, 'ex7')
-    fprintf(fid, '\\clearpage\n\\textbf{MATLAB code for L%d, $%s^\\circ$:}\n', caseNumber, angleTitle);
+    fprintf(fid, '\n\\textbf{MATLAB code for L%d, $%s^\\circ$:}\n', caseNumber, angleTitle);
     fprintf(fid, ['The following case-specific block uses the common local functions ' ...
         '\\texttt{simulate\\_case} and \\texttt{export\\_case} listed in the source appendix.\n']);
     fprintf(fid, '\\begin{lstlisting}\n');
