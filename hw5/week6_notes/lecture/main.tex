@@ -1,0 +1,711 @@
+% !TeX program = xelatex
+% !TeX encoding = UTF-8
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,xeCJK,graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr,xcolor,array,booktabs}
+\setCJKmainfont{Microsoft JhengHei}
+\definecolor{accent}{HTML}{185A75}
+\makeatletter
+\newcommand{\totalpages}{\@abspage@last}
+\makeatother
+\pagestyle{fancy}\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\thepage/\totalpages}
+\fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}\fancyfoot[C]{\thepage/\totalpages}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\renewcommand{\arraystretch}{1.25}
+\raggedbottom
+\newcommand{\topic}[3]{\clearpage\section*{#1}\textcolor{accent}{\textbf{原講義 #2 頁｜這節要回答：#3}}\par}
+\newcommand{\key}[1]{\par\textcolor{accent}{\textbf{先記住：}}#1\par}
+\newcommand{\checkq}[1]{\par\textbf{停下來想：}#1\par}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\nul}{nullity}
+\title{Linear System --- Week 6\\[0.4em]\large 從觀念到計算的課堂筆記}
+\author{葉彥辰\quad P46154345}
+\date{}
+\begin{document}
+\maketitle
+\begin{center}\textcolor{accent}{依 Li-Yu Lin 老師第六週 class note 整理}\end{center}
+\textbf{閱讀目標}\quad 即使沒有聽到這週上課，也能理解公式為什麼出現、如何計算，以及結果代表的系統行為。
+
+本筆記唯一的課程內容來源是 \texttt{linearsys\_w6\_note.pdf}，共 48 頁。頁碼均指原 PDF 的實際頁次；第 1 頁是封面。內容以中文重新講解，保留英文術語。標為「補充」或「自編例」的內容是為了補足推導與練習，並非老師原文。本文件是補課筆記；第六週與第五次作業的編號不同，不影響本次範圍。
+
+\textbf{整週其實圍繞同一個問題}
+\[
+\boxed{\dot x(t)=Ax(t)+Bu(t),\qquad y(t)=Cx(t)+Du(t)}
+\]
+我們想知道：給定初始狀態與輸入，未來的狀態和輸出會如何變化？
+\begin{enumerate}
+\item 先研究 $A$ 的多項式，讓高次矩陣運算變簡單。
+\item 用 $e^{At}$ 描述沒有輸入時的演化。
+\item 用 Jordan form 處理不能對角化的矩陣。
+\item 用卷積累積輸入的影響，再得到輸出與轉移函數。
+\end{enumerate}
+\textbf{建議讀法}\quad 若矩陣運算已生疏，先讀第 0 節；接著依文末的三次補課安排閱讀。第 19 節提供公式地圖，第 20--21 節提供自我檢查與解析。每節末的提問可先自行回答，再查第 20 節。
+
+\textbf{記號}\quad $I$ 是適當大小的單位矩陣，$0$ 可代表零向量或零矩陣；$j=\sqrt{-1}$（與數學中的 $i$ 相同）。除非另註，$A,B,C,D$ 都是常數矩陣，討論的是連續時間 LTI 系統。
+
+\topic{0. 前置補充：特徵值與換座標怎麼算？}{3--6 的前置補充}{能不能自己找出 $T$？}
+本節是補課用的前置說明。矩陣乘向量是「每一列分別和向量做內積」，例如
+\[
+ \begin{bmatrix}3&-1\\-1&3\end{bmatrix}\begin{bmatrix}a\\b\end{bmatrix}
+ =\begin{bmatrix}3a-b\\-a+3b\end{bmatrix}.
+\]
+矩陣 $A$ 把向量轉成另一個向量；特徵向量是其中只被乘上一個純量的特殊方向：$Av=\lambda v$、$v\ne0$。
+
+\textbf{第一步：求特徵值}\quad $(A-\lambda I)v=0$ 要有非零解，必須有 $\det(\lambda I-A)=0$。二階矩陣的行列式是 $\det\begin{bmatrix}a&b\\c&d\end{bmatrix}=ad-bc$。對本週講義反覆使用的矩陣，
+\[
+ \det(sI-A)=\det\begin{bmatrix}s-3&1\\1&s-3\end{bmatrix}
+ =(s-3)^2-1=(s-2)(s-4).
+\]
+所以特徵值為 2 與 4。這裡先用 $s$ 寫多項式，再把它的根記成 $\lambda$。
+
+\textbf{第二步：求特徵向量}\quad 對 $\lambda=2$，解 $(A-2I)v=0$ 得 $v_1=v_2$，可選 $v=[1\;1]^T$。對 $\lambda=4$，得到 $v_1=-v_2$，可選 $[1\;-1]^T$。特徵向量的非零倍數都可以，零向量不可以。
+
+\textbf{第三步：用這些方向當新座標軸}\quad 令
+\[
+ T=\begin{bmatrix}1&1\\1&-1\end{bmatrix},\quad
+ \Lambda=\begin{bmatrix}2&0\\0&4\end{bmatrix},\quad x=Tz.
+\]
+兩欄線性獨立，$T$ 可逆，且 $AT=T\Lambda$，因此
+\[
+ \dot x=Ax\quad\Longrightarrow\quad
+ T\dot z=ATz=T\Lambda z\quad\Longrightarrow\quad\dot z=\Lambda z.
+\]
+原本耦合的兩條方程，變成 $\dot z_1=2z_1$、$\dot z_2=4z_2$。\textbf{換座標沒有改變系統，只是選擇較容易計算的描述方式。}若找不到足夠多獨立特徵向量，便需要後面的 Jordan form。
+
+\topic{1. 先看懂狀態與相平面}{2}{特徵值怎麼連到軌跡？}
+狀態 $x$ 是足以預測未來的一組變數。例如自由質點可選位置與速度：$x=[q\;\dot q]^T$。$\dot x=Ax$ 的意思是：\textbf{現在的狀態決定現在往哪個方向移動}。二維時，以 $x_1,x_2$ 為座標畫出的軌跡就是 state plane portrait；它不是「時間對位置」的圖。
+
+\textbf{必要前置觀念}\quad 若 $Av=\lambda v$ 且 $v\ne0$，$v$ 是 eigenvector，$\lambda$ 是 eigenvalue。沿著 $v$ 的初始狀態，之後會依 $e^{\lambda t}$ 演化：
+\[
+ x(0)=cv\quad\Longrightarrow\quad x(t)=ce^{\lambda t}v.
+\]
+因為微分後 $\dot x=c\lambda e^{\lambda t}v=Ax$。這是「特徵值控制時間行為」的第一個理由。
+
+對\textbf{實數二維矩陣}，常見情況如下（先看非零、非重根情況）：
+\begin{center}\small
+\begin{tabular}{p{0.34\linewidth}p{0.55\linewidth}}
+\toprule 特徵值 & 相平面行為\\\midrule
+兩個負實數 & stable node，軌跡往原點靠近\\
+兩個正實數 & unstable node，軌跡離開原點\\
+一正一負實數 & saddle，某些方向靠近、另一些離開\\
+$\alpha\pm j\omega$, $\omega\ne0$ & $\alpha<0$ 向內螺旋；$\alpha>0$ 向外螺旋\\
+$\pm j\omega$, $\omega\ne0$ & center，閉合軌跡，不會衰減至零\\\bottomrule
+\end{tabular}
+\end{center}
+對複數對 $\alpha\pm j\omega$，$e^{\alpha t}$ 決定包絡線，$\omega$ 決定振盪速度。特徵值能判斷類型，但\textbf{旋轉方向與軌跡形狀還要看 $A$}；不能只看正負 $j\omega$ 決定順時針或逆時針。
+
+\key{先問「變大、變小，還是振盪？」再計算詳細軌跡。重根與零特徵值需要 Jordan 結構，後面會補上。}
+\checkq{若特徵值為 $-1\pm 2j$，振盪幅度會如何改變？}
+
+\topic{2. 矩陣也可以代進多項式}{3--6}{什麼是 $p(A)$？}
+對純量多項式
+\[
+ p(s)=a_0+a_1s+\cdots+a_ms^m,
+\]
+定義
+\[
+\boxed{p(A)=a_0I+a_1A+\cdots+a_mA^m.}
+\]
+\textbf{常數項要乘 $I$。}例如 $p(s)=s^2-3s+2$，代入矩陣後是 $A^2-3A+2I$。$A^2$ 是矩陣乘法，並不是把每個元素各自平方。
+
+\textbf{為什麼換座標很有用？}\quad 若 $A=T\Lambda T^{-1}$，則
+\[
+ A^2=T\Lambda\underbrace{T^{-1}T}_{I}\Lambda T^{-1}=T\Lambda^2T^{-1}.
+\]
+同理 $A^k=T\Lambda^kT^{-1}$，因此
+\[
+\boxed{p(A)=Tp(\Lambda)T^{-1}.}
+\]
+當 $\Lambda=\diag(\lambda_1,\ldots,\lambda_n)$ 時，
+\[
+ p(\Lambda)=\diag\bigl(p(\lambda_1),\ldots,p(\lambda_n)\bigr).
+\]
+本來要做許多矩陣乘法，換座標後只要計算純量多項式。
+
+\textbf{講義例子（第 6 頁）}\quad
+$A=\begin{bmatrix}3&-1\\-1&3\end{bmatrix}$，可取
+\[
+ T=\begin{bmatrix}1&1\\1&-1\end{bmatrix},\quad
+ T^{-1}=\tfrac12T,\quad \Lambda=\diag(2,4).
+\]
+所以
+\[
+ p(A)=\frac12\begin{bmatrix}
+ p(2)+p(4)&p(2)-p(4)\\p(2)-p(4)&p(2)+p(4)
+ \end{bmatrix}.
+\]
+另外，若 $Av=\lambda v$，便有 $p(A)v=p(\lambda)v$。特徵向量保留，特徵值由 $\lambda$ 變成 $p(\lambda)$。
+\checkq{$p(s)=s+1$ 時，$p(A)$ 的常數項應該寫什麼？}
+
+\topic{3. Cayley--Hamilton：讓高次方降階}{7--9、11}{為什麼不用一直乘矩陣？}
+設 $A$ 是 $n\times n$ 矩陣，其 characteristic polynomial 為
+\[
+ p(s)=\det(sI-A)=s^n+a_{n-1}s^{n-1}+\cdots+a_1s+a_0.
+\]
+Cayley--Hamilton theorem 說：\textbf{矩陣滿足自己的特徵多項式}，即
+\[
+\boxed{p(A)=A^n+a_{n-1}A^{n-1}+\cdots+a_1A+a_0I=0.}
+\]
+右側是零矩陣。於是 $A^n$ 可以改寫成 $I,A,\ldots,A^{n-1}$ 的線性組合；再乘 $A$、再代回，就能降低任意更高次方。
+
+\textbf{自編例：逐步降階}\quad 若 $p(s)=s^2+3s+2$，則
+\begin{align*}
+ A^2&=-3A-2I,\\
+ A^3&=-3A^2-2A=7A+6I,\\
+ A^4&=7A^2+6A=-15A-14I.
+\end{align*}
+甚至不需要知道 $A$ 的每個元素。若 $a_0\ne0$，則 $A$ 可逆；將 $p(A)=0$ 乘上 $A^{-1}$，便可表示 $A^{-1}$。上例得到
+\[
+ A+3I+2A^{-1}=0\quad\Rightarrow\quad A^{-1}=-\tfrac12(A+3I).
+\]
+\textbf{講義的 nilpotent 例子}\quad 第 9 頁的三階 shift matrix 特徵多項式是 $s^3$，因此 $A^3=0$；此後所有 $A^k$（$k\ge3$）都為零。
+
+\textbf{為什麼定理合理？}\quad 若 $A$ 可對角化，每個 $p(\lambda_i)=0$，所以 $p(A)=Tp(\Lambda)T^{-1}=0$。這是講義第 7 頁展示的想法。\textbf{定理本身也適用於不能對角化的矩陣}；第 8 節會給不依賴對角化的代數說明。
+\checkq{若 $A^3=0$，$A^7$ 等於什麼？}
+
+\topic{4. Minimal polynomial：真正需要幾次方？}{10}{特徵多項式是不是最短？}
+所有使 $q(A)=0$ 成立的非零多項式中，取次數最低、最高次項係數為 1 的那個，稱為 minimal polynomial，記作 $m_A(s)$。
+\[
+ m_A(A)=0,\qquad m_A(s)\mid p_A(s),\qquad \deg m_A\le n.
+\]
+它和特徵多項式有相同的不同根，也就是 $A$ 的特徵值，但\textbf{根的重數可以不同}。
+
+\textbf{講義對比（第 10 頁）}
+\[
+ A_1=\begin{bmatrix}0&0\\0&0\end{bmatrix},\qquad
+ A_2=\begin{bmatrix}0&1\\0&0\end{bmatrix}.
+\]
+兩者的特徵多項式都是 $s^2$，但
+\[
+ m_{A_1}(s)=s,\qquad m_{A_2}(s)=s^2.
+\]
+原因是 $A_1=0$，一次就消掉；$A_2\ne0$ 但 $A_2^2=0$，必須到二次。
+
+\textbf{為什麼有用？}\quad 如果 $\deg m_A=r$，所有高次方其實只需用
+\[
+ I,A,\ldots,A^{r-1}
+\]
+來表示，可能比用特徵多項式還短。之後會看到：$m_A$ 中 $(s-\lambda)$ 的次數，恰好是該特徵值最大 Jordan block 的大小。
+
+\textbf{補充：可對角化的判準}\quad 在複數域上，$A$ 可對角化，若且唯若 minimal polynomial 沒有重根。例如 $A=2I_3$ 雖然 $p_A(s)=(s-2)^3$，卻有 $m_A(s)=s-2$，而且本來就是對角矩陣。
+
+\key{「重複特徵值」不代表「不能對角化」。必須檢查有沒有足夠多線性獨立的特徵向量。}
+\checkq{$A=5I_3$ 的 minimal polynomial 是幾次？}
+
+\topic{5. 矩陣指數：微分方程的演化規則}{12--14}{為什麼解是 $e^{At}x_0$？}
+從純量 $\dot z=az$ 的解 $z(t)=e^{at}z(0)$ 出發，把指數的冪級數推廣為
+\[
+\boxed{e^{At}=I+At+\frac{A^2t^2}{2!}+\cdots
+ =\sum_{k=0}^{\infty}\frac{A^kt^k}{k!}.}
+\]
+這個級數對任意有限大小的 $A$、任意有限 $t$ 都收斂。它是\textbf{矩陣函數}，不是把 $A$ 的每個元素各取指數。
+
+逐項微分可得
+\[
+ \frac{d}{dt}e^{At}=Ae^{At}=e^{At}A,\qquad e^{A\cdot0}=I.
+\]
+因此 $x(t)=e^{At}x_0$ 同時滿足 $\dot x=Ax$ 與 $x(0)=x_0$。一般初始時間是 $t_0$ 時，
+\[
+\boxed{x(t)=\Phi(t,t_0)x_0,\qquad \Phi(t,t_0)=e^{A(t-t_0)}.}
+\]
+$\Phi$ 稱為 state transition matrix：把「起點的狀態」搬到「之後的狀態」。LTI 時只依賴時間差。
+
+\textbf{用欄向量理解}\quad 設 $e^{At}=[\phi_1(t)\;\cdots\;\phi_n(t)]$，則
+\[
+ x(t)=x_{01}\phi_1(t)+\cdots+x_{0n}\phi_n(t).
+\]
+第 $i$ 欄就是從第 $i$ 個單位向量出發的響應；任意初始狀態則由這些響應線性組合而成。
+
+\textbf{最簡單的驗算}\quad 若 $A=0$，$e^{At}=I$，所以 $x(t)=x_0$，狀態完全不動。若把零矩陣每格各取指數，會得到全為 1 的矩陣，顯然不對。
+\checkq{任何正確的 $e^{At}$，代入 $t=0$ 都必須得到什麼？}
+
+\topic{6. 指數性質與計算方法的選擇}{13--15}{哪些純量指數規則仍然成立？}
+對同一個常數矩陣 $A$，
+\[
+ e^{A(t_1+t_2)}=e^{At_1}e^{At_2},\qquad
+ (e^{At})^{-1}=e^{-At}.
+\]
+所以 $e^{At}$ 永遠可逆，即使 $A$ 本身不可逆。若 $Av=\lambda v$，則
+\[
+ e^{At}v=e^{\lambda t}v.
+\]
+但對兩個不同矩陣，只有在 $AB=BA$ 的條件下，才能保證
+\[
+ e^{A+B}=e^Ae^B.
+\]
+不能因為純量可以拆，就任意拆矩陣。
+
+\textbf{計算 $e^{At}$ 的四條路（講義第 14--15 頁）}
+\begin{enumerate}
+\item \textbf{冪級數／多項式關係：}若 $A^2=0$、$A^2=-I$ 等關係很簡單，直接整理級數最快。
+\item \textbf{數值計算：}實務上使用可靠的 matrix exponential 演算法；不要把逐元素的指數誤當成矩陣指數。
+\item \textbf{Jordan form：}$A=TJT^{-1}$，先求 $e^{Jt}$ 再換回。
+\item \textbf{Laplace transform：}求 $(sI-A)^{-1}$，逐元素做反轉換。
+\end{enumerate}
+\textbf{補充例：旋轉}\quad 若 $A=\begin{bmatrix}0&-\omega\\\omega&0\end{bmatrix}$，$A^2=-\omega^2I$，將級數的奇次與偶次項分開，得到
+\[
+ e^{At}=\begin{bmatrix}\cos\omega t&-\sin\omega t\\
+ \sin\omega t&\cos\omega t\end{bmatrix}.
+\]
+這連起第 1 節的 center 與第 5 節的矩陣指數。
+\checkq{若 $A$ 不可逆，$e^{At}$ 會不會也不可逆？}
+
+\topic{7. 兩種方法算同一個講義例子}{6、15--16}{對角化和 Laplace 怎麼相互驗證？}
+講義使用
+\[
+ A=\begin{bmatrix}3&-1\\-1&3\end{bmatrix},\quad
+ T=\begin{bmatrix}1&1\\1&-1\end{bmatrix},\quad \Lambda=\diag(2,4).
+\]
+\textbf{方法一：對角化（Jordan form 的特殊情況）}
+\begin{align*}
+ e^{At}&=T\diag(e^{2t},e^{4t})T^{-1}\\
+ &=\frac12\begin{bmatrix}
+ e^{2t}+e^{4t}&e^{2t}-e^{4t}\\
+ e^{2t}-e^{4t}&e^{2t}+e^{4t}
+ \end{bmatrix}.
+\end{align*}
+\textbf{方法二：Laplace transform}\quad 由 $\dot\Phi=A\Phi$、$\Phi(0)=I$，
+\[
+ s\widehat\Phi-I=A\widehat\Phi
+ \quad\Rightarrow\quad \widehat\Phi=(sI-A)^{-1}.
+\]
+因此 $e^{At}=\mathcal L^{-1}\{(sI-A)^{-1}\}$，而本例
+\[
+ (sI-A)^{-1}=\frac1{(s-2)(s-4)}
+ \begin{bmatrix}s-3&-1\\-1&s-3\end{bmatrix}.
+\]
+部分分式為
+\begin{align*}
+ \frac{s-3}{(s-2)(s-4)}&=\frac12\left(\frac1{s-2}+\frac1{s-4}\right),\\
+ \frac{-1}{(s-2)(s-4)}&=\frac12\left(\frac1{s-2}-\frac1{s-4}\right).
+\end{align*}
+利用 $\mathcal L^{-1}\{1/(s-a)\}=e^{at}$，便得到相同結果。
+
+\textbf{看懂結果}\quad $[1\;1]^T$ 方向以 $e^{2t}$ 成長，$[1\;-1]^T$ 方向以 $e^{4t}$ 成長。兩個特徵值皆正，原點不穩定。
+\checkq{上式 $e^{At}$ 的非對角元素在 $t=0$ 應為多少？}
+
+\topic{8. Resolvent 與 Cayley--Hamilton 的關係}{17}{為什麼反矩陣的分子是矩陣多項式？}
+$(sI-A)^{-1}$ 稱為 resolvent。只要 $s$ 不是 $A$ 的特徵值，反矩陣就存在。令
+\[
+ p(s)=\det(sI-A)=s^n+a_{n-1}s^{n-1}+\cdots+a_0,
+\]
+則 adjugate 公式給出
+\[
+ (sI-A)^{-1}=\frac{N(s)}{p(s)},\qquad N(s)=\operatorname{adj}(sI-A).
+\]
+$N(s)$ 是最高次不超過 $n-1$ 的矩陣多項式。講義用「比較 $s$ 的係數」找出它；以三階為例，設
+\[
+ N(s)=s^2N_2+sN_1+N_0.
+\]
+將 $(sI-A)N(s)=p(s)I$ 展開，逐次比較得
+\begin{align*}
+ N_2&=I,\\
+ N_1&=A+a_2I,\\
+ N_0&=A^2+a_2A+a_1I,\\
+ -AN_0&=a_0I.
+\end{align*}
+最後一行正好變成
+\[
+ A^3+a_2A^2+a_1A+a_0I=0.
+\]
+這也說明 Cayley--Hamilton 不需要以「$A$ 可對角化」作前提。
+
+\textbf{另一個角度}\quad 當 $|s|$ 足夠大時，幾何級數給出
+\[
+ (sI-A)^{-1}=\frac1s\left(I-\frac As\right)^{-1}
+ =\frac Is+\frac A{s^2}+\frac{A^2}{s^3}+\cdots.
+\]
+高次 $A^k$ 透過 Cayley--Hamilton 降階，與有限次的分子表示相呼應。這個無窮級數\textbf{有收斂條件}，不能直接拿到任意 $s$ 使用。
+\checkq{為什麼 $s=\lambda_i(A)$ 時通常不能直接計算 resolvent？}
+
+\topic{9. 取樣：從連續時間走到離散時間}{18--19}{為什麼 $A_d=e^{A_cT}$？}
+原系統是無輸入的連續時間系統
+\[
+ \dot x_c(t)=A_cx_c(t).
+\]
+每隔 $T>0$ 秒觀測一次，定義 $x_d[k]=x_c(kT)$。從 $kT$ 到 $(k+1)T$ 的演化是
+\[
+ x_c((k+1)T)=e^{A_cT}x_c(kT).
+\]
+因此
+\[
+\boxed{x_d[k+1]=A_dx_d[k],\qquad A_d=e^{A_cT}.}
+\]
+這是\textbf{精確取樣關係}。$I+A_cT$ 只是小 $T$ 時的一階近似，並不一般相等。
+
+若 $\lambda=\alpha+j\omega$ 是 $A_c$ 的特徵值，對應的離散特徵值是
+\[
+ z=e^{\lambda T}=e^{\alpha T}e^{j\omega T},\qquad |z|=e^{\alpha T}.
+\]
+\begin{center}
+\begin{tabular}{cc}
+\toprule 連續時間 & 離散時間\\\midrule
+$\Re\lambda<0$ & $|z|<1$\\
+$\Re\lambda=0$ & $|z|=1$\\
+$\Re\lambda>0$ & $|z|>1$\\\bottomrule
+\end{tabular}
+\end{center}
+因為指數永遠不為零，$A_d$ 一定可逆。\textbf{是否有界仍需看邊界特徵值的 Jordan block}，只知道 $|z|=1$ 還不夠。
+
+\textbf{補充：取樣也可能藏住振盪}\quad 若 $\omega T=2\pi$，每次取樣都剛好繞一圈，$e^{j\omega T}=1$。取樣點看似不變，不表示連續時間軌跡沒在動。
+
+本節原講義先處理無輸入系統。有輸入時還需要離散輸入矩陣，不能只把所有時間符號換成 $k$。
+\checkq{$\lambda=-2$、$T=0.1$ 時，離散特徵值在單位圓內還是外？}
+
+\topic{10. 為什麼還需要 Jordan block？}{20--24}{特徵值都一樣，行為就一樣嗎？}
+講義的 unattached mass（自由質點）滿足
+\[
+ \dot x_1=x_2,\qquad \dot x_2=0,\qquad
+ A=\begin{bmatrix}0&1\\0&0\end{bmatrix}.
+\]
+若 $x(0)=[0\;1]^T$，速度固定為 1，因此位置持續增加：$x(t)=[t\;1]^T$。兩個特徵值都是零，解卻不是常數！
+
+原因是 $A$ 只有一個獨立特徵向量，無法對角化。它就是一個 Jordan block：
+\[
+ J(\lambda,r)=\begin{bmatrix}
+ \lambda&1&&0\\&\lambda&\ddots&\\&&\ddots&1\\0&&&\lambda
+ \end{bmatrix}=\lambda I+N,\qquad N^r=0.
+\]
+$\lambda I$ 與 $N$ 可交換，於是
+\[
+\boxed{e^{Jt}=e^{\lambda t}\left(I+tN+\cdots+
+ \frac{t^{r-1}}{(r-1)!}N^{r-1}\right).}
+\]
+例如
+\[
+ e^{J(\lambda,3)t}=e^{\lambda t}
+ \begin{bmatrix}1&t&t^2/2\\0&1&t\\0&0&1\end{bmatrix}.
+\]
+所以一般解除了 $e^{\lambda t}$，還可能包含 $te^{\lambda t}$、$t^2e^{\lambda t}$ 等項。這是\textbf{不能只看特徵值、不看 Jordan 結構}的關鍵。
+
+講義第 22 頁把常數擾動 $w$ 當成額外狀態：$\dot q=v$、$\dot v=w$、$\dot w=0$，就形成 $J(0,3)$。常加速度產生二次位置，正好對應 $t^2/2$。
+\checkq{對 $J(0,2)$，$e^{At}$ 的右上角是常數還是 $t$？}
+
+\topic{11. 廣義特徵向量與 chain}{25--30}{缺少的基底要去哪裡找？}
+普通特徵向量滿足 $(A-\lambda I)v=0$。若獨立向量不夠，就找 generalized eigenvector。階數恰為 $k$ 的 $g_k$ 滿足
+\[
+ (A-\lambda I)^kg_k=0,\qquad (A-\lambda I)^{k-1}g_k\ne0.
+\]
+使用下標 $g_1,g_2,\ldots$ 表示鏈中的向量，\textbf{不是向量的次方}。一條 chain 滿足
+\[
+ (A-\lambda I)g_1=0,\quad
+ (A-\lambda I)g_2=g_1,\quad\ldots,\quad
+ (A-\lambda I)g_r=g_{r-1}.
+\]
+把向量依這個順序排成 $T=[g_1\;g_2\;\cdots\;g_r]$，就有 $AT=TJ(\lambda,r)$。若這是完整基底，$T^{-1}AT=J$。
+
+\textbf{講義第 30 頁例子，補齊驗算}
+\[
+ A=\begin{bmatrix}-3.5&-0.5\\0.5&-4.5\end{bmatrix},\quad
+ A+4I=\begin{bmatrix}0.5&-0.5\\0.5&-0.5\end{bmatrix}.
+\]
+可選 $g_1=[1\;1]^T$，再解 $(A+4I)g_2=g_1$，取 $g_2=[1\;-1]^T$。因此
+\[
+ T=\begin{bmatrix}1&1\\1&-1\end{bmatrix},\quad
+ J=\begin{bmatrix}-4&1\\0&-4\end{bmatrix},\quad
+ e^{At}=T\left[e^{-4t}\begin{bmatrix}1&t\\0&1\end{bmatrix}\right]T^{-1}.
+\]
+廣義特徵向量可以不唯一；滿足 chain 關係且組成可逆 $T$ 即可。
+
+\key{驗算 $AT=TJ$ 通常比直接算 $T^{-1}AT$ 清楚。不要把兩個相依的普通特徵向量硬排成 $T$，那樣 $T$ 不可逆。}
+\checkq{chain 的第一個向量 $g_1$，是不是普通特徵向量？}
+
+\topic{12. 多個 Jordan blocks：AM、GM 與 index}{31--36}{如何把整個矩陣的結構拼起來？}
+一般矩陣可在複數域寫成
+\[
+ A=TJT^{-1},\qquad J=\operatorname{blockdiag}(J_1,\ldots,J_\ell).
+\]
+block diagonal 的函數可以分塊計算：
+\[
+ e^{Jt}=\operatorname{blockdiag}(e^{J_1t},\ldots,e^{J_\ell t}),\qquad
+ e^{At}=Te^{Jt}T^{-1}.
+\]
+對某個特徵值 $\lambda$：
+\begin{itemize}
+\item algebraic multiplicity（AM）：$(s-\lambda)$ 在特徵多項式中的次數，等於所有相關 blocks 大小的總和。
+\item geometric multiplicity（GM）：$\dim\ker(A-\lambda I)$，等於相關 blocks 的個數。
+\item index：相關 blocks 中最大的大小，也是 $m_A(s)$ 中 $(s-\lambda)$ 的次數。
+\end{itemize}
+\textbf{講義第 33 頁的結構例子}
+\[
+ J=\operatorname{blockdiag}\bigl(J(2,3),J(2,2),J(2,1)\bigr).
+\]
+只有一種特徵值 $2$，卻有三個 blocks，故
+\[
+ \mathrm{AM}=6,\quad\mathrm{GM}=3,\quad\mathrm{index}=3,
+ \qquad p(s)=(s-2)^6,\quad m_A(s)=(s-2)^3.
+\]
+\textbf{講義第 34 頁}\quad $J(2,2),J(2,2),J(5,2),J(5,1)$ 組成的矩陣，對 $\lambda=2$ 有 AM $=4$、GM $=2$；對 $\lambda=5$ 有 AM $=3$、GM $=2$。兩者 index 都是 2。
+
+\textbf{補充：怎麼從計算辨認 block 大小？}\quad 設 $d_k=\nul((A-\lambda I)^k)$、$d_0=0$，則 $d_k-d_{k-1}$ 是大小至少為 $k$ 的相關 blocks 數目。$d_k$ 不再增加時，已達最大 block 大小。
+\checkq{同一特徵值有大小 3 與 1 的兩個 blocks，AM、GM、index 各是多少？}
+
+\topic{13. 系統模態與穩定性的完整圖像}{19--20、24、36}{什麼樣的初始狀態會激發哪些模態？}
+令 $z=T^{-1}x$，則 $\dot z=Jz$。Jordan 座標把原本耦合的動態拆成 chains；每個 chain 會帶來
+\[
+ e^{\lambda t},\ te^{\lambda t},\ldots,t^{r-1}e^{\lambda t}
+\]
+這類時間項。對實係數系統，共軛複數特徵值可合成實數的正弦、餘弦項。
+
+\textbf{補充：這裡談的是無輸入系統的內部穩定性}\quad 原點漸近穩定，當且唯若所有特徵值的實部都小於零。即使有 $t^ke^{\lambda t}$，負實部的指數衰減仍會壓過多項式。
+\begin{center}\small
+\begin{tabular}{p{0.56\linewidth}p{0.32\linewidth}}
+\toprule 條件 & 無輸入的結果\\\midrule
+全部 $\Re\lambda<0$ & 所有初始狀態都趨近零\\
+有 $\Re\lambda>0$ & 存在發散的初始狀態\\
+全部 $\Re\lambda\le0$，且虛軸 blocks 都為大小 1 & 狀態有界，未必趨近零\\
+虛軸上有大小大於 1 的 block & 存在多項式成長，原點不穩定\\\bottomrule
+\end{tabular}
+\end{center}
+這補足「特徵值實部等於零」時不能只看正負號的問題。
+
+\textbf{某次響應不一定包含所有模態}\quad 自編例：$A=\diag(-1,-3)$、$x_0=[1\;0]^T$，則
+\[
+ x(t)=\begin{bmatrix}e^{-t}\\0\end{bmatrix}.
+\]
+系統有 $-1,-3$ 兩個特徵值，但這次初始狀態沒有激發 $e^{-3t}$。對大小 2 的 Jordan block，若鏈後方的初始座標為零，$te^{\lambda t}$ 也可能不出現。
+
+\key{「系統有哪些模態」由 $A$ 決定；「這次響應出現哪些模態」還取決於初始狀態、輸入與量測。}
+\checkq{$J(0,2)$ 與二階零矩陣的特徵值相同，穩定性是否相同？}
+
+\topic{14. 有輸入：卷積公式從哪裡來？}{37--40}{每個時刻的輸入如何累積到現在？}
+現在回到完整模型
+\[
+ \dot x=Ax+Bu,\qquad y=Cx+Du.
+\]
+若 $x\in\R^n$、$u\in\R^m$、$y\in\R^p$，則 $A$ 為 $n\times n$、$B$ 為 $n\times m$、$C$ 為 $p\times n$、$D$ 為 $p\times m$。
+
+\textbf{講義第 39 頁推導，逐步拆解}\quad 先把已知的自然演化消掉：
+\begin{align*}
+ \frac{d}{dt}(e^{-At}x(t))
+ &=-Ae^{-At}x+e^{-At}(Ax+Bu)\\
+ &=e^{-At}Bu(t).
+\end{align*}
+從 $t_0$ 積分至 $t$，再左乘 $e^{At}$，得到
+\[
+\boxed{x(t)=\underbrace{e^{A(t-t_0)}x_0}_{\text{zero-input response}}
+ +\underbrace{\int_{t_0}^{t}e^{A(t-\tau)}Bu(\tau)\,d\tau}_{\text{zero-state response}}.}
+\]
+\textbf{物理讀法}\quad $Bu(\tau)d\tau$ 是時刻 $\tau$ 注入的狀態增量；$e^{A(t-\tau)}$ 把那一小份影響傳到現在；積分把所有時刻的貢獻加起來。注意是 $t-\tau$，不是 $\tau$。
+
+\textbf{另一種等價表示（第 40 頁）}\quad 若已找到一個 particular solution $x_p(t)$，則
+\[
+ x(t)=e^{A(t-t_0)}\bigl(x_0-x_p(t_0)\bigr)+x_p(t).
+\]
+自然響應負責修正初始條件。不能只寫特解就說已解完整初值問題。
+\checkq{zero-state response 的「zero」是指輸入為零，還是初始狀態為零？}
+
+\topic{15. Impulse：瞬間輸入如何改變狀態？}{41}{為什麼脈衝像是重新指定初始狀態？}
+Dirac impulse $\delta(t)$ 不是一般有限高度的函數；它的核心性質是
+\[
+ \int \delta(\tau)f(\tau)\,d\tau=f(0)
+\]
+（積分區間包含脈衝，且以完整脈衝的慣例處理）。這裡明確區分脈衝前 $0^-$ 與脈衝後 $0^+$。
+
+對 $u(t)=v\delta(t)$，在零點兩側積分狀態方程，$Ax$ 的有限部分不產生瞬間跳躍，因此
+\[
+\boxed{x(0^+)-x(0^-)=Bv.}
+\]
+脈衝之後 $t>0$ 已沒有輸入，所以
+\[
+ x(t)=e^{At}\bigl(x(0^-)+Bv\bigr).
+\]
+若脈衝前是零初始狀態，便得到講義的 zero-state impulse response：
+\[
+\boxed{x(t)=e^{At}Bv,\qquad t>0.}
+\]
+這與無輸入、但初始狀態設為 $Bv$ 的響應相同。
+
+\textbf{補充自編例：脈衝不一定激發全部模態}\quad
+\[
+ A=\diag(-1,-3),\quad B=\begin{bmatrix}1\\0\end{bmatrix},\quad v=1.
+\]
+則 $x(0^+)=[1\;0]^T$，後續 $x(t)=[e^{-t}\;0]^T$。$-3$ 模態雖然存在，這個輸入方向卻碰不到它。
+
+\textbf{不要混淆}\quad unit impulse 與 unit step 不同。step 在 $t>0$ 持續作用；impulse 只在瞬間注入。對普通 step，狀態通常連續；對 impulse，狀態可以跳躍。
+\checkq{若 $x(0^-)=0$，脈衝方向為 $v$，$x(0^+)$ 是 $v$ 還是 $Bv$？}
+
+\topic{16. 指數輸入：先找與輸入同形的特解}{42}{為什麼要出現 $(\lambda I-A)^{-1}$？}
+講義考慮 $u(t)=e^{\lambda t}v$，假設 $\lambda$ 不是 $A$ 的特徵值。猜一個同形特解
+\[
+ x_p(t)=e^{\lambda t}w.
+\]
+代入 $\dot x=Ax+Bu$：
+\[
+ \lambda e^{\lambda t}w=Ae^{\lambda t}w+Be^{\lambda t}v
+ \quad\Rightarrow\quad (\lambda I-A)w=Bv.
+\]
+所以
+\[
+ w=(\lambda I-A)^{-1}Bv,\qquad
+ x_p(t)=e^{\lambda t}(\lambda I-A)^{-1}Bv.
+\]
+加上初始條件的修正，$t_0=0$ 時的完整解為
+\[
+\boxed{x(t)=e^{At}(x_0-w)+e^{\lambda t}w.}
+\]
+第一項是系統的自然部分，第二項是跟著輸入走的 particular 部分。把它叫做「穩態」需要小心：只有自然項確實消失時，才能把長期行為交給第二項描述。
+
+\textbf{自編純量例}\quad $\dot x=-2x+e^t$、$x(0)=0$。此處 $w=1/(1+2)=1/3$，因此
+\[
+ x(t)=\frac13(e^t-e^{-2t}).
+\]
+代入 $t=0$ 為零；微分後也能驗回原式。
+
+\textbf{補充：若 $\lambda$ 恰好是特徵值？}\quad 逆矩陣不存在，這個公式就不能直接用。可能需要帶 $t$ 的特解；例如 $\dot x=-2x+e^{-2t}$、$x(0)=0$，解是 $te^{-2t}$。遇到此情況可回到卷積公式；是否出現共振型項也與輸入方向有關。
+\checkq{使用 $(\lambda I-A)^{-1}$ 前，要先檢查哪個條件？}
+
+\topic{17. 輸出、脈衝響應與 transfer function}{43--47}{量測到的行為與內部狀態有何不同？}
+由 $y=Cx+Du$ 代入狀態解，取 $t_0=0$：
+\[
+ y(t)=Ce^{At}x_0+
+ C\int_0^t e^{A(t-\tau)}Bu(\tau)\,d\tau+Du(t).
+\]
+$C$ 選擇如何組合內部狀態，$D$ 是輸入直接到輸出的 direct feedthrough。
+
+把系統視為因果系統，定義輸出脈衝響應矩陣（講義記為 $G(t)$）
+\[
+\boxed{G(t)=Ce^{At}B\,\mathbf 1_{t\ge0}+D\delta(t).}
+\]
+因此 $y(t)=Ce^{At}x_0+(G*u)(t)$。$D\delta(t)$ 以廣義函數的卷積解讀，恰好產生 $Du(t)$；普通卷積積分的端點寫法不要另算半個脈衝。
+
+\textbf{講義兩個例子}\quad 第 45 頁：$\dot x=-x+u$、$y=x$，所以 $G(t)=e^{-t}$（$t\ge0$）。第 46 頁自由質點為
+\[
+ A=\begin{bmatrix}0&1\\0&0\end{bmatrix},\ B=\begin{bmatrix}0\\1\end{bmatrix},\ C=\begin{bmatrix}1&0\end{bmatrix},\ D=0.
+\]
+由 $e^{At}=\begin{bmatrix}1&t\\0&1\end{bmatrix}$，得到 $G(t)=t$（$t\ge0$）。瞬間改變速度後，位置便線性增加。
+
+\textbf{Laplace transform 把卷積變成乘法}\quad 定義
+\[
+\boxed{\widehat G(s)=C(sI-A)^{-1}B+D.}
+\]
+零初始狀態時 $Y(s)=\widehat G(s)U(s)$；非零初始狀態還要加 $C(sI-A)^{-1}x_0$。transfer function 描述的是零初始狀態輸入輸出關係，不能自行取代全部內部動態。
+\checkq{非零初始狀態時，是否永遠可以只寫 $Y=\widehat G U$？}
+
+\topic{18. 指數與正弦輸入的輸出響應}{48}{為什麼頻率響應是代入 $s=j\omega$？}
+沿用 $u=e^{\lambda t}v$ 與 $w=(\lambda I-A)^{-1}Bv$，有
+\begin{align*}
+ y(t)&=Ce^{At}(x_0-w)+e^{\lambda t}(Cw+Dv)\\
+ &=\underbrace{Ce^{At}(x_0-w)}_{\text{自然部分}}
+ +\underbrace{e^{\lambda t}\widehat G(\lambda)v}_{\text{跟隨輸入的部分}}.
+\end{align*}
+也就是說，對指數輸入，系統把它的方向／振幅乘上 $\widehat G(\lambda)$。需有 $\lambda\notin\sigma(A)$ 才能使用這個推導。
+
+\textbf{補充：正弦輸入用複指數處理}\quad 對實係數 SISO 系統，將
+\[
+ u(t)=\cos\omega t=\Re(e^{j\omega t})
+\]
+視為複輸入的實部。若 $A$ 的特徵值全在左半平面，自然項消失，則
+\[
+ y_{\rm ss}(t)=\Re\{\widehat G(j\omega)e^{j\omega t}\}
+ =|\widehat G(j\omega)|\cos\bigl(\omega t+\angle\widehat G(j\omega)\bigr).
+\]
+系統在穩態保留頻率，改變振幅與相位。這就是 frequency response 的核心。對多輸入多輸出系統，要先算 $\widehat G(j\omega)v$，再逐個輸出取實部。
+
+\textbf{沿用講義第 45 頁的系統，補充正弦計算}\quad
+$\widehat G(s)=1/(s+1)$，故
+\[
+ |\widehat G(j\omega)|=\frac1{\sqrt{1+\omega^2}},\qquad
+ \angle\widehat G(j\omega)=-\arctan\omega.
+\]
+頻率越高，穩態振幅越小。若 $\omega=1$、$x_0=0$，完整輸出為
+\[
+ y(t)=\tfrac12(\cos t+\sin t-e^{-t}).
+\]
+最後一項確保 $y(0)=0$，長期留下振幅 $1/\sqrt2$、相位 $-\pi/4$ 的振盪。
+\checkq{若自然項不會消失，能否直接刪掉它，只保留正弦穩態？}
+
+\topic{19. 公式地圖與計算檢查表}{2--48}{寫題目前先選哪條路？}
+\textbf{先確認問題給了什麼}
+\begin{center}\small
+\begin{tabular}{p{0.32\linewidth}p{0.56\linewidth}}
+\toprule 問題類型 & 建議起點\\\midrule
+高次方、$A^{-1}$ & 找特徵／最小多項式，再降階\\
+無輸入初值問題 & $x(t)=e^{A(t-t_0)}x_0$\\
+求 $e^{At}$ & 先找簡單冪次關係；否則 Jordan 或 Laplace\\
+重根、特徵向量不足 & 找 generalized eigenvector chains\\
+一般輸入 & 狀態轉移矩陣加卷積\\
+脈衝輸入 & 先求跳躍 $x(0^+)=x(0^-)+Bv$\\
+指數／正弦輸入 & 非共振時找同形特解，再修正初值\\
+零初始輸入輸出 & $\widehat G(s)=C(sI-A)^{-1}B+D$\\\bottomrule
+\end{tabular}
+\end{center}
+\textbf{算完後，做這幾個能抓出實際錯誤的檢查}
+\begin{enumerate}
+\item $\Phi(0)=I$、$\dot\Phi(t)=A\Phi(t)$。只有第一個條件成立還不夠。
+\item $x(t_0)=x_0$；有脈衝則分別檢查 $0^-$ 與 $0^+$。
+\item $\dot x=Ax+Bu$；$y=Cx+Du$。不要把 $x$ 和 $y$ 當成同一個量。
+\item $AT=TJ$、$T$ 可逆；chain 的排列順序是否正確。
+\item 觀察時間項是否與特徵值和 Jordan blocks 相符。
+\item 矩陣維度：$e^{At}B$ 為 $n\times m$，$Ce^{At}B$ 為 $p\times m$。
+\end{enumerate}
+\textbf{常見誤區}\quad $e^{At}$ 不是逐元素指數；$e^{A+B}$ 不能任意拆；重根不一定不能對角化；所有實部非正不一定穩定；零初始不代表零輸入；transfer function 不保證呈現每個內部模態。
+
+\textbf{原講義對照索引}\quad 第 1 節：p.2；第 2--4 節：pp.3--11；第 5--8 節：pp.12--17；第 9 節：pp.18--19；第 10--13 節：pp.20--36；第 14--18 節：pp.37--48。原講義 p.1 是封面。
+
+\topic{20. 自我檢查：真的能講給別人聽嗎？}{全週}{能不能不看公式說出理由？}
+\textbf{各節「停下來想」的簡答}
+\begin{enumerate}
+\item $e^{-t}$ 衰減，仍以角頻率 2 振盪。
+\item 常數項是 $I$，所以 $p(A)=A+I$。
+\item $A^7=0$。
+\item 一次：$m_A(s)=s-5$。
+\item 單位矩陣 $I$。
+\item 不會；$(e^{At})^{-1}=e^{-At}$。
+\item 零；初始的狀態轉移矩陣沒有交叉項。
+\item 因為 $\det(sI-A)=0$，$sI-A$ 不可逆。
+\item 圓內，$z=e^{-0.2}$。
+\item 是 $t$，代表速度對位置的累積。
+\item 是；它滿足 $(A-\lambda I)g_1=0$。
+\item AM $=4$，GM $=2$，index $=3$。
+\item 不同。零矩陣的狀態固定、有界；$J(0,2)$ 存在線性成長。
+\item 初始狀態為零，輸入可以非零。
+\item 是 $Bv$，先把輸入映到狀態空間。
+\item 檢查 $\lambda$ 不是 $A$ 的特徵值。
+\item 不行；還有初始狀態造成的 $C(sI-A)^{-1}x_0$。
+\item 不行；只有確實消失或係數為零的項才能省略。
+\end{enumerate}
+\textbf{再試三題自編練習}\quad 先自己算，再看下一頁解析。
+\begin{enumerate}
+\item $A=\begin{bmatrix}-1&1\\0&-1\end{bmatrix}$、$x_0=[0\;1]^T$、$u=0$。求 $x(t)$ 並判斷是否趨近零。
+\item 同樣的 $A$，改為 $B=[1\;0]^T$、$x(0^-)=0$、$u=\delta(t)$。求 $t>0$ 的 $x(t)$；為什麼沒有 $te^{-t}$？
+\item $\dot x=-2x+u$、$y=3x$、$x(0)=0$、$u(t)=1$（$t\ge0$）。求 $x(t)$、$y(t)$、$\widehat G(s)$。
+\end{enumerate}
+
+\topic{21. 自編練習解析與補課安排}{全週}{把結構、輸入與輸出串在一起}
+\textbf{練習一}\quad $A=-I+N$，$N=\begin{bmatrix}0&1\\0&0\end{bmatrix}$ 且 $N^2=0$，因此
+\[
+ e^{At}=e^{-t}(I+tN)=e^{-t}\begin{bmatrix}1&t\\0&1\end{bmatrix},\qquad
+ x(t)=\begin{bmatrix}te^{-t}\\e^{-t}\end{bmatrix}.
+\]
+兩個分量都趨近零。即使有 $t$，$e^{-t}$ 衰減得更快。
+
+\textbf{練習二}\quad 脈衝造成 $x(0^+)=B$，所以
+\[
+ x(t)=e^{At}B=\begin{bmatrix}e^{-t}\\0\end{bmatrix},\qquad t>0.
+\]
+$te^{-t}$ 項由第二個初始座標帶入，但這次輸入只改變第一個座標，所以沒有該項。Jordan block 存在，不表示每一次響應都會出現它所有的時間項。
+
+\textbf{練習三}\quad 用卷積或純量微分方程皆可：
+\[
+ x(t)=\int_0^t e^{-2(t-\tau)}\,d\tau=\tfrac12(1-e^{-2t}),
+ \qquad y(t)=\tfrac32(1-e^{-2t}).
+\]
+轉移函數為 $\widehat G(s)=3/(s+2)$，且 step 的 $U(s)=1/s$，故 $Y(s)=3/[s(s+2)]$，反轉換與上式相同。長期 $x\to1/2$、$y\to3/2$，也符合 $\dot x=0$ 時的平衡關係。
+
+\textbf{建議分三次讀完}\quad 每次約 45--60 分鐘，視前置程度調整。
+\begin{enumerate}
+\item 第一次：第 1--8 節。能說明 $p(A)$、Cayley--Hamilton 與 $e^{At}$，並重算第 7 節例子。
+\item 第二次：第 9--13 節。能說明取樣、Jordan chain、AM／GM，以及零特徵值為何不保證有界。
+\item 第三次：第 14--21 節。自己推一次卷積公式，再獨立完成本頁三個練習。
+\end{enumerate}
+若卡住，先指出是哪一行公式不理解，再回到對應原講義頁；不必一次背完所有結論。
+\end{document}

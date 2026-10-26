@@ -1,0 +1,655 @@
+% !TeX program = xelatex
+% !TeX encoding = UTF-8
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{needspace}
+
+\setCJKmainfont{Microsoft JhengHei}
+
+\makeatletter
+\newcommand{\totalpages}{\@abspage@last}
+\makeatother
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\thepage/\totalpages}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyfoot[C]{\thepage/\totalpages}%
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\raggedbottom
+\title{Linear System --- Homework 5}
+\author{葉彥辰\quad P46154345}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{center}Fall 2026\quad Due: Friday, Oct 31\end{center}
+
+\section*{Exercise 1}
+Suppose $A$ is a $3\times 3$ matrix and
+\[
+\det(sI-A)=s^3+2s^2+s+1.
+\]
+
+\needspace{6cm}
+\textbf{(a)} Express $A^3$ in terms of $I$, $A$, and $A^2$.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+
+\begin{align*}
+	p(s) &= \det (sI - A) = s^3 + 2s^2 + s + 1 \\
+	p(A) &= A^3 + 2A^2 + A + I  = 0\\
+	\Rightarrow A^3 &= -2A^2 -A-I
+\end{align*}
+
+\textbf{(b)} Express $A^5$ in terms of $I$, $A$, and $A^2$.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+
+\[
+A^5 = A^2 A^3 = -2A^4 - A^3 - A^2
+\]
+\begin{align*}
+A^4 &= A^3A = -2A^3 - A^2 - A  \\
+&= -2( -2A^2 -A-I) - A^2 - A \\
+&= 4A^2 + 2A + 2I -A^2 - A \\
+&=3A^2 + A + 2I
+\end{align*}
+
+\begin{align*}
+A^5 &= -2 (3A^2 + A +2I) - (-2A^2 - A - I) - A^2 \\
+    &= -6A^2 -2A -4I + 2A^2 +A + I - A^2 \\
+    &= -5A^2-A-3I.
+\end{align*}
+\vspace{0.5cm}
+
+
+\textbf{(c)} Express $A^{-1}$ in terms of $I$, $A$, and $A^2$.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+Since $p(0)=\det(-A)=1$ and $A$ is $3\times3$, $\det A=-1\ne0$.
+Thus $A$ is invertible.
+\begin{align*}
+	A^{-1}p(A) &= A^2 + 2A + I + A^{-1} = 0 \\
+	\Rightarrow A^{-1} &= -A^2 - 2A - I
+\end{align*}
+
+\section*{Exercise 2}
+Without doing any matrix multiplications, compute $A^4$ for
+\[
+A=\begin{bmatrix}
+0&1&0&0\\
+0&0&1&0\\
+0&0&0&1\\
+564&0&0&0
+\end{bmatrix}.
+\]
+Justify your answer.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\begin{align*}
+p(s)&=\det(sI-A)=
+\begin{vmatrix}
+s&-1&0&0\\
+0&s&-1&0\\
+0&0&s&-1\\
+-564&0&0&s
+\end{vmatrix} \\
+&= s \begin{vmatrix}
+	s & -1 & 0 \\
+	0 & s & -1 \\
+	0 & 0 & s \\
+\end{vmatrix} - (-564)\begin{vmatrix}
+-1 &  0 & 0 \\
+s & -1 & 0 \\
+0 & s & -1
+\end{vmatrix} \\
+&= s^4 - 564 \\ \\
+\Rightarrow p(A) &= A^4 - 564I = 0 \quad \text{(Cayley--Hamilton theorem)} \\
+\therefore A^4 &= 564I
+\end{align*}
+
+
+\section*{Exercise 3}
+Consider the differential equation
+\[
+\dot{x}=Ax,
+\]
+where $A$ is a square matrix. Show that if $A$ has $j2\pi$ as an eigenvalue, then there is a nonzero initial state $x_0$ such that the solution $x$ satisfies
+\[
+x(1)=x(0)=x_0.
+\]
+\subsection*{Solution}
+% 在這裡撰寫解答。
+Since $j2\pi$ is an eigenvalue of $A$, choose a nonzero eigenvector
+$v$ such that $Av=j2\pi v$. Set $x_0=v$ and let
+\[
+x(t)=e^{j2\pi t}v.
+\]
+Then $x(0)=v=x_0$ and
+\[
+\dot{x}(t)=j2\pi e^{j2\pi t}v
+=e^{j2\pi t}Av=Ax(t).
+\]
+\[
+\Rightarrow x(1) = e^{j2\pi}x_0 = x_0 = x(0)
+\]
+If $A$ is real and a real initial state is required, take the real
+or imaginary part of this solution whose initial value is nonzero.
+Both parts satisfy $\dot{x}=Ax$ and return to their initial values at $t=1$.
+
+
+\section*{Exercise 4}
+Compute $e^{At}$ at $t=\ln(2)$ for
+\[
+A=\begin{bmatrix}0&1\\-1&0\end{bmatrix}
+\]
+by:
+
+\needspace{6cm}
+\textbf{(a)} use Jordan form using eigenvalues and eigenvectors of $A$;
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\begin{align*}
+	\det (sI -A) = \begin{vmatrix}
+		s & -1 \\ 1 & s
+	\end{vmatrix} = s^2 + 1 = 0, \quad \therefore s = \pm j
+\end{align*}
+for $s = j$
+
+\[
+\begin{bmatrix}
+	j & -1 \\ 1 & j
+\end{bmatrix} v = \begin{bmatrix}
+	j & -1 \\ 1 & j
+\end{bmatrix}\begin{bmatrix}
+v_1 \\ v_2
+\end{bmatrix} = \begin{bmatrix}
+0 \\ 0
+\end{bmatrix} \quad \Rightarrow \begin{bmatrix}
+v_1 \\ v_2 
+\end{bmatrix} = \begin{bmatrix}
+j \\ -1
+\end{bmatrix}
+\]
+
+for $s = -j$
+\[
+\begin{bmatrix}
+	-j & -1 \\ 1& -j 
+\end{bmatrix} v = \begin{bmatrix}
+-j & -1 \\ 1& -j 
+\end{bmatrix}\begin{bmatrix}
+v_1 \\ v_2
+\end{bmatrix} = \begin{bmatrix}
+0 \\ 0
+\end{bmatrix} \quad \begin{bmatrix}
+v_1 \\ v_2
+\end{bmatrix} = \begin{bmatrix}
+j \\ 1
+\end{bmatrix}
+\]
+
+Therefore 
+\[
+T = \begin{bmatrix}
+	j & j \\ -1 & 1
+\end{bmatrix}, \quad J = \begin{bmatrix}
+j & 0 \\ 0 & -j
+\end{bmatrix}, \quad T^{-1} = {1\over 2j} \begin{bmatrix}
+1 & -j \\ 1 & j
+\end{bmatrix}
+\]
+
+By $A = TJT^{-1}$
+\[
+e^{At} = T \begin{bmatrix}
+	e^{jt} & 0 \\ 0 & e^{-jt} 
+\end{bmatrix} T^{-1}
+\]
+Hence, at $ t = \ln 2$ 
+\begin{align*}
+e^{A\ln2} &= T\begin{bmatrix}
+	e^{j\ln2} & 0 \\ 0 & e^{-j\ln2}
+\end{bmatrix}T^{-1} = {1\over 2j}\begin{bmatrix}
+		j & j \\ -1 & 1
+\end{bmatrix}\begin{bmatrix}
+2^j & 0 \\ 0 & 2^{-j}
+\end{bmatrix} \begin{bmatrix}
+1 & -j \\ 1 & j
+\end{bmatrix} \\&= {1\over2}\begin{bmatrix}
+2^{-j} + 2^j & -j(2^j - 2^{-j}) \\
+j(2^j - 2^{-j}) &2^{-j} + 2^j
+\end{bmatrix} = \begin{bmatrix}
+\cos(\ln2) & \sin(\ln2) \\ -\sin(\ln2) & \cos(\ln2)
+\end{bmatrix}
+\end{align*}
+
+\vspace{3cm}
+
+\needspace{6cm}
+\textbf{(b)} using the Laplace transform.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+
+By
+\[
+\mathcal L \{ e^{At}\} = (sI - A)^{-1} \quad \Leftrightarrow \quad e^{At} = \mathcal L^{-1} \{(sI - A)^{-1}\}
+\]
+\begin{align*}
+	(sI - A)^{-1} &= \begin{bmatrix}
+		s & -1 \\ 1 & s
+	\end{bmatrix}^{-1} \\
+	&=  \begin{bmatrix}
+		{s\over s^2 + 1} & {1\over s^2 + 1} \\ -{1\over s^2 + 1} & {s\over s^2 + 1}
+	\end{bmatrix} \\
+	\Rightarrow \mathcal L^{-1} \{ (sI -A)^{-1}\} = e^{At} &= \mathcal L^{-1} \left\{ \begin{bmatrix}
+		{s\over s^2 + 1} & {1\over s^2 + 1} \\ -{1\over s^2 + 1} & {s\over s^2 + 1}
+	\end{bmatrix} \right\} = \begin{bmatrix}
+	\cos t & \sin t \\ -\sin t & \cos t
+	\end{bmatrix}
+\end{align*}
+
+Hence, at $t = \ln2$	
+\[
+e^{At} = \begin{bmatrix}
+	\cos(\ln2) & \sin(\ln2) \\ -\sin(\ln2) & \cos(\ln2)
+\end{bmatrix}
+\]
+
+
+\section*{Exercise 5}
+Compute $e^{At}$ for
+\[
+A=\begin{bmatrix}3&-5\\-5&3\end{bmatrix}
+\]
+by:
+
+\textbf{(a)} use Jordan form using eigenvalues and eigenvectors of $A$;
+\subsection*{Solution}
+% 在這裡撰寫解答。
+
+\[
+\det (sI - A) = \det \begin{bmatrix}
+	s -3 & 5 \\ 5 & s - 3
+\end{bmatrix} = s^2-6s-16 = (s-8)(s+2)
+\]
+therefore, eigenvalues $s=8$ and $s=-2$
+
+for $s = 8$
+\begin{align*}
+	(sI - A)v &= \begin{bmatrix}
+		5 & 5 \\ 5 & 5
+	\end{bmatrix}v = \begin{bmatrix}
+	0 \\ 0
+	\end{bmatrix}, \quad v = \begin{bmatrix}
+	1 \\ -1 
+	\end{bmatrix}
+\end{align*}
+
+for $s = -2$
+\begin{align*}
+	(sI - A)v &= \begin{bmatrix}
+		-5 & 5 \\ 5 & -5
+	\end{bmatrix}	v = \begin{bmatrix}
+	0 \\ 0
+	\end{bmatrix}, \quad v = \begin{bmatrix}
+	1 \\ 1 
+\end{bmatrix}
+\end{align*}
+
+\[
+T = \begin{bmatrix}
+	1 & 1 \\ -1 & 1	
+\end{bmatrix},\quad J = \begin{bmatrix}
+8 & 0 \\ 0 & -2
+\end{bmatrix}, \quad T^{-1} = {1\over2}\begin{bmatrix}
+1 & -1 \\ 1 & 1
+\end{bmatrix}
+\]
+Finally
+\begin{align*}
+	e^{At} &= {1\over2} \begin{bmatrix}
+		1 & 1 \\ -1 & 1	
+	\end{bmatrix}\begin{bmatrix}
+	e^{8t} & 0 \\ 0 & e^{-2t}
+	\end{bmatrix}\begin{bmatrix}
+	1 & -1 \\ 1 & 1
+	\end{bmatrix} \\
+	&= {1\over2}\begin{bmatrix}
+		e^{8t} & e^{-2t} \\
+		-e^{8t} & e^{-2t}
+	\end{bmatrix}\begin{bmatrix}
+	1 & -1 \\ 1 & 1
+	\end{bmatrix}\\
+	&= {1\over2 } \begin{bmatrix}
+		e^{8t} + e^{-2t} & -e^{8t} + e^{-2t} \\
+		-e^{8t} + e^{-2t} & e^{8t} + e^{-2t}
+	\end{bmatrix} \\
+    &= {e^{3t}\over 2} \begin{bmatrix}
+        e^{5t} + e^{-5t} & -(e^{5t} - e^{-5t}) \\
+        -(e^{5t} - e^{-5t}) & e^{5t} + e^{-5t}
+    \end{bmatrix} \\
+    &= e^{3t} \begin{bmatrix}
+        \cosh(5t) & -\sinh(5t) \\
+        -\sinh(5t) & \cosh(5t)
+    \end{bmatrix}
+\end{align*}
+
+\textbf{(b)} using the Laplace transform.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+By
+\[
+\mathcal L \{e^{At}\} = (sI -A)^{-1} \Rightarrow e^{At} = \mathcal{L}^{-1} \{ (sI - A)^{-1} \}
+\]
+
+\begin{align*}
+    (sI-A)^{-1}
+    &= \frac{1}{(s-8)(s+2)}
+    \begin{bmatrix}
+        s-3 & -5 \\ -5 & s-3
+    \end{bmatrix}.
+\end{align*}
+
+For the $(1,1)$ entry:
+\[
+\frac{s-3}{(s-8)(s+2)}
+=\frac{1}{2}\frac{1}{s-8}+\frac{1}{2}\frac{1}{s+2}.
+\]
+
+For the $(1,2)$ entry:
+\[
+\frac{-5}{(s-8)(s+2)}
+=-\frac{1}{2}\frac{1}{s-8}+\frac{1}{2}\frac{1}{s+2}.
+\]
+
+For the $(2,1)$ entry:
+\[
+\frac{-5}{(s-8)(s+2)}
+=-\frac{1}{2}\frac{1}{s-8}+\frac{1}{2}\frac{1}{s+2}.
+\]
+
+For the $(2,2)$ entry:
+\[
+\frac{s-3}{(s-8)(s+2)}
+=\frac{1}{2}\frac{1}{s-8}+\frac{1}{2}\frac{1}{s+2}.
+\]
+
+\begin{align*}
+\Rightarrow \mathcal{L}^{-1} \{(sI - A)^{-1}\} &= {1\over2} \begin{bmatrix}
+		e^{8t} + e^{-2t} & -e^{8t} + e^{-2t} \\
+	-e^{8t} + e^{-2t} & e^{8t} + e^{-2t}
+\end{bmatrix}\\&= e^{3t} \begin{bmatrix}
+\cosh(5t) & -\sinh(5t) \\
+-\sinh(5t) & \cosh(5t)
+\end{bmatrix}
+\end{align*}
+\vspace{3cm}
+
+
+\needspace{11cm}
+\section*{Exercise 6}
+Compute $e^{At}$ at $t=\ln(2)$ for
+\[
+A=\begin{bmatrix}0&1\\-1&0\end{bmatrix}.
+\]
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\begin{align*}
+	\det (sI -A) = \begin{vmatrix}
+		s & -1 \\ 1 & s
+	\end{vmatrix} = s^2 + 1 = 0, \quad \therefore s = \pm j
+\end{align*}
+for $s = j$
+
+\[
+\begin{bmatrix}
+	j & -1 \\ 1 & j
+\end{bmatrix} v = \begin{bmatrix}
+	j & -1 \\ 1 & j
+\end{bmatrix}\begin{bmatrix}
+	v_1 \\ v_2
+\end{bmatrix} = \begin{bmatrix}
+	0 \\ 0
+\end{bmatrix} \quad \Rightarrow \begin{bmatrix}
+	v_1 \\ v_2 
+\end{bmatrix} = \begin{bmatrix}
+	j \\ -1
+\end{bmatrix}
+\]
+
+for $s = -j$
+\[
+\begin{bmatrix}
+	-j & -1 \\ 1& -j 
+\end{bmatrix} v = \begin{bmatrix}
+	-j & -1 \\ 1& -j 
+\end{bmatrix}\begin{bmatrix}
+	v_1 \\ v_2
+\end{bmatrix} = \begin{bmatrix}
+	0 \\ 0
+\end{bmatrix} \quad \begin{bmatrix}
+	v_1 \\ v_2
+\end{bmatrix} = \begin{bmatrix}
+	j \\ 1
+\end{bmatrix}
+\]
+
+Therefore 
+\[
+T = \begin{bmatrix}
+	j & j \\ -1 & 1
+\end{bmatrix}, \quad J = \begin{bmatrix}
+	j & 0 \\ 0 & -j
+\end{bmatrix}, \quad T^{-1} = {1\over 2j} \begin{bmatrix}
+	1 & -j \\ 1 & j
+\end{bmatrix}
+\]
+
+By $A = TJT^{-1}$
+\[
+e^{At} = T \begin{bmatrix}
+	e^{jt} & 0 \\ 0 & e^{-jt} 
+\end{bmatrix} T^{-1}
+\]
+Hence, at $ t = \ln 2$ 
+\begin{align*}
+	e^{A\ln2} &= T\begin{bmatrix}
+		e^{j\ln2} & 0 \\ 0 & e^{-j\ln2}
+	\end{bmatrix}T^{-1} = {1\over 2j}\begin{bmatrix}
+		j & j \\ -1 & 1
+	\end{bmatrix}\begin{bmatrix}
+		2^j & 0 \\ 0 & 2^{-j}
+	\end{bmatrix} \begin{bmatrix}
+		1 & -j \\ 1 & j
+	\end{bmatrix} \\&= {1\over2}\begin{bmatrix}
+		2^{-j} + 2^j & -j(2^j - 2^{-j}) \\
+		j(2^j - 2^{-j}) &2^{-j} + 2^j
+	\end{bmatrix} = \begin{bmatrix}
+		\cos(\ln2) & \sin(\ln2) \\ -\sin(\ln2) & \cos(\ln2)
+	\end{bmatrix}
+\end{align*}
+
+\vspace{3cm}
+
+\needspace{11cm}
+\section*{Exercise 7}
+Obtain (by hand) the state response and output response $x(\cdot)$ of the following system due to a unit impulse input and the zero initial conditions. Determine whether the state response contains all the system modes.
+\begin{align*}
+\dot{x}_1&=-5x_1+2x_2+u,\\
+\dot{x}_2&=-12x_1+5x_2+u,\\
+y&=2x_1+3x_2.
+\end{align*}
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\[
+\begin{cases}
+	\begin{bmatrix}
+		\dot x_1 \\ \dot x_2
+	\end{bmatrix} &= \begin{bmatrix}
+		-5 & 2 \\ -12 & 5
+	\end{bmatrix}\begin{bmatrix}
+	x_1 \\ x_2
+	\end{bmatrix} + \begin{bmatrix}
+	1 \\ 1
+	\end{bmatrix}u = Ax + Bu \\ \\
+	y &= \begin{bmatrix}
+		2 & 3 
+	\end{bmatrix}
+	\begin{bmatrix}
+		x_1 \\ x_2
+	\end{bmatrix} = Cx + Du
+\end{cases} 
+\]
+\[
+\dot x - Ax(t) = Bu(t)
+\]
+Multiply both sides on the left by $e^{-At}$. Since $A$ commutes with $e^{-At}$,
+\[
+e^{-At}\dot x(t) - e^{-At}Ax(t) = e^{-At}Bu(t) \Rightarrow{d\over dt} (e^{-At}x(t)) = e^{-At}Bu(t)
+\]
+Integrate from $0^-$ to $t$:
+\[
+e^{-At}x(t) - x(0^-) = \int_{0^-}^t e^{-A\tau}Bu(\tau)d\tau
+\]
+Therefore
+\[
+x(t) = e^{At}x(0^-)+ e^{At}\int_{0^-}^t e^{-A\tau}Bu(\tau)d\tau 
+\]
+For zero initial conditions, $x(0^-)=0$, and a unit impulse input, $u(t)=\delta(t)$,
+
+\begin{align*}
+	x(t) &= e^{At}\int_{0^-}^t e^{-A\tau}B\delta(\tau)d\tau \\
+	&=e^{At} B, \quad t > 0
+\end{align*}
+and
+\[
+y = Cx \Rightarrow y = Ce^{At}B, \quad t > 0.
+\]
+
+\vspace{1cm}
+Solving $e^{At}$
+
+\[
+A = \begin{bmatrix}
+	-5 & 2 \\ -12 & 5
+\end{bmatrix}
+\]
+
+\begin{align*}
+	\det (sI - A) &= \begin{vmatrix}
+		s + 5 & -2 \\ 12 & s - 5 
+	\end{vmatrix} \\
+	&= s^2 - 25 + 24 = s^2 -1  = (s + 1)(s - 1) = 0
+\end{align*}
+
+Hence, $A$ has two eigenvalues, $1$ and $-1$.
+
+for $s = 1$
+
+\begin{align*}
+	(sI - A)v = \begin{bmatrix}
+		6 & -2 \\ 12 & -4
+	\end{bmatrix}v = 0 \Rightarrow v = \begin{bmatrix}
+	1 \\ 3
+	\end{bmatrix}
+\end{align*}
+
+for $ s= -1$
+
+\[
+(sI - A)v = \begin{bmatrix}
+	4 & -2 \\ 12 & -6
+\end{bmatrix}v = 0 \Rightarrow v=\begin{bmatrix}
+1 \\ 2
+\end{bmatrix}
+\]
+
+Therefore
+\[
+T = \begin{bmatrix}
+	1 & 1 \\
+	3 & 2
+\end{bmatrix}, \quad J = \begin{bmatrix}
+1 & 0 \\ 0 & -1
+\end{bmatrix}, \quad T^{-1} = {1\over -1} \begin{bmatrix}
+2 & -1 \\ -3 & 1
+\end{bmatrix} = \begin{bmatrix}
+-2 & 1 \\ 3 & -1
+\end{bmatrix}
+\]
+
+\begin{align*}
+e^{At} &= T e^{Jt} T^{-1} = \begin{bmatrix}
+	1 & 1 \\ 3 & 2 
+\end{bmatrix}	\begin{bmatrix}
+e^{t} & 0 \\ 0 & e^{-t}
+\end{bmatrix}\begin{bmatrix}
+-2 & 1 \\ 3 & -1
+\end{bmatrix} \\
+&= \begin{bmatrix}
+	e^{t} & e^{-t} \\
+	3e^{t} & 2e^{-t}
+\end{bmatrix}\begin{bmatrix}
+-2 & 1 \\ 3 & -1
+\end{bmatrix} \\
+&= \begin{bmatrix}
+	-2e^{t} + 3e^{-t} & e^{t} -e^{-t} \\
+	-6e^{t} + 6e^{-t} & 3e^{t}-2e^{-t}
+\end{bmatrix}
+\end{align*}
+
+Finally, 
+\begin{align*}
+ x(t) &= e^{At}B \\
+ &= \begin{bmatrix}
+	-2e^{t} + 3e^{-t} & e^{t} -e^{-t} \\
+-6e^{t} + 6e^{-t} & 3e^{t}-2e^{-t}
+ \end{bmatrix}	\begin{bmatrix}
+ 1 \\ 1
+ \end{bmatrix} \\
+ &= \begin{bmatrix}
+ (-2e^t+3e^{-t})+(e^t-e^{-t}) \\
+ (-6e^t+6e^{-t})+(3e^t-2e^{-t})
+ \end{bmatrix} \\
+ &= \begin{bmatrix}
+ -e^t+2e^{-t} \\
+ -3e^t+4e^{-t}
+ \end{bmatrix}, \qquad t>0.
+\end{align*}
+and 
+\begin{align*}
+y(t) &= Ce^{At}B \\
+&= \begin{bmatrix}2 & 3\end{bmatrix}
+\begin{bmatrix}
+-e^t+2e^{-t} \\
+-3e^t+4e^{-t}
+\end{bmatrix} \\
+&= 2(-e^t+2e^{-t})+3(-3e^t+4e^{-t}) \\
+&= -11e^t+16e^{-t}, \qquad t>0.
+\end{align*}
+
+The state response can be written as
+\[
+x(t)=-\begin{bmatrix}1\\3\end{bmatrix}e^t
+     +2\begin{bmatrix}1\\2\end{bmatrix}e^{-t}.
+\]
+Both modes $e^t$ and $e^{-t}$, corresponding to the eigenvalues $1$ and $-1$,
+have nonzero coefficients. Therefore, the state response contains all the system modes.
+
+
+\vspace{4cm}
+
+\end{document}
