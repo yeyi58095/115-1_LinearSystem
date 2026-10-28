@@ -1,0 +1,312 @@
+% !TeX program = xelatex
+% !TeX encoding = UTF-8
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,xeCJK,graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\setCJKmainfont{Microsoft JhengHei}
+\makeatletter
+\newcommand{\totalpages}{\@abspage@last}
+\makeatother
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\thepage/\totalpages}
+\fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}\fancyfoot[C]{\thepage/\totalpages}}
+\setlength{\parindent}{0pt}
+\title{Linear System --- Midterm Practice}
+\author{葉彥辰\\P46154345}
+\date{}
+\begin{document}
+\maketitle
+\begin{center}
+\textbf{Mock Examination}\\[6pt]
+24 exercises \quad 100 points \quad Suggested time: 240 minutes
+\end{center}
+\bigskip
+\textbf{Instructions}
+\begin{itemize}
+\item Answer all questions and show your reasoning. Exercises 1--20 carry 4 points each; Exercises 21--24 carry 5 points each.
+\item Work by hand. No programming or simulation is required. Exact symbolic answers are preferred.
+\item Unless otherwise stated, state variables and inputs are real, $j^2=-1$, and transfer functions use zero initial conditions.
+\item Blank solution areas are provided; use extra paper if needed.
+\end{itemize}
+\bigskip
+\textbf{Practice scope}\\
+State-space modeling; equilibria and linearization; transfer functions and realizations; linear algebra; eigenvalues and modes; the Cayley--Hamilton theorem; matrix exponentials and impulse responses.
+\bigskip
+
+本卷依專案中 HW1--HW5 的原始題目所涵蓋主題重新設計，並非原題逐字彙編，亦非教師公告的正式期中考範圍。僅含題目與空白作答區。
+\bigskip
+
+\begin{center}
+\begin{tabular}{c|l|r}
+Exercises & Topic & Points\\ \hline
+1--3 & State-space modeling & 12\\
+4--6 & Equilibria and linearization & 12\\
+7--11 & Transfer functions and realizations & 20\\
+12--17 & Linear algebra and eigenstructure & 24\\
+18--20 & Continuous/discrete-time modes & 12\\
+21--24 & Matrix functions and responses & 20\\ \hline
+ & Total & 100
+\end{tabular}
+\end{center}
+\clearpage
+\section*{Exercise 1 \hfill {\normalsize (4 points)}}
+Obtain a state-space representation $(A,B,C,D)$ of
+\[
+q^{(3)}+4\ddot q+5\dot q+2q=u,\qquad y=3q-\dot q+2u.
+\]
+Define your state variables explicitly.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\vfill
+\section*{Exercise 2 \hfill {\normalsize (4 points)}}
+Obtain a three-state nonlinear state-space model, including the output equation, for
+\[
+\ddot q_1+\ddot q_2+\sin q_1=u,\qquad
+\dot q_2+2q_1+q_2=0,\qquad y=q_1-q_2.
+\]
+Your state equations must not contain derivatives of the input.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\clearpage
+\section*{Exercise 3 \hfill {\normalsize (4 points)}}
+For $k=0,1,\ldots$, consider
+\[
+q(k+2)-\tfrac12q(k+1)-\tfrac12q(k)=u(k),\qquad
+y(k)=2q(k)-q(k+1)+u(k).
+\]
+Obtain $(A,B,C,D)$ using $x(k)=[q(k)\;\;q(k+1)]^T$.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\vfill
+\section*{Exercise 4 \hfill {\normalsize (4 points)}}
+Find all equilibrium states and the linearized system matrix at each equilibrium for
+\[
+\ddot q+2\dot q-q+q^3=0.
+\]
+Use $x=[q\;\;\dot q]^T$ and define the perturbation state.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\clearpage
+\section*{Exercise 5 \hfill {\normalsize (4 points)}}
+For each scalar system below, find every equilibrium and determine whether a Jacobian linearization exists there. If it exists, compute it; otherwise, justify why it does not.
+\[
+\text{(a) }\dot x=|x|,\qquad
+\text{(b) }\dot x=x|x|,\qquad
+\text{(c) }\dot x=\sqrt{|x|}.
+\]
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\vfill
+\section*{Exercise 6 \hfill {\normalsize (4 points)}}
+Consider the pendulum with torque input
+\[
+\ddot\theta+0.4\dot\theta+2\sin\theta=u,\qquad y=\sin\theta.
+\]
+For $u^e=1$, find all equilibrium states. Obtain $(A,B,C,D)$ for the perturbation model about each equilibrium, using $x=[\theta\;\;\dot\theta]^T$.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\clearpage
+\section*{Exercise 7 \hfill {\normalsize (4 points)}}
+Under zero initial conditions, find the transfer matrix from $[u_1\;\;u_2]^T$ to $[y_1\;\;y_2]^T$:
+\[
+\dot y_1+2y_1-y_2=u_1,\qquad
+\dot y_2+3y_2=\dot u_2+u_1.
+\]
+State the dimensions of the transfer matrix.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\vfill
+\section*{Exercise 8 \hfill {\normalsize (4 points)}}
+Let $h>0$ and
+\[
+\dot x(t)=-3x(t)+x(t-h)+u(t),\qquad y(t)=2x(t),
+\]
+with zero prehistory $x(t)=0$ for $t\leq0$. Find $G(s)=Y(s)/U(s)$. Explain whether $G(s)$ can be realized exactly by a finite-dimensional continuous-time LTI model with constant matrices and no delays.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\clearpage
+\section*{Exercise 9 \hfill {\normalsize (4 points)}}
+Obtain a controllable companion-form realization of
+\[
+G(s)=\frac{2s^2+7s+5}{s^2+4s+3}.
+\]
+Use the displayed denominator without cancelling factors first. Then determine whether your realization is minimal and, if needed, give a lower-order realization.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\vfill
+\section*{Exercise 10 \hfill {\normalsize (4 points)}}
+Construct a real state-space realization of
+\[
+G(s)=\begin{bmatrix}
+\dfrac1{s+2}&\dfrac1{s+2}\\[4pt]
+\dfrac1{s+4}&-\dfrac1{s+4}
+\end{bmatrix}.
+\]
+Use no more than two states. Verify your answer by computing $C(sI-A)^{-1}B+D$.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\clearpage
+\section*{Exercise 11 \hfill {\normalsize (4 points)}}
+Consider
+\[
+A=\begin{bmatrix}0&1\\-2&-3\end{bmatrix},\quad
+B=\begin{bmatrix}0\\1\end{bmatrix},\quad C=\begin{bmatrix}1&0\end{bmatrix},\quad D=0.
+\]
+With $z=Tx$ and $T=\begin{bmatrix}1&1\\0&1\end{bmatrix}$, compute the transformed matrices. Show that the original and transformed realizations have the same transfer function.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\vfill
+\section*{Exercise 12 \hfill {\normalsize (4 points)}}
+Determine all real values of $a,b$ for which the following equations are consistent:
+\[
+x_1+x_2+x_3=1,\qquad
+2x_1+2x_2+2x_3=a,\qquad
+x_1+x_2+bx_3=2.
+\]
+For each consistent case, describe all solutions and state whether the solution is unique.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\clearpage
+\section*{Exercise 13 \hfill {\normalsize (4 points)}}
+For
+\[
+A=\begin{bmatrix}1&2&0&1\\0&1&1&1\\1&3&1&2\end{bmatrix},
+\]
+find bases for $\ker A$ and $\operatorname{range}A$. Compute the rank and nullity and verify the rank--nullity identity.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\vfill
+\section*{Exercise 14 \hfill {\normalsize (4 points)}}
+Let
+\[
+v_1=\begin{bmatrix}1\\0\\1\end{bmatrix},\quad
+v_2=\begin{bmatrix}0\\1\\1\end{bmatrix},\quad
+v_3=\begin{bmatrix}1\\1\\2\end{bmatrix}.
+\]
+Determine the condition on $(a,b,c)$ for $[a\;\;b\;\;c]^T$ to belong to their span. When that condition holds, give all coefficient triples in the linear combination. Are $v_1,v_2,v_3$ linearly independent?
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\clearpage
+\section*{Exercise 15 \hfill {\normalsize (4 points)}}
+Find the eigenvalues and a basis for each eigenspace of
+\[
+A=\begin{bmatrix}2&1&0\\0&2&0\\0&0&-1\end{bmatrix}.
+\]
+State the algebraic and geometric multiplicities of each eigenvalue, and determine whether $A$ is diagonalizable over $\mathbb R$.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\vfill
+\section*{Exercise 16 \hfill {\normalsize (4 points)}}
+Construct a real $3\times3$ companion matrix, with ones on the superdiagonal, whose eigenvalues are
+\[
+-2,\qquad -1+2j,\qquad -1-2j,\qquad j^2=-1.
+\]
+Verify its characteristic polynomial.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\clearpage
+\section*{Exercise 17 \hfill {\normalsize (4 points)}}
+Let $v,w\in\mathbb R^4$ be nonzero and let $A=vw^T$. Find the rank and nullity of $A$. Determine all eigenvalues, with algebraic multiplicities, and whether $A$ is diagonalizable in each case:
+\[
+\text{(a) }w^Tv=3,\qquad \text{(b) }w^Tv=0.
+\]
+Justify your conclusions.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\vfill
+\section*{Exercise 18 \hfill {\normalsize (4 points)}}
+A real $3\times3$ matrix $A$ has eigenvectors
+\[
+v_1=\begin{bmatrix}1\\0\\0\end{bmatrix},\quad
+v_2=\begin{bmatrix}0\\1\\1\end{bmatrix},\quad
+v_3=\begin{bmatrix}0\\1\\-1\end{bmatrix}
+\]
+corresponding to $-2,-1,1$, respectively. Find the response of $\dot x=Ax$ with $x(0)=[2\;\;3\;\;1]^T$. Characterize all initial states whose responses tend to zero as $t\to\infty$.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\clearpage
+\section*{Exercise 19 \hfill {\normalsize (4 points)}}
+Let $A\in\mathbb R^{2\times2}$ satisfy
+\[
+A\begin{bmatrix}1\\j\end{bmatrix}
+=(-1+2j)\begin{bmatrix}1\\j\end{bmatrix},\qquad j^2=-1.
+\]
+Find the real response of $\dot x=Ax$ for $x(0)=[2\;\;-1]^T$. Determine whether this nonzero response is periodic and whether it tends to zero.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\vfill
+\section*{Exercise 20 \hfill {\normalsize (4 points)}}
+For the discrete-time system
+\[
+x(k+1)=Ax(k),\qquad
+A=\begin{bmatrix}0&-\tfrac12\\[2pt]\tfrac12&0\end{bmatrix},\qquad
+x(0)=\begin{bmatrix}1\\0\end{bmatrix},
+\]
+find a real closed-form expression for $x(k)$. Is the response periodic? Does it tend to zero? Explain both answers.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\clearpage
+\section*{Exercise 21 \hfill {\normalsize (5 points)}}
+Suppose $A\in\mathbb R^{3\times3}$ and
+\[
+\det(sI-A)=s^3+4s^2+5s+2.
+\]
+Using the Cayley--Hamilton theorem, express (a) $A^3$, (b) $A^5$, and (c) $A^{-1}$ as linear combinations of $I,A,A^2$. Justify the existence of $A^{-1}$.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\vfill
+\section*{Exercise 22 \hfill {\normalsize (5 points)}}
+For
+\[
+A=\begin{bmatrix}-2&1\\0&-2\end{bmatrix},
+\]
+compute $e^{At}$ in two ways: (a) using the nilpotent part of $A$ and the exponential series; (b) by inverse Laplace transformation of $(sI-A)^{-1}$. Use your result to find $x(t)$ for $\dot x=Ax$, $x(0)=[0\;\;1]^T$.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\clearpage
+\section*{Exercise 23 \hfill {\normalsize (5 points)}}
+Consider the initially resting system
+\[
+\dot x=\begin{bmatrix}-1&0\\0&-3\end{bmatrix}x+
+\begin{bmatrix}1\\1\end{bmatrix}u,\qquad
+y=\begin{bmatrix}1&0\end{bmatrix}x,\qquad x(0^-)=0.
+\]
+For $u(t)=\delta(t)$, find $x(0^+)$, $x(t)$ for $t>0$, and $y(t)$. Determine which system modes occur in the state response and in the output response, and explain the difference.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\vfill
+\section*{Exercise 24 \hfill {\normalsize (5 points)}}
+Let $A\in\mathbb R^{n\times n}$ have eigenvalue $j\omega$, where $\omega>0$, with eigenvector $v=p+jq$, $p,q\in\mathbb R^n$.
+Prove that $\dot x=Ax$ has a nonzero real periodic solution. Construct a suitable real initial state from $p,q$ and give a period. Does the existence of this solution imply that every solution is bounded? Justify your answer with a proof or counterexample.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{3cm}
+\clearpage
+\end{document}
