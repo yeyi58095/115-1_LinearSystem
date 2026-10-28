@@ -61,8 +61,52 @@ q^{(3)}+4\ddot q+5\dot q+2q=u,\qquad y=3q-\dot q+2u.
 Define your state variables explicitly.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+Let $ x = \begin{bmatrix}
+	x_1 \\ x_2 \\ x_3
+\end{bmatrix} = \begin{bmatrix}	
+   q \\ \dot q \\ \ddot q
+\end{bmatrix}
+ \Rightarrow \dot x = \begin{bmatrix}
+	\dot q \\ \ddot q \\ q^{(3)}
+\end{bmatrix} = \begin{bmatrix}
+x_2 \\ x_3 \\ q^{(3)}
+\end{bmatrix}
+$ 
+
+\begin{align*}
+	q^{(3)} &= -2q - 5\dot q - 4\ddot q + u \\
+	&= -2 x_1 - 5x_2 - 4x_3 + u
+\end{align*}
+and
+\begin{align*}
+	y &= 3q - \dot q + 2u \\
+	&= 3x_1 - x_2 + 2u 
+\end{align*}
+
+Therefore
+\[
+\begin{cases}
+	\dot x &= \begin{bmatrix}		
+		0 & 1 & 0 \\
+		0 & 0 & 1 \\
+		-2 & -5 & - 4
+	\end{bmatrix}	\begin{bmatrix}
+	x_1 \\ x_2 \\ x_3
+	\end{bmatrix} + \begin{bmatrix}
+	0 \\ 0 \\ 1
+	\end{bmatrix} u \\
+	y &= \begin{bmatrix}
+		3 & -1 & 0
+	\end{bmatrix} \begin{bmatrix}	
+	x_1 \\ x_2 \\ x_3
+	\end{bmatrix} + [2]u
+\end{cases}
+\]
+
 \vspace{3cm}
 \vfill
+\clearpage
 \section*{Exercise 2 \hfill {\normalsize (4 points)}}
 Obtain a three-state nonlinear state-space model, including the output equation, for
 \[
@@ -72,6 +116,51 @@ Obtain a three-state nonlinear state-space model, including the output equation,
 Your state equations must not contain derivatives of the input.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+Let $ x = 
+\begin{bmatrix}
+	x_1 \\ x_2 \\ x_3 \\ x_4
+\end{bmatrix} = 
+\begin{bmatrix}
+q_1 \\ q_2 \\ \dot q_1 \\ \dot q_2	
+\end{bmatrix} \Rightarrow \dot x = \begin{bmatrix}
+x_3 \\ x_4 \\ \ddot q_1 \\ \ddot q_2
+\end{bmatrix}
+$
+
+By
+\[
+\dot q_2 = 2q_1 + q_2 = 0 \Rightarrow \ddot q_2 = -2\dot q_1 - \dot q_2
+\]
+
+\begin{align*}
+	\ddot q_1 &=  -\sin q_1 -\ddot q_2 + u \\
+	&= -\sin q_1 - (-2\dot q_1 - \dot q_2) + u \\
+	&= -\sin q_1 + 2\dot q_1 + \dot q_2 +u \\
+	&= -\sin x_1 + 2 x_3 + x_4 + u
+\end{align*}
+
+Therefore 
+\[
+\begin{cases}
+	\dot x &= \begin{bmatrix}
+		-1 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 \\
+		0 & 0 & 2 & 0 \\
+		0 & 0 & 0 & 1
+	\end{bmatrix}\begin{bmatrix}
+	\sin x_1 \\ x_2 \\ x_3 \\ x_4
+	\end{bmatrix} + \begin{bmatrix}
+	0 \\ 0\\ 0 \\ 1
+	\end{bmatrix}u \\
+	y &= \begin{bmatrix}
+		1 & -1 & 0 & 0 
+	\end{bmatrix}\begin{bmatrix}
+	x_1 \\ x_2 \\ x_3 \\ x_4
+	\end{bmatrix} + [0]u
+\end{cases}
+\]
+
 \vspace{3cm}
 \clearpage
 \section*{Exercise 3 \hfill {\normalsize (4 points)}}
@@ -83,8 +172,53 @@ y(k)=2q(k)-q(k+1)+u(k).
 Obtain $(A,B,C,D)$ using $x(k)=[q(k)\;\;q(k+1)]^T$.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+\[
+x(k)\begin{bmatrix}
+	x_1(k) \\ x_2(k)
+\end{bmatrix} = \begin{bmatrix}
+	q(k) \\ q(k + 1)
+\end{bmatrix} \Rightarrow  x(k + 1) = \begin{bmatrix}
+ q(k + 1) \\ q(k + 2)
+\end{bmatrix} = \begin{bmatrix}
+x_2(k) \\ q(k + 2)
+\end{bmatrix}
+\]
+
+\begin{align*}
+	q(k +2) &= {1\over2 } q(k) + {1\over2 } q(k + 1) + u(k) \\
+	&= {1\over 2} x_1(k) + {1\over2 } x_2(k) + u(k)
+\end{align*}
+and 
+\begin{align*}
+	y(k) &= 2q(k)- q(k + 1) + u(k) \\
+	&= 2x_1(k) - x_2(k) + u(k)
+\end{align*}
+
+Finally, 
+
+\[
+\begin{cases}
+	x(k + 1) &= \begin{bmatrix}
+		{1\over2} & 0 \\
+		0 & {1\over2}
+	\end{bmatrix} \begin{bmatrix}
+	x_1(k) \\ x_2(k)
+	\end{bmatrix} + \begin{bmatrix}
+	0 \\ 1
+	\end{bmatrix}u(k) \\
+	y(k) &= \begin{bmatrix}
+		2 & -1
+	\end{bmatrix} \begin{bmatrix}
+	x_1(k) \\ x_2(k) 
+	\end{bmatrix} + [1] u(k)
+\end{cases}
+\]
+
+
 \vspace{3cm}
 \vfill
+\clearpage
 \section*{Exercise 4 \hfill {\normalsize (4 points)}}
 Find all equilibrium states and the linearized system matrix at each equilibrium for
 \[
@@ -93,6 +227,120 @@ Find all equilibrium states and the linearized system matrix at each equilibrium
 Use $x=[q\;\;\dot q]^T$ and define the perturbation state.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+\[
+x = \begin{bmatrix}
+	x_1 \\ x_2
+\end{bmatrix}  = 
+\begin{bmatrix}
+	q \\ \dot q 
+\end{bmatrix} \Rightarrow \dot x =\begin{bmatrix}
+\dot q \\ \ddot q 
+\end{bmatrix} = \begin{bmatrix}
+x_2 \\ \ddot q
+\end{bmatrix} = \begin{bmatrix}	
+x_2 \\ -q^3 + q - 2 \dot q
+\end{bmatrix} = \begin{bmatrix}
+x_2 \\ -x_1^3 + x_1 - 2x_2
+\end{bmatrix}
+\]
+
+For the equilibrium state , which implies $\dot x = 0$
+
+\[ \dot x = 
+\begin{bmatrix}
+x_2  \\ -x_1^3 + x_1 - 2x_2
+\end{bmatrix} = \begin{bmatrix}
+0 \\ 0
+\end{bmatrix}
+\]
+
+Therefore $x_2 = 0$ is trivial.
+\[
+x_1 - x_1^3 = x_1 (1 - x_1^2) = 0 \Rightarrow x_1 = 0 \lor 1 \lor -1
+\]
+
+Hence, the equilibrium state $x^e$ becomes
+
+\[
+x^e = \begin{bmatrix}
+	x_1 \\ x_2
+\end{bmatrix} = \begin{bmatrix}
+0 \\ 0 
+\end{bmatrix} \lor \begin{bmatrix}
+1 \\ 0 
+\end{bmatrix} \lor \begin{bmatrix}
+-1 \\ 0
+\end{bmatrix}
+ \]
+ 
+ and
+ 
+ \[
+ f(x) = \begin{bmatrix}
+ 	f_1(x) \\ f_2(x)
+ \end{bmatrix} = \begin{bmatrix}
+ x_2 \\ -x_1^3 + x_1 - 2x_2
+ \end{bmatrix}
+ \]
+ 
+ \[
+ A = \begin{bmatrix}
+ 	{\partial f_1 \over \partial x_1} & {\partial f_1 \over \partial x_2} \\
+ 	{\partial f_2 \over \partial x_1} & {\partial f_2 \over \partial x_2}
+ \end{bmatrix} = \begin{bmatrix}
+ 0 & 1 \\ -3x_1^2 + 1 & -2
+ \end{bmatrix}
+  \]
+ 
+ For $x^e = \begin{bmatrix}
+ 	0 \\ 0
+ \end{bmatrix}
+ $
+ 
+ \[
+ A = \begin{bmatrix}
+ 	0 & 1 \\ 1 & -2
+ \end{bmatrix} \Rightarrow \delta\dot x = \begin{bmatrix}
+ 0 & 1 \\1 & -2
+ \end{bmatrix} \delta x
+ \]
+ 
+ For $x^e = \begin{bmatrix}
+ 	1 \\ 0
+ \end{bmatrix}
+ $
+ 
+ \[
+  A = \begin{bmatrix}
+ 	0 & 1 \\ -2 & -2
+ \end{bmatrix} \Rightarrow \delta\dot x = \begin{bmatrix}
+ 	0 & 1 \\-2 & -2
+ \end{bmatrix} \delta x
+ \]
+ 
+  For $x^e = \begin{bmatrix}
+ 	-1 \\ 0
+ \end{bmatrix}
+ $
+ 
+ \[
+ A = \begin{bmatrix}
+ 	0 & 1 \\ -2 & -2
+ \end{bmatrix} \Rightarrow \delta\dot x = \begin{bmatrix}
+ 	0 & 1 \\-2 & -2
+ \end{bmatrix} \delta x
+ \]
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 \vspace{3cm}
 \clearpage
 \section*{Exercise 5 \hfill {\normalsize (4 points)}}
@@ -104,6 +352,27 @@ For each scalar system below, find every equilibrium and determine whether a Jac
 \]
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+
+(a) $\dot x = |x|$
+
+
+
+
+\vspace{1cm}
+(b) $\dot x = x |x|$
+
+
+\vspace{1cm}
+(c) $\dot x = \sqrt{|x|}$
+
+\vspace{1cm}
+
+
+
+
+
+
 \vspace{3cm}
 \vfill
 \section*{Exercise 6 \hfill {\normalsize (4 points)}}
