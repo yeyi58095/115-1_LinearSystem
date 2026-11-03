@@ -130,7 +130,7 @@ $
 
 By
 \[
-\dot q_2 = 2q_1 + q_2 = 0 \Rightarrow \ddot q_2 = -2\dot q_1 - \dot q_2
+\dot q_2 + 2q_1 + q_2 = 0 \Rightarrow \ddot q_2 = -2\dot q_1 - \dot q_2
 \]
 
 \begin{align*}
@@ -163,6 +163,72 @@ Therefore
 
 \vspace{3cm}
 \clearpage
+\section*{Exercise 2A \hfill {\normalsize (Supplementary)}}
+For the system in Exercise 2, construct a redundant four-variable nonlinear
+representation using $x=[q_1\;\;q_2\;\;\dot q_1\;\;\dot q_2]^T$.
+Include the output equation and the constraint on the initial values that
+makes this representation equivalent to the original system.
+Show that the constraint is preserved by the dynamics.
+
+\subsection*{Solution}
+令
+\[
+x_1=q_1,\qquad x_2=q_2,\qquad x_3=\dot q_1,\qquad x_4=\dot q_2.
+\]
+由狀態定義及原方程，
+\begin{align*}
+\dot x_1&=x_3, & \dot x_2&=x_4,\\
+\ddot q_2&=-2\dot q_1-\dot q_2, &
+\ddot q_1&=-\sin q_1+2\dot q_1+\dot q_2+u.
+\end{align*}
+因此正確的四變數方程為
+\[
+\boxed{\begin{aligned}
+\dot x_1&=x_3,\\
+\dot x_2&=x_4,\\
+\dot x_3&=-\sin x_1+2x_3+x_4+u,\\
+\dot x_4&=-2x_3-x_4,\\
+y&=x_1-x_2.
+\end{aligned}}
+\]
+沿用第 2 題的非線性向量寫法，可整理成
+\[
+\dot x=
+\begin{bmatrix}
+0&0&1&0\\
+0&0&0&1\\
+-1&0&2&1\\
+0&0&-2&-1
+\end{bmatrix}
+\begin{bmatrix}\sin x_1\\x_2\\x_3\\x_4\end{bmatrix}
++\begin{bmatrix}0\\0\\1\\0\end{bmatrix}u,
+\qquad
+y=\begin{bmatrix}1&-1&0&0\end{bmatrix}x.
+\]
+此處矩陣乘的是含 $\sin x_1$ 的非線性向量，不是 $x$ 本身，
+所以這不是線性系統的 $\dot x=Ax+Bu$。
+
+\subsubsection*{初始值約束與等價性}
+原題的 $\dot q_2+2q_1+q_2=0$ 要求
+\[
+\boxed{x_4(0)+2x_1(0)+x_2(0)=0.}
+\]
+令 $r(t)=x_4(t)+2x_1(t)+x_2(t)$，則
+\[
+\dot r=\dot x_4+2\dot x_1+\dot x_2
+=(-2x_3-x_4)+2x_3+x_4=0.
+\]
+故 $r(t)=r(0)=0$，原題的一階約束一直成立；同時
+\[
+\ddot q_1+\ddot q_2+\sin q_1
+=(-\sin x_1+2x_3+x_4+u)+(-2x_3-x_4)+\sin x_1=u.
+\]
+因此，在滿足初始值約束時，這組方程與原系統等價。
+若任意指定四個初始值，則只保證 $r(t)=r(0)$，不一定滿足原題的 $r=0$。
+這是四個變數、三個獨立自由度的冗餘表示，仍不符合原第 2 題的
+three-state 要求。第 2 題原有計算保留，其中最後矩陣的修正版見本題。
+
+\clearpage
 \section*{Exercise 3 \hfill {\normalsize (4 points)}}
 For $k=0,1,\ldots$, consider
 \[
@@ -174,7 +240,7 @@ Obtain $(A,B,C,D)$ using $x(k)=[q(k)\;\;q(k+1)]^T$.
 % 在這裡撰寫解答。
 
 \[
-x(k)\begin{bmatrix}
+x(k)=\begin{bmatrix}
 	x_1(k) \\ x_2(k)
 \end{bmatrix} = \begin{bmatrix}
 	q(k) \\ q(k + 1)
@@ -200,8 +266,8 @@ Finally,
 \[
 \begin{cases}
 	x(k + 1) &= \begin{bmatrix}
-		{1\over2} & 0 \\
-		0 & {1\over2}
+		0 & 1 \\
+		{1\over2} & {1\over2}
 	\end{bmatrix} \begin{bmatrix}
 	x_1(k) \\ x_2(k)
 	\end{bmatrix} + \begin{bmatrix}
@@ -354,17 +420,19 @@ For each scalar system below, find every equilibrium and determine whether a Jac
 % 在這裡撰寫解答。
 
 
-(a) $\dot x = |x|$
+\subsubsection*{(a) $\dot x = |x|$}
 
-
+\[
+F(x) = |x| \Rightarrow F'(x) = {x\over|x|}
+\]
 
 
 \vspace{1cm}
-(b) $\dot x = x |x|$
+\subsubsection*{(b) $\dot x = x |x|$}
 
 
 \vspace{1cm}
-(c) $\dot x = \sqrt{|x|}$
+\subsubsection*{(c) $\dot x = \sqrt{|x|}$}
 
 \vspace{1cm}
 
@@ -374,7 +442,8 @@ For each scalar system below, find every equilibrium and determine whether a Jac
 
 
 \vspace{3cm}
-\vfill
+\vfill 
+\clearpage
 \section*{Exercise 6 \hfill {\normalsize (4 points)}}
 Consider the pendulum with torque input
 \[
@@ -383,6 +452,166 @@ Consider the pendulum with torque input
 For $u^e=1$, find all equilibrium states. Obtain $(A,B,C,D)$ for the perturbation model about each equilibrium, using $x=[\theta\;\;\dot\theta]^T$.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+\[
+x = \begin{bmatrix}
+	x_1 \\ x_2
+\end{bmatrix} = 
+ \begin{bmatrix}
+	\theta \\ \dot \theta
+\end{bmatrix},\quad \dot x = \begin{bmatrix}
+\dot \theta \\ \ddot \theta
+\end{bmatrix} = \begin{bmatrix}
+x_2 \\ \ddot \theta
+\end{bmatrix}
+\]
+
+\[\begin{cases}
+	\dot x &= \begin{bmatrix}
+		x_2 \\ -2\sin x_1- 0.4 x_2 +u
+	\end{bmatrix}  \Rightarrow F(x, u) = \begin{bmatrix}
+	x_2 \\ -2\sin x_1 - 0.4 x_2 + u
+	\end{bmatrix} \\
+	y &= \sin x_1  \qquad \qquad\qquad \qquad \Rightarrow H(x, u) = \sin x_1
+\end{cases}
+\]
+
+At equilibrium state with $u^e = 1$.
+
+\[
+F(x, u) = \begin{bmatrix}
+	x_2 \\ -2\sin x_1 - 0.4 x_2 + u
+\end{bmatrix} = \begin{bmatrix}
+0 \\ 0
+\end{bmatrix}
+\]
+$x_2^e = 0$, and $u^e = 1$ are tivial .Hence, $ \sin x_1^e = {1\over2}$,
+therefore $x_1^e = {\pi\over6} \lor {5\pi\over6} \lor {-\pi\over6} \lor {-5\pi\over6} $ in a period.
+
+
+\begin{align*}
+	A &= {\partial F \over \partial x} = \begin{bmatrix}
+		{\partial F_1 \over x_1} & {\partial F_1 \over x_2} \\
+		{\partial F_2 \over x_1} & {\partial F_2 \over x_2}
+	\end{bmatrix} \\
+	&= \begin{bmatrix}
+		0 & 1 \\
+		-2\cos x_1 & -0.4
+	\end{bmatrix}\\ \\
+	B &= {\partial F \over \partial u} = \begin{bmatrix}
+		{\partial F_1 \over \partial u} \\
+		{\partial F_2 \over \partial u}
+	\end{bmatrix}\\
+	&= \begin{bmatrix}
+		0 \\ 1
+	\end{bmatrix} \\ \\
+	C &= {\partial H \over \partial x} = \begin{bmatrix}
+		{\partial H \over \partial x_1} & {\partial H \over \partial x_2}
+	\end{bmatrix}\\
+	&= \begin{bmatrix}
+		\cos x_1 & 0
+	\end{bmatrix} \\ \\
+	 D &= {\partial H \over \partial u} = 0
+\end{align*}
+
+For $x_1^e = {\pi\over6},\quad x_2^e = 0$ and $u^e = 1$
+
+The linearized equation became
+
+\[
+\begin{cases}
+	\delta \dot x &= \begin{bmatrix}
+		0 & 1 \\ -2\cos x_1 & -0.4
+	\end{bmatrix} \delta x + \begin{bmatrix}
+	0 \\ 1
+	\end{bmatrix} \delta u  = \begin{bmatrix}
+	0 & 1 \\ -\sqrt3 & -0.4
+	\end{bmatrix} \delta x + \begin{bmatrix}
+	0 \\ 1 
+	\end{bmatrix} \delta u \\
+	\delta y &= \begin{bmatrix}
+		\cos x_1 & 0
+	\end{bmatrix}\delta x = \begin{bmatrix}
+	{\sqrt3\over2} & 0 
+	\end{bmatrix}\delta x
+\end{cases}
+\]
+
+For $x_1^e = {5\pi\over6},\quad x_2^e = 0$ and $u^e = 1$
+
+The linearized equation became
+
+\[
+\begin{cases}
+	\delta \dot x &= \begin{bmatrix}
+		0 & 1 \\ -2\cos x_1 & -0.4
+	\end{bmatrix} \delta x + \begin{bmatrix}
+		0 \\ 1
+	\end{bmatrix} \delta u  = \begin{bmatrix}
+		0 & 1 \\ \sqrt3 & -0.4
+	\end{bmatrix} \delta x + \begin{bmatrix}
+		0 \\ 1 
+	\end{bmatrix} \delta u \\
+	\delta y &= \begin{bmatrix}
+		\cos x_1 & 0
+	\end{bmatrix}\delta x = \begin{bmatrix}
+		-{\sqrt3\over2} & 0 
+	\end{bmatrix}\delta x
+\end{cases}
+\]
+
+
+
+For $x_1^e = {-\pi\over6},\quad x_2^e = 0$ and $u^e = 1$
+
+The linearized equation became
+
+\[
+\begin{cases}
+	\delta \dot x &= \begin{bmatrix}
+		0 & 1 \\ -2\cos x_1 & -0.4
+	\end{bmatrix} \delta x + \begin{bmatrix}
+		0 \\ 1
+	\end{bmatrix} \delta u  = \begin{bmatrix}
+		0 & 1 \\ -\sqrt3 & -0.4
+	\end{bmatrix} \delta x + \begin{bmatrix}
+		0 \\ 1 
+	\end{bmatrix} \delta u \\
+	\delta y &= \begin{bmatrix}
+		\cos x_1 & 0
+	\end{bmatrix}\delta x = \begin{bmatrix}
+		{\sqrt3\over2} & 0 
+	\end{bmatrix}\delta x
+\end{cases}
+\]
+
+
+For $x_1^e = {-5\pi\over6},\quad x_2^e = 0$ and $u^e = 1$
+
+The linearized equation became
+
+\[
+\begin{cases}
+	\delta \dot x &= \begin{bmatrix}
+		0 & 1 \\ -2\cos x_1 & -0.4
+	\end{bmatrix} \delta x + \begin{bmatrix}
+		0 \\ 1
+	\end{bmatrix} \delta u  = \begin{bmatrix}
+		0 & 1 \\ \sqrt3 & -0.4
+	\end{bmatrix} \delta x + \begin{bmatrix}
+		0 \\ 1 
+	\end{bmatrix} \delta u \\
+	\delta y &= \begin{bmatrix}
+		\cos x_1 & 0
+	\end{bmatrix}\delta x = \begin{bmatrix}
+		-{\sqrt3\over2} & 0 
+	\end{bmatrix}\delta x
+\end{cases}
+\]
+
+
+
+
 \vspace{3cm}
 \clearpage
 \section*{Exercise 7 \hfill {\normalsize (4 points)}}
@@ -394,8 +623,60 @@ Under zero initial conditions, find the transfer matrix from $[u_1\;\;u_2]^T$ to
 State the dimensions of the transfer matrix.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+\[
+\begin{cases}
+	\dot y_1 + 2y_1 - y_2 &= u_1 \\
+	\dot y_2 + 3y_2 &= \dot u_2 + u_1
+\end{cases} \overset{\text{tf}}{\Rightarrow} \begin{cases}
+ 	s\hat y_1 + 2\hat y_1 - \hat y_2 &= \hat u_1 \\
+ 	s\hat y_2 + 3\hat y_2 &= \hat u_1 + s\hat u_2
+\end{cases}
+\]
+Therefore 
+\[
+\begin{bmatrix}
+	s + 2 & -1 \\
+	0 & s + 3
+\end{bmatrix}\begin{bmatrix}
+\hat y_1 \\ \hat y_2
+\end{bmatrix} = \begin{bmatrix}
+1 & 0 \\ 1 & s
+\end{bmatrix}\begin{bmatrix}
+\hat u_1 \\ \hat u_2
+\end{bmatrix} \Rightarrow \begin{bmatrix}
+\hat y_1 \\ \hat y_2 
+\end{bmatrix} = \begin{bmatrix}
+s +2 & -1 \\ 0 & s + 3
+\end{bmatrix}^{-1} \begin{bmatrix}
+1 & 0 \\ 1 & s
+\end{bmatrix} \begin{bmatrix}
+\hat u_1 \\ \hat u_2
+\end{bmatrix}
+\]
+
+Finally,
+
+\begin{align*}
+	G(s) &=  \begin{bmatrix}
+		s +2 & -1 \\ 0 & s + 3
+	\end{bmatrix}^{-1} \begin{bmatrix}
+		1 & 0 \\ 1 & s
+	\end{bmatrix} \\
+	&= {1\over (s +2) (s + 3)} \begin{bmatrix}
+		s +3 & 1 \\ 0 & s + 2
+	\end{bmatrix} \begin{bmatrix}
+	1 & 0 \\ 1 &s 
+	\end{bmatrix} \\
+	&= {1\over (s +2 )(s +3)} \begin{bmatrix}
+		s + 4 & s \\
+		s +2 & s^2 + 2s
+\end{bmatrix}
+\end{align*}
+
 \vspace{3cm}
 \vfill
+\clearpage
 \section*{Exercise 8 \hfill {\normalsize (4 points)}}
 Let $h>0$ and
 \[
@@ -404,6 +685,26 @@ Let $h>0$ and
 with zero prehistory $x(t)=0$ for $t\leq0$. Find $G(s)=Y(s)/U(s)$. Explain whether $G(s)$ can be realized exactly by a finite-dimensional continuous-time LTI model with constant matrices and no delays.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+\[
+\dot x(t)=-3x(t)+x(t-h)+u(t) \Rightarrow s\hat x = -3\hat x + e^{-sh} \hat x + \hat u
+\]
+Hence
+\[
+(s + 3 - e^{-sh}) \hat x = \hat u \Rightarrow \hat x = {1\over s + 3 - e^{-sh}} \hat u
+\]
+
+By $y(t) = 2x(t)$, we can known that $\hat y = 2\hat x$
+
+\[
+\hat y = 2 \hat x = {2\over s + 3 - e^{-sh}} \hat u = G(s) \hat u
+\]
+
+Finally, 
+
+\[
+G(s) = {2\over s + 3 - e^{-sh}}
+\]
 \vspace{3cm}
 \clearpage
 \section*{Exercise 9 \hfill {\normalsize (4 points)}}
@@ -414,8 +715,55 @@ G(s)=\frac{2s^2+7s+5}{s^2+4s+3}.
 Use the displayed denominator without cancelling factors first. Then determine whether your realization is minimal and, if needed, give a lower-order realization.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+\begin{align*}
+	G(s) &= {2s^2 + 7s + 5 \over s^2 + 4s + 3} \\
+	&= { (2s + 5) (s + 1) \over (s + 3)(s + 1) } \\
+	&= {2s + 5 \over s + 3} = 2 - {1\over s + 3} \\
+	&= C(sI -A)^{-1} B +D
+\end{align*}
+
+Therefore
+\[
+A = -3, \quad B = -1, \quad C = 1,\quad D = 2
+\]
+
+
 \vspace{3cm}
 \vfill
+\clearpage
+\section*{Exercise 9A \hfill {\normalsize (Supplementary)}}
+For
+\[
+G(s)=\frac{2s^2+7s+5}{s^2+4s+3},
+\]
+obtain a real state-space realization of any order. You may cancel common
+factors before constructing the realization; companion form is not required.
+
+\textbf{Review note.} 第 9 題中原有的約分與一階實現可作為本題解答；
+其傳遞函數與原題相同，但尚未完成原題要求的「先不約分建立 companion form」步驟。
+
+\subsection*{Solution}
+% 在這裡撰寫解答。
+
+\begin{align*}
+	G(s) &= { s^2 + 7s + 5 \over s^2 + 4s + 3 } \\
+	&= {2 + { -s-1 \over s^2 + 4s +3}}
+\end{align*}
+
+\[
+\Rightarrow A = \begin{bmatrix}
+	0 & 1 \\ -3 & -4
+\end{bmatrix}, \quad B = \begin{bmatrix}
+0 \\ 1
+\end{bmatrix}, \quad C = \begin{bmatrix}
+-1 & -1
+\end{bmatrix}, \quad D = 2
+\]
+
+
+\vspace{3cm}
+\clearpage
 \section*{Exercise 10 \hfill {\normalsize (4 points)}}
 Construct a real state-space realization of
 \[
@@ -427,6 +775,130 @@ G(s)=\begin{bmatrix}
 Use no more than two states. Verify your answer by computing $C(sI-A)^{-1}B+D$.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+\begin{align*}
+	G(s) &= \begin{bmatrix}
+		{1\over s+ 2} & {1\over s+ 2} \\
+		{1\over s+4} & -{1\over s+4}
+	\end{bmatrix} \\
+	&= \begin{bmatrix}
+		{s + 4 \over (s +2)(s + 4)} & {s + 4 \over (s +2)(s + 4)}  \\
+		{s + 2 \over (s +2)(s + 4)} & -{s + 2 \over (s +2)(s + 4)} 
+	\end{bmatrix} \\
+	&= \begin{bmatrix}
+		{s + 4 \over s^2 + 6s + 8} & {s + 4 \over s^2 + 6s + 8} \\
+		{s + 2 \over s^2 + 6s + 8} & {-s - 2 \over s^2 + 6s + 8}
+	\end{bmatrix} \Rightarrow \begin{cases}
+	m &= 2 \\
+	l &= 2 
+	\end{cases} \Rightarrow n = m \times l = 4
+\end{align*}
+
+The deminsion of $I$ and $O$ are $m \times m = 2 \times 2$
+
+With $G(s) = N(s)\Delta(s)^{-1} + D(s)$
+
+\[
+\Delta(s) = s^2 + 6s + 8 \Rightarrow \begin{cases}
+	\Delta_0 &= 8I \\
+	\Delta_1 &= 6I \\
+	\Delta_2 &= I
+\end{cases}
+\]
+
+\[
+A = \begin{bmatrix}
+	O & I \\
+	-\Delta_0 & -\Delta_1
+\end{bmatrix} = \begin{bmatrix}
+0 & 0 & 1& 0 \\
+0 & 0 & 0 & 1 \\
+-8 & 0 & -6 & 0 \\
+0 & -8 & 0 & -6
+\end{bmatrix}
+\]
+
+\[
+B = \begin{bmatrix}
+	O \\ I 
+\end{bmatrix} = \begin{bmatrix}
+ 0 & 0 \\
+0 & 0 \\ 
+1 & 0 \\
+0 & 1
+\end{bmatrix}
+\]
+
+\[
+C = \begin{bmatrix}
+	N_0 & N_1
+\end{bmatrix} = \begin{bmatrix}
+4 & 4 & 1 & 1\\
+2 & -2 & 1 & -1
+\end{bmatrix}
+\]
+\[
+D = O
+\]
+\vspace{3cm}
+\clearpage
+\section*{Exercise 10A \hfill {\normalsize (Supplementary)}}
+Construct a real state-space realization of
+\[
+G(s)=\begin{bmatrix}
+\dfrac1{s+2}&\dfrac1{s+2}\\[4pt]
+\dfrac1{s+4}&-\dfrac1{s+4}
+\end{bmatrix}
+\]
+using the common denominator $s^2+6s+8$ and a four-state block companion
+construction. A minimal realization is not required.
+Verify your answer by computing $C(sI-A)^{-1}B+D$.
+
+\textbf{Review note.} 第 10 題中原有的四階矩陣（負號已修正）可沿用於本題。
+它與原題具有相同的零初始條件輸入輸出關係，但不是最小實現，
+也不符合原題最多兩個狀態的限制。式中的 $n=m\times l=4$ 是此建構的狀態數，
+不是此傳遞矩陣必需的最少狀態數。原有計算保留於前題；本題可補上驗證。
+
+\subsection*{Solution}
+% 在這裡撰寫解答。
+
+Let 
+\begin{align*}
+	G(s) &= \begin{bmatrix}
+		{1\over s+ 2} & {1\over s+ 2} \\
+		{1\over s+4} & -{1\over s+4}
+	\end{bmatrix} \\
+	&= \begin{bmatrix}
+		{s + 4 \over (s +2)(s + 4)} & {s + 4 \over (s +2)(s + 4)}  \\
+		{s + 2 \over (s +2)(s + 4)} & -{s + 2 \over (s +2)(s + 4)} 
+	\end{bmatrix} \\ 
+	&= \begin{bmatrix}
+		{ 1 \over s + 2} + { 0 \over s + 4} & {1\over s + 2} + {0\over s + 4} \\
+		{0 \over s + 2} + {1 \over s + 4} & {0 \over s + 2} + {-1 \over s + 4}
+	\end{bmatrix} \\
+	&= {1\over s + 2} \begin{bmatrix}
+		1 & 1 \\ 0 & 0
+	\end{bmatrix} + {1\over s + 4} \begin{bmatrix}
+	0 &  0 \\ 1 & -1 
+\end{bmatrix}
+\end{align*}
+
+For $G_1$
+
+\[
+A_1 = -2, \quad B_1 =1, \quad C_1 = \begin{bmatrix}
+1 & 1 \\ 0 & 0
+\end{bmatrix}, \quad D_1 = O
+\]
+
+For $G_2$
+
+\[
+A_2=-4, \quad B_2 = 1, \quad C_2 = \begin{bmatrix}
+0 & 0 \\ 1 & -1
+\end{bmatrix}, \quad D_2 = O
+\]
+
 \vspace{3cm}
 \clearpage
 \section*{Exercise 11 \hfill {\normalsize (4 points)}}
@@ -438,8 +910,131 @@ B=\begin{bmatrix}0\\1\end{bmatrix},\quad C=\begin{bmatrix}1&0\end{bmatrix},\quad
 With $z=Tx$ and $T=\begin{bmatrix}1&1\\0&1\end{bmatrix}$, compute the transformed matrices. Show that the original and transformed realizations have the same transfer function.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+The original 
+
+ \begin{align*}
+ 	G(s) &= C(sI - A)^{-1}B + D \\
+ 	&= \begin{bmatrix}
+ 		1 & 0
+ 	\end{bmatrix} \begin{bmatrix}
+ 	s & -1 \\
+ 	2 & s + 3
+ 	\end{bmatrix}^{-1} \begin{bmatrix}
+ 	0 \\ 1
+ 	\end{bmatrix} \\
+ 	&=  {1\over s^2 + 3s + 2} \begin{bmatrix}
+ 		1 & 0
+ 	\end{bmatrix} \begin{bmatrix}
+ 	s +3 & 1 \\ -2 & s
+ 	\end{bmatrix} \begin{bmatrix}
+ 	0 \\ 1
+ 	\end{bmatrix} \\
+	&= {1 \over s^2 + 3s + 2} \begin{bmatrix}
+		s + 3 & 1 
+	\end{bmatrix} \begin{bmatrix}
+	0 \\ 1
+	\end{bmatrix} \\
+	&= {1 \over s^2 + 3s + 2}	
+ \end{align*}
+
+
+The transformed
+
+By $z = Tx$, and $\dot x = Ax + Bu$
+
+\begin{align*}
+	\dot z &= T \dot x	\\
+	&= T (Ax + Bu) \\
+	&= TAx + TBu \\
+	&= TAT^{-1}z + TBu \triangleq \bar A z + \bar B u \\ \\ 
+	y &= Cx + Du \\
+	&= CT^{-1} z + Du \triangleq \bar C z + \bar D u
+\end{align*}
+
+Therefore
+
+\[
+\bar A = TAT^{-1}, \quad \bar B = TB,\quad \bar C = CT^{-1},\quad \bar D = D
+\]
+
+\begin{align*}
+	\bar A &= \begin{bmatrix}
+		1 & 1 \\ 0 & 1
+	\end{bmatrix} \begin{bmatrix}
+	0 & 1 \\ -2 & -3
+	\end{bmatrix} \begin{bmatrix}
+		1 & 1 \\ 0 & 1
+	\end{bmatrix}^{-1} \\
+	&= \begin{bmatrix}
+		1 & 1 \\ 0 & 1
+	\end{bmatrix} \begin{bmatrix}
+	0 & 1 \\ -2 & -3
+	\end{bmatrix} \begin{bmatrix}
+	1 & -1 \\ 0 & 1
+	\end{bmatrix} \\
+	&= \begin{bmatrix}
+		-2 & -2  \\
+		-2 & -3
+	\end{bmatrix} \begin{bmatrix}
+	1 & -1 \\ 0 & 1
+	\end{bmatrix} = \begin{bmatrix}
+		-2  & 0 \\ -2 & -1
+	\end{bmatrix}
+\end{align*}
+
+\begin{align*}
+	\bar B &= \begin{bmatrix}
+		1 & 1 \\ 0 & 1
+	\end{bmatrix}\begin{bmatrix}
+	0 \\ 1
+	\end{bmatrix} \\
+	&= \begin{bmatrix}
+		1 \\ 1
+	\end{bmatrix}
+\end{align*}
+
+\begin{align*}
+	\bar C &= CT^{-1} \\
+	&= \begin{bmatrix}
+		1 & 0
+	\end{bmatrix} \begin{bmatrix}
+	1 & -1 \\ 0 & 1
+	\end{bmatrix} \\ &= \begin{bmatrix}
+	1 & -1
+	\end{bmatrix}
+\end{align*}
+
+\begin{align*}
+	\bar G(s) &= \bar C ( s I - \bar A)^{-1} \bar B + \bar D \\
+	&= \begin{bmatrix}
+		1 & -1
+	\end{bmatrix} \begin{bmatrix}
+	s + 2 &  0 \\ 
+	2 & s + 1
+	\end{bmatrix}^{-1} \begin{bmatrix}
+	1 \\ 1
+	\end{bmatrix} \\
+	&= {1\over (s+2)(s+1)} \begin{bmatrix}
+		1 & -1
+	\end{bmatrix} \begin{bmatrix}
+		s+1 & 0 \\ -2 & s+2
+	\end{bmatrix} \begin{bmatrix}
+	1 \\ 1
+	\end{bmatrix} \\
+	&= {1\over (s+2)(s+1)} \begin{bmatrix}
+		1 & -1
+	\end{bmatrix} \begin{bmatrix}
+		s+1 \\ s
+	\end{bmatrix} \\
+	&= {1\over (s+2)(s+1)}
+	= {1\over s^2+3s+2}
+	= G(s).
+\end{align*}
+
 \vspace{3cm}
 \vfill
+\clearpage
 \section*{Exercise 12 \hfill {\normalsize (4 points)}}
 Determine all real values of $a,b$ for which the following equations are consistent:
 \[
@@ -450,6 +1045,60 @@ x_1+x_2+bx_3=2.
 For each consistent case, describe all solutions and state whether the solution is unique.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+\begin{align*}
+	\begin{bmatrix}
+		1 & 1 & 1 & 1 \\
+		2 & 2 & 2 & a \\
+		1 & 1 & b & 2
+\end{bmatrix}
+\xrightarrow{\substack{r_2 \leftarrow r_2-2r_1\\ r_3 \leftarrow r_3-r_1}}
+\begin{bmatrix}
+		1 & 1 & 1 & 1 \\
+		0 & 0 & 0 & a-2 \\
+		0 & 0 & b-1 & 1
+	\end{bmatrix}.
+\end{align*}
+
+For the system to be consistent, the second row requires $a-2=0$, so
+$a=2$. The third row requires $b-1\ne 0$; otherwise it gives the
+contradiction $0=1$. Therefore, the system is consistent exactly when
+\[
+a=2,\qquad b\ne 1.
+\]
+
+For this case, swap the second and third rows, divide the new second row
+by $b-1$, then eliminate $x_3$ from the first row:
+\begin{align*}
+\begin{bmatrix}
+1 & 1 & 1 & 1\\
+0 & 0 & 0 & 0\\
+0 & 0 & b-1 & 1
+\end{bmatrix}
+&\xrightarrow{r_2 \leftrightarrow r_3}
+\begin{bmatrix}
+1 & 1 & 1 & 1\\
+0 & 0 & b-1 & 1\\
+0 & 0 & 0 & 0
+\end{bmatrix}\\
+&\xrightarrow{\substack{r_2 \leftarrow \frac{1}{b-1}r_2\\r_1 \leftarrow r_1-r_2}}
+\begin{bmatrix}
+1 & 1 & 0 & \frac{b-2}{b-1}\\
+0 & 0 & 1 & \frac{1}{b-1}\\
+0 & 0 & 0 & 0
+\end{bmatrix}.
+\end{align*}
+
+Thus $x_2$ is a free variable. Let $x_2=t\in\mathbb{R}$. All solutions are
+\[
+\begin{bmatrix}x_1\\x_2\\x_3\end{bmatrix}
+=
+\begin{bmatrix}\frac{b-2}{b-1}-t\\t\\\frac{1}{b-1}\end{bmatrix},
+\qquad t\in\mathbb{R},\quad a=2,\quad b\ne1.
+\]
+Since $x_2$ is free, the solution is not unique; there are infinitely many
+solutions whenever the system is consistent.
+
 \vspace{3cm}
 \clearpage
 \section*{Exercise 13 \hfill {\normalsize (4 points)}}
@@ -460,6 +1109,65 @@ A=\begin{bmatrix}1&2&0&1\\0&1&1&1\\1&3&1&2\end{bmatrix},
 find bases for $\ker A$ and $\operatorname{range}A$. Compute the rank and nullity and verify the rank--nullity identity.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+\begin{align*}
+	A &= \begin{bmatrix}
+		1 & 2 & 0 & 1 \\
+		0 & 1 & 1 & 1 \\
+		1 & 3 & 1 & 2
+	\end{bmatrix} \\
+	&\overset{r_3 -= r_3}{\rightarrow} \begin{bmatrix}
+		1 & 2 & 0 & 1 \\
+		0 & 1 & 1 & 1 \\
+		0 & 1 & 1 & 1 
+	\end{bmatrix} \\
+	&\overset{r_3 -= r_2}{\rightarrow} \begin{bmatrix}
+		1 & 2 & 0 & 1 \\
+		0 & 1 & 1 & 1 \\
+		0 & 0 & 0 & 0
+	\end{bmatrix} \\
+	&\overset{r_1 -= 2r_2}{\rightarrow} \begin{bmatrix}
+		1 & 0 & -2 & -1 \\
+		0 & 1 & 1 & 1 \\
+		0 & 0 & 0 & 0
+	\end{bmatrix}
+\end{align*}
+
+Therefore
+
+\begin{align*}
+	\operatorname{range}A = \left\{	\begin{bmatrix}
+		1 \\ 0 \\ 1
+	\end{bmatrix},\begin{bmatrix}
+	2 \\ 1 \\ 3
+	\end{bmatrix}\right\}, \quad \operatorname{rank}A = 2
+\end{align*}
+
+Furthermore, we can directly know that $\dim A = 4$ and $\operatorname{nullity}A = \dim A - \operatorname{rank} A = 2 = \dim (\operatorname{null}A)$ .
+
+To find the $\ker A$ or $\operatorname{null}A$
+
+By 
+\begin{align*}
+	\begin{bmatrix}
+		1 & 0 & -2 & -1 \\
+		0 & 1 & 1 & 1 \\
+		0 & 0 & 0 & 0
+	\end{bmatrix}\begin{bmatrix}
+	x_1 \\ x_2 \\ x_3 \\ x_4 
+	\end{bmatrix} = 0
+\end{align*}
+
+By observation
+
+\[
+\operatorname{null} A = \left\{ \begin{bmatrix}
+	2 \\ -1 \\ 1 \\ 0
+\end{bmatrix}, \begin{bmatrix}
+	1 \\ -1 \\ 0 \\ 1
+\end{bmatrix} \right\}
+\]
+
 \vspace{3cm}
 \vfill
 \section*{Exercise 14 \hfill {\normalsize (4 points)}}
@@ -472,6 +1180,41 @@ v_3=\begin{bmatrix}1\\1\\2\end{bmatrix}.
 Determine the condition on $(a,b,c)$ for $[a\;\;b\;\;c]^T$ to belong to their span. When that condition holds, give all coefficient triples in the linear combination. Are $v_1,v_2,v_3$ linearly independent?
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+\[
+\alpha v_1 + \beta v_2 + \gamma v_3 = \begin{bmatrix}
+	a \\ b \\ c
+\end{bmatrix}
+\]
+
+Therefore 
+\[
+\alpha + \gamma = a, \quad \beta + \gamma = b, \quad \alpha + \beta + 2\gamma = c 
+\]
+
+and we can find that 
+
+\begin{align*}
+	a + b &= \alpha + \beta + 2\gamma \\ & = c
+\end{align*}
+
+we can let $\gamma = t$. then $\alpha = a - t, \beta = b - t$
+
+Therefore, the coefficient triples in the linear combination is
+\[
+(\alpha, \quad \beta,\quad \gamma) = (a -t, \quad b - t , \quad t),\quad t\in \mathbb R
+\]
+
+Finally, 
+
+\[
+\begin{bmatrix}
+	a \\ b \\ c
+\end{bmatrix} \in \operatorname{span} \left\{ v_1, v_2, v_3 \right\} \Leftrightarrow c = a + b
+\]
+
+and due to $v_1 + v_2 - v_3 = 0$, so that $v_1, v_2, v_3$ are linear depend.
+
 \vspace{3cm}
 \clearpage
 \section*{Exercise 15 \hfill {\normalsize (4 points)}}
@@ -482,6 +1225,47 @@ A=\begin{bmatrix}2&1&0\\0&2&0\\0&0&-1\end{bmatrix}.
 State the algebraic and geometric multiplicities of each eigenvalue, and determine whether $A$ is diagonalizable over $\mathbb R$.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+\begin{align*}
+	\det(sI - A) &= \begin{vmatrix}
+		s - 2 & -1 & 0 \\
+		0 & s - 2 &  0 \\
+		0 & 0 & s + 1 
+	\end{vmatrix} \\
+	&= (s-2)^2 (s + 1)
+\end{align*}
+
+For $s = 2$
+
+\begin{align*}
+	(sI - A)v &= \begin{bmatrix}
+		0 & -1 & 0 \\
+		0 & 0 & 0 \\
+		0 & 0 & 3
+	\end{bmatrix}v = 0\quad \Rightarrow v = \begin{bmatrix}
+	1 \\ 0 \\ 0
+	\end{bmatrix}
+\end{align*}
+
+therefore, AM = 2 and GM = 1 with $s = 2$
+
+
+\vspace{1cm}
+For $ s= -1$
+
+\begin{align*}
+	(sI - A) v &= \begin{bmatrix}
+		-3 & -1 & 0 \\
+		0 & -3  & 0 \\
+		0 & 0 & 0
+	\end{bmatrix}v = 0 \quad \Rightarrow v = \begin{bmatrix}
+	0 \\ 0 \\ 1
+	\end{bmatrix}
+\end{align*}
+
+therefore, AM = 1 and GM = 1 with $s = -1$
+
+because at $s = 2$, the GM $\neq$ AM, therefore, A can not be diagonalizable over $\mathbb R$
 \vspace{3cm}
 \vfill
 \section*{Exercise 16 \hfill {\normalsize (4 points)}}
@@ -492,6 +1276,35 @@ Construct a real $3\times3$ companion matrix, with ones on the superdiagonal, wh
 Verify its characteristic polynomial.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+\begin{align*}
+	\det (sI - A) &= (s + 2) (s - (-1 + 2j)) (s - (-1 - 2j)) \\
+	&= (s + 2) ( (s + 1)^2 + 4 ) \\
+	&= (s + 2) ( s^2 + 2s + 5) \\
+	&= s^3 + 2s^2 + 5s + 2s^2 + 4s + 10  \\
+	&= s^3 + 4s^2 + 9s + 10\\
+	&\triangleq a_3 s^3 + a_2 s^2 + a_1 s + a_0
+\end{align*}
+
+Therefore 
+\[
+a_0 = 10, \quad a_1 = 9, \quad a_2 = 4, \quad a_3 = 1
+\]
+
+Finally, 
+
+\[
+A = \begin{bmatrix}
+	0 & 1 & 0 \\
+	0 & 0 & 1 \\
+	-a_0 & -a_1 & -a_2
+\end{bmatrix} = \begin{bmatrix}
+	0 & 1 & 0 \\
+0 & 0 & 1 \\
+-10 & -9 & -4
+\end{bmatrix}
+\]
+
 \vspace{3cm}
 \clearpage
 \section*{Exercise 17 \hfill {\normalsize (4 points)}}
@@ -502,8 +1315,23 @@ Let $v,w\in\mathbb R^4$ be nonzero and let $A=vw^T$. Find the rank and nullity o
 Justify your conclusions.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+\subsubsection*{(a) $w^T v = 3$}
+\[
+A = vw^T \Rightarrow Av = vw^Tv = 3v \Rightarrow \lambda = 3
+\]
+\[
+\operatorname{range}A = \operatorname{span}\{v\} \Rightarrow \operatorname{rank}A = 1
+\]
+\[
+\because \dim A = 4 \\ \therefore \operatorname{nullity} A= \dim A - \operatorname{rank} A = 3
+\]
+
+\subsubsection*{(b)}
+
 \vspace{3cm}
 \vfill
+\clearpage
 \section*{Exercise 18 \hfill {\normalsize (4 points)}}
 A real $3\times3$ matrix $A$ has eigenvectors
 \[
@@ -514,6 +1342,59 @@ v_3=\begin{bmatrix}0\\1\\-1\end{bmatrix}
 corresponding to $-2,-1,1$, respectively. Find the response of $\dot x=Ax$ with $x(0)=[2\;\;3\;\;1]^T$. Characterize all initial states whose responses tend to zero as $t\to\infty$.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+As $s_1 = -2$, $v_1 = \begin{bmatrix}
+	1 \\ 0 \\ 0
+\end{bmatrix}$, and as $s_2 = -1$, $v_2 = \begin{bmatrix}
+0 \\ 1\\ 1
+\end{bmatrix}$, and as $s_3 = 1 $, $v_3 = \begin{bmatrix}
+0 \\ 1 \\ -1
+\end{bmatrix}$
+
+Therefore
+
+\[
+A = TJT^{-1} ,\quad J = \begin{bmatrix}
+	-2 & 0 & 0 \\
+	0 & -1 & 0 \\ 
+	0 & 0 & 1 
+\end{bmatrix},\quad T = \begin{bmatrix}
+ 	1 & 0 & 0 \\
+ 	0 & 1 & 1 \\
+ 	0 & 1 & -1
+\end{bmatrix} \Rightarrow T^{-1} = {1\over2}\begin{bmatrix}
+2 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 1 & -1
+\end{bmatrix}
+\]
+
+\begin{align*}
+	x(t) &= e^{At}x(0) \\
+	&=  {1\over2}\begin{bmatrix}
+		1 & 0 & 0 \\
+		0 & 1 & 1 \\
+		0 & 1 & -1
+	\end{bmatrix}\begin{bmatrix}
+	e^{-2t} & 0 & 0 \\
+	0 & e^{-t} & 0  \\
+	0 & 0 & e^{t}
+	\end{bmatrix}\begin{bmatrix}
+	2 & 0 & 0 \\
+	0 & 1 & 1 \\
+	0 & 1 & -1
+	\end{bmatrix} \cdot \begin{bmatrix}
+	2 \\ 3 \\ 1
+	\end{bmatrix} \\
+	&= \begin{bmatrix}
+		2e^{-2t} \\
+		2e^{-t} + e^{t} \\
+		2e^{-t}- e^t
+	\end{bmatrix}
+\end{align*}
+
+
+
 \vspace{3cm}
 \clearpage
 \section*{Exercise 19 \hfill {\normalsize (4 points)}}
@@ -525,6 +1406,92 @@ A\begin{bmatrix}1\\j\end{bmatrix}
 Find the real response of $\dot x=Ax$ for $x(0)=[2\;\;-1]^T$. Determine whether this nonzero response is periodic and whether it tends to zero.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+We eignenvalue $\lambda = -1 + 2j$, there are eigenvector $v = \begin{bmatrix}
+	1 \\ j
+\end{bmatrix}$
+
+\[
+x(0) =\begin{bmatrix}
+	2 \\ -1
+\end{bmatrix}= \left( 1 + {j\over2} \right)\begin{bmatrix}
+1 \\j
+\end{bmatrix} + \left(1 - {j\over2}\right)\begin{bmatrix}
+1 \\ -j
+\end{bmatrix} = \left(1 + {j\over2}\right)v + \left(1 - {j\over2}\right)\bar v
+\]
+
+\begin{align*}
+	x(t) &= \left(1 + {j\over2}\right) e^{\lambda t} v + \left(1 - {j \over 2}\right) e^{\bar \lambda t} \bar v \\
+	&= \left(1 + {j\over2}\right) e^{\lambda t} v + \left(1 - {j \over 2}\right) \overline  {e^{\lambda t}  v} \\
+	&= \left( 1 + {j\over 2} \right) e^{(-1 + 2j)t} \begin{bmatrix}
+		1 \\ j
+	\end{bmatrix} + \left(1 - {j\over 2}\right) e^{(-1 - 2j)t} \begin{bmatrix}
+	1 \\ -j
+	\end{bmatrix} \\
+	&= \left( 1 + {j\over 2} \right)e^{-t}(\cos2t + j\sin2t) \begin{bmatrix}
+		1 \\ j
+	\end{bmatrix} + \left(1 - {j\over 2}\right)e^{-t} (\cos 2t - j\sin 2t) \begin{bmatrix}
+		1 \\ -j
+	\end{bmatrix} \\
+	&= e^{-t} \left\{ \left(\cos 2t - {1\over2} \sin 2t\right) + j \left( {1\over 2} \cos 2t + \sin 2t\right) \right\} \begin{bmatrix}
+		1 \\ j
+	\end{bmatrix} \\
+	&\qquad + e^{-t} \left\{ \left(\cos 2t - {1\over2} \sin 2t\right) - j \left( {1\over 2} \cos 2t + \sin 2t\right) \right\} \begin{bmatrix}
+		1 \\ -j
+	\end{bmatrix} \\
+	&= e^{-t} \begin{bmatrix}
+		\left(\cos 2t - {1\over2} \sin 2t\right) + j \left( {1\over 2} \cos 2t + \sin 2t\right) \\
+		j\left(\cos 2t - {1\over2} \sin 2t\right) - \left( {1\over 2} \cos 2t + \sin 2t\right)
+	\end{bmatrix} \\
+	&\qquad + e^{-t} \begin{bmatrix}
+		\left(\cos 2t - {1\over2} \sin 2t\right) - j \left( {1\over 2} \cos 2t + \sin 2t\right) \\
+		-j\left(\cos 2t - {1\over2} \sin 2t\right) - \left( {1\over 2} \cos 2t + \sin 2t\right)
+	\end{bmatrix} \\
+	&= e^{-t} \begin{bmatrix}
+		2 \left(\cos 2t - {1\over2} \sin 2t\right) \\
+		-2 \left( {1\over 2} \cos 2t + \sin 2t\right)
+	\end{bmatrix} \\
+	&= e^{-t} \begin{bmatrix}
+		2\cos 2t - \sin 2t \\
+		-\cos 2t - 2\sin 2t
+	\end{bmatrix}
+	\end{align*}
+	
+	Since there is an exponentially decaying term $e^{-t}$ multiplying the trigonometric functions, the response $x(t)$ is \textbf{not periodic}. 
+	Furthermore, as $t \to \infty$, the term $e^{-t} \to 0$, and the trigonometric functions are bounded, so the response \textbf{tends to zero} (i.e., $\lim_{t \to \infty} x(t) = 0$).
+
+\clearpage
+\subsection*{Solution (Alternative Method)}
+
+Let the complex eigenvalue be $\lambda = -1 + 2j$ and its corresponding eigenvector $v = \begin{bmatrix} 1 \\ j \end{bmatrix}$.
+A complex solution to the system is given by $z(t) = e^{\lambda t}v$.
+By Euler's formula, we can expand $z(t)$ and separate it into real and imaginary parts:
+\begin{align*}
+	z(t) &= e^{(-1+2j)t} \begin{bmatrix} 1 \\ j \end{bmatrix} \\
+	&= e^{-t}(\cos 2t + j\sin 2t) \begin{bmatrix} 1 \\ j \end{bmatrix} \\
+	&= e^{-t} \begin{bmatrix} \cos 2t + j\sin 2t \\ j\cos 2t - \sin 2t \end{bmatrix} \\
+	&= \underbrace{e^{-t} \begin{bmatrix} \cos 2t \\ -\sin 2t \end{bmatrix}}_{x_{Re}(t)} + j \underbrace{e^{-t} \begin{bmatrix} \sin 2t \\ \cos 2t \end{bmatrix}}_{x_{Im}(t)}
+\end{align*}
+
+Since $A$ is a real matrix, both the real part $x_{Re}(t)$ and the imaginary part $x_{Im}(t)$ are valid linearly independent real solutions. The general real solution is their linear combination:
+\[
+x(t) = c_1 x_{Re}(t) + c_2 x_{Im}(t) = c_1 e^{-t} \begin{bmatrix} \cos 2t \\ -\sin 2t \end{bmatrix} + c_2 e^{-t} \begin{bmatrix} \sin 2t \\ \cos 2t \end{bmatrix}
+\]
+
+Use the initial condition $x(0) = \begin{bmatrix} 2 \\ -1 \end{bmatrix}$ to find $c_1$ and $c_2$:
+\[
+x(0) = c_1 \begin{bmatrix} 1 \\ 0 \end{bmatrix} + c_2 \begin{bmatrix} 0 \\ 1 \end{bmatrix} = \begin{bmatrix} c_1 \\ c_2 \end{bmatrix} = \begin{bmatrix} 2 \\ -1 \end{bmatrix}
+\]
+Thus, $c_1 = 2$ and $c_2 = -1$. Substituting these back into the general solution yields:
+\begin{align*}
+	x(t) &= 2 e^{-t} \begin{bmatrix} \cos 2t \\ -\sin 2t \end{bmatrix} - e^{-t} \begin{bmatrix} \sin 2t \\ \cos 2t \end{bmatrix} \\
+	&= e^{-t} \begin{bmatrix} 2\cos 2t - \sin 2t \\ -\cos 2t - 2\sin 2t \end{bmatrix}
+\end{align*}
+
+Since there is an exponentially decaying term $e^{-t}$ multiplying the trigonometric functions, the response $x(t)$ is \textbf{not periodic}. 
+Furthermore, as $t \to \infty$, the term $e^{-t} \to 0$, and the trigonometric functions are bounded, so the response \textbf{tends to zero} (i.e., $\lim_{t \to \infty} x(t) = 0$).
+
 \vspace{3cm}
 \vfill
 \section*{Exercise 20 \hfill {\normalsize (4 points)}}
@@ -537,6 +1504,66 @@ x(0)=\begin{bmatrix}1\\0\end{bmatrix},
 find a real closed-form expression for $x(k)$. Is the response periodic? Does it tend to zero? Explain both answers.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+\begin{align*}
+	\det (sI - A) = \begin{vmatrix}
+		s & {1\over2} \\
+		{-1\over 2} & s
+	\end{vmatrix} = s^2 + {1\over4} = \left(s + {1\over2}j\right) \left(s - {1\over 2}j\right) = 0, \quad s = \pm{j\over2 }
+\end{align*}
+
+For $s = {j\over2}$
+
+\begin{align*}
+	(sI - A) v &= \begin{bmatrix}
+		{j\over2} & {1\over2} \\
+		{-1\over2} & {j\over2}
+	\end{bmatrix} v = 0, \quad v = \begin{bmatrix}
+	j \\ 1
+	\end{bmatrix} \triangleq v_1
+\end{align*}
+
+For $s = {-j\over2}$
+
+\[
+(sI - A)v = \begin{bmatrix}
+	{-j\over2} & {1\over2} \\
+	{-1\over2} & {-j\over2}
+\end{bmatrix}v = 0, \quad v = \begin{bmatrix}
+j \\ -1
+\end{bmatrix}\triangleq v_2
+\]
+
+\[
+x(0) = \begin{bmatrix}
+	1 \\ 0
+\end{bmatrix} = {-1\over2}j \begin{bmatrix}
+j \\ 1
+\end{bmatrix} + {-1\over2}j \begin{bmatrix}
+j \\ -1
+\end{bmatrix} = {-j\over2} (v_1 + v_2)
+\]
+
+Therefore
+
+\begin{align*}
+	x(k) &= \sum_i \alpha_i \lambda_i^k v_i ,  \quad \alpha_i \text{ is just constant coefficient} \\
+	&= {-j\over2}  \left(
+	 \left({j\over2}\right)^k \begin{bmatrix}
+	 	j \\ 1
+	 \end{bmatrix}  + \left({-j\over2}\right)^k \begin{bmatrix}
+	 j \\ -1
+	 \end{bmatrix} \right) \\
+	 &= {-j \over 2^{k + 1}} \left( \begin{bmatrix}
+	 	 j^{k + 1} \\ j^k
+	 \end{bmatrix}  +  (-1)^k \begin{bmatrix}
+	 	j^{k + 1} \\ (-1)\cdot j^k
+	 \end{bmatrix} \right) \\
+	 &= {-j^{k + 1} \over 2^{k + 1}} \left( \begin{bmatrix}
+	 	j  + (-1)^k j \\ 1 + (-1)^{k + 1} 
+	 \end{bmatrix} \right)
+\end{align*}
+
 \vspace{3cm}
 \clearpage
 \section*{Exercise 21 \hfill {\normalsize (5 points)}}
@@ -547,8 +1574,33 @@ Suppose $A\in\mathbb R^{3\times3}$ and
 Using the Cayley--Hamilton theorem, express (a) $A^3$, (b) $A^5$, and (c) $A^{-1}$ as linear combinations of $I,A,A^2$. Justify the existence of $A^{-1}$.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+\subsubsection*{(a) $A^3$}
+
+\begin{align*}
+	p(s) &= \det(sI - A) = s^3 + 4s^2 + 5s + 2 = 0\\
+	p(A) &= A^3 + 4A^2 + 5A + 2I = 0 
+\end{align*}
+
+\[
+\Rightarrow A^3 = -4A^2 - 5A - 2I 
+\]
+
+\subsubsection*{(b) $A^5$}
+
+\begin{align*}
+	A^4 &= A\cdot A^3 \\
+	&= -4A^3 - 5A^2 - 2A	
+\end{align*}
+\begin{align*}
+	A^5 &= A^2 A^3 \\
+		&= 
+\end{align*}
+
+\subsubsection*{(c) $A^{-1}$}
 \vspace{3cm}
 \vfill
+\clearpage
 \section*{Exercise 22 \hfill {\normalsize (5 points)}}
 For
 \[
@@ -557,6 +1609,54 @@ A=\begin{bmatrix}-2&1\\0&-2\end{bmatrix},
 compute $e^{At}$ in two ways: (a) using the nilpotent part of $A$ and the exponential series; (b) by inverse Laplace transformation of $(sI-A)^{-1}$. Use your result to find $x(t)$ for $\dot x=Ax$, $x(0)=[0\;\;1]^T$.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+\subsubsection*{(a) Using nilpotent part of A and the exponential series}
+
+
+\[
+A = \begin{bmatrix}
+	-2 & 1 \\ 0 & -2
+\end{bmatrix} = -2I + N ,\quad N = \begin{bmatrix}
+0 & 1 \\ 0 & 0
+\end{bmatrix}, \quad N^2 = O_{2\times2}
+\]
+
+\begin{align*}
+e^{At} &= e^{-2I + N} = e^{-2t} e^{Nt} = e^{-2t} \sum_{i = 0}^\infty { (Nt)^i\over i!} = e^{-2t} (I + tN) \\
+&= \begin{bmatrix}
+	e^{-2t} & te^{-2t} \\
+	0 & e^{-2t}
+\end{bmatrix} 
+\end{align*}
+\vspace{1cm}
+\subsubsection*{(b) By inverse Lapalce transformation}
+
+By
+\[
+\mathcal L \{e^{At}\} = (sI - A)^{-1} \Leftrightarrow  e^{At} = \mathcal{L}^{-1} \{ (sI - A)^{-1} \}
+\]
+
+\begin{align*}
+	(sI - A)^{-1} &= \begin{bmatrix}
+		s +2 & -1 \\
+		0 & s + 2
+	\end{bmatrix}^{-1} \\
+	&={1\over (s + 2)^2} \begin{bmatrix}
+		s + 2 & 1 \\
+		0 & s + 2
+	\end{bmatrix} \\
+	&= \begin{bmatrix}
+		{1\over s + 2} & {1\over (s + 2)^2} \\
+		0& {1\over s + 2}
+	\end{bmatrix} \\ \\
+	\mathcal{L}^{-1} \{ (sI - A)^{-1} \} &= \begin{bmatrix}
+		e^{-2t} & te^{-2t} \\
+		0 & e^{-2t}
+	\end{bmatrix}
+\end{align*}
+
+
+
 \vspace{3cm}
 \clearpage
 \section*{Exercise 23 \hfill {\normalsize (5 points)}}
@@ -569,6 +1669,75 @@ y=\begin{bmatrix}1&0\end{bmatrix}x,\qquad x(0^-)=0.
 For $u(t)=\delta(t)$, find $x(0^+)$, $x(t)$ for $t>0$, and $y(t)$. Determine which system modes occur in the state response and in the output response, and explain the difference.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+\[
+\begin{cases}
+	\dot x &= Ax + Bu \\
+	y &= Cx + Du
+\end{cases} \Rightarrow A = \begin{bmatrix}
+-1 & 0 \\ 0 & -3
+\end{bmatrix},\quad B = \begin{bmatrix}
+1 \\ 1
+\end{bmatrix}, C = \begin{bmatrix}
+1 & 0 
+\end{bmatrix}, D = 0
+\]
+
+\begin{align*}
+	\dot x &= Ax + Bu \Rightarrow \dot x - Ax = Bu \\ 
+	e^{-At}\left({d\over dt} x - Ax\right) &= e^{-At} Bu \\
+	&= e^{-At} {d\over dt} x - A e^{-At} x \\
+	&= {d\over dt} e^{-At}x(t)
+\end{align*}
+
+\[
+{d\over dt} e^{-At}x(t) = e^{-At}Bu(t) \Rightarrow e^{-At} x(t) - e^{-A0^-}x(0^-)  = \int_{0^-}^t e^{-A\tau}Bu(\tau)d\tau
+\]
+
+\[\Rightarrow
+x(t) = e^{At} \left( x(0^-)  + \int_{0^-}^t e^{-A\tau} Bu(\tau) d\tau \right)
+\]
+
+With $x(0^-) =0$ and $u(t) = \delta (t)$
+
+\begin{align*}
+	x(t) &= e^{At} \int_{0^-}^t e^{-A\tau}B\delta(\tau)d\tau\\
+	&= e^{At}B, \quad t > 0\\
+	y(t) &= Cx + Du , \quad D = 0\\
+	&= Ce^{At}B, \quad t > 0
+\end{align*}
+
+\[
+e^{At} = \begin{bmatrix}
+	e^{-t} & 0 \\
+	0 & e^{-3t}
+\end{bmatrix}, \quad x(t) = e^{At}B = \begin{bmatrix}
+e^{-t} & 0 \\
+0 & e^{-3t}
+\end{bmatrix}\begin{bmatrix}
+1 \\ 1
+\end{bmatrix} = \begin{bmatrix}
+e^{-t} \\ e^{-3t}
+\end{bmatrix},\quad t > 0
+\]
+
+Therefore
+
+\begin{align*}
+	x(0^+) = \begin{bmatrix}
+		1 \\1
+	\end{bmatrix}
+\end{align*}
+
+
+\[
+y(t) = Ce^{At}B = \begin{bmatrix}
+	1 & 0 
+\end{bmatrix}\begin{bmatrix}
+e^{-t} \\ e^{-3t}
+\end{bmatrix} = e^{-t}, \quad t > 0
+\]
+
 \vspace{3cm}
 \vfill
 \section*{Exercise 24 \hfill {\normalsize (5 points)}}
@@ -576,6 +1745,556 @@ Let $A\in\mathbb R^{n\times n}$ have eigenvalue $j\omega$, where $\omega>0$, wit
 Prove that $\dot x=Ax$ has a nonzero real periodic solution. Construct a suitable real initial state from $p,q$ and give a period. Does the existence of this solution imply that every solution is bounded? Justify your answer with a proof or counterexample.
 \subsection*{Solution}
 % 在這裡撰寫解答。
+
+\begin{align*}
+x(t) &= e^{j\omega t} (p + jq) \\
+&= (\cos \omega t + j\sin \omega t) (p + jq) \\
+&= p\cos \omega t - q\sin \omega t + j( q\cos \omega t + p\sin \omega t ) \\ \\
+x_{re}(t) &= p\cos \omega t - q\sin \omega t \text{ is a real solution}
+\end{align*}
+
 \vspace{3cm}
+\clearpage
+\section*{Exercise 25 \hfill {\normalsize (Supplementary)}}
+Consider the continuous-time system
+\[
+\dot x=Ax,\qquad
+A=\begin{bmatrix}0&-1\\4&0\end{bmatrix},\qquad
+x(0)=\begin{bmatrix}1\\0\end{bmatrix}.
+\]
+Find the eigenvalues and a complex eigenvector $v=p+jq$ for the eigenvalue
+with positive imaginary part. Using the real basis matrix
+$P=[\,p\; -q\,]$, find the real $2\times2$ block similar to $A$. Obtain
+the real response $x(t)$ and determine whether it is periodic.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+
+\begin{align*}
+	\det (sI - A) &= \begin{vmatrix}
+		s & 1 \\ -4 & s
+	\end{vmatrix} \\ &= s^2 + 4 = 0, \quad s = \pm 2j \text{  (choose positive)}
+\end{align*}
+
+For $s = 2j$
+
+\begin{align*}
+	(sI - A)v &= \begin{bmatrix}
+		2j & 1 \\ -4 & 2j
+	\end{bmatrix}v = \begin{bmatrix}
+	0 \\ 0
+	\end{bmatrix}, \quad v = \begin{bmatrix}
+	1 \\ -2j
+	\end{bmatrix}
+\end{align*}
+
+\[
+v = \begin{bmatrix}
+	1 \\ -2j
+\end{bmatrix} = \begin{bmatrix}
+1 \\ 0 
+\end{bmatrix} + j \begin{bmatrix}
+0 \\ -2
+\end{bmatrix}, \Rightarrow p = \begin{bmatrix}
+1 \\ 0
+\end{bmatrix}, \quad q = \begin{bmatrix}
+0 \\ -2
+\end{bmatrix}
+\]
+\[
+P = \begin{bmatrix}
+	p & -q
+\end{bmatrix} = \begin{bmatrix}
+1 & 0 \\ 0 & 2
+\end{bmatrix}
+\]
+
+The basis is defined as $A_{new}$ simplied as $B$, and the transformed ordination is $y$ intead the origin is $x$.
+\[
+x = Py
+\]
+
+and the system is 
+\[
+\dot x = Ax 
+\]
+
+
+\[
+\Rightarrow \dot x  = {d\over dt} (Py) = P\dot y, \quad Ax = A(Py) = APy \Rightarrow P\dot y = APy
+\]
+
+Finally, 
+
+\[
+\dot y = P^{-1}AP y = A_{new} y = B y
+\]
+
+\begin{align*}
+	B &= P^{-1}AP = \begin{bmatrix}
+		1 & 0 \\
+		0 & {1\over2}
+	\end{bmatrix}\begin{bmatrix}
+	0 & -1 \\ 4 & 0
+	\end{bmatrix}\begin{bmatrix}
+	1 & 0 \\ 0 & 2
+	\end{bmatrix} \\
+	&= \begin{bmatrix}
+		0 & -1 \\
+		2 & 0
+	\end{bmatrix}\begin{bmatrix}
+	1 & 0 \\ 0 & 2
+	\end{bmatrix} \\
+	&=\begin{bmatrix}
+		0 & -2 \\
+		2 & 0
+	\end{bmatrix}
+\end{align*}
+
+By
+\[
+y = P^{-1} x , \quad x(0) = \begin{bmatrix}
+	1 \\ 0
+\end{bmatrix} \Rightarrow y(0) = \begin{bmatrix}
+1 & 0 \\ 0 & {1\over2} 
+\end{bmatrix} \begin{bmatrix}
+1 \\ 0
+\end{bmatrix} = \begin{bmatrix}
+1 \\ 0
+\end{bmatrix}
+\]
+Therefore
+\begin{align*}
+	y(t) &= e^{Bt}y(0) 
+\end{align*}
+
+To find $e^{Bt}$, we need to fine the eigen-pair of $B$ first.
+
+\begin{align*}
+	\det (sI - B) &= \begin{vmatrix}
+		s & 2 \\ -2 & s
+	\end{vmatrix} = s^2 + 4 = 0 \Rightarrow s= \pm 2j
+\end{align*}
+
+For $s = 2j$
+\begin{align*}
+	(sI - B)v &= \begin{bmatrix}
+		2j & 2 \\ -2 & 2j
+	\end{bmatrix}v = \begin{bmatrix}
+	0 \\ 0
+	\end{bmatrix}\Rightarrow v = \begin{bmatrix}
+	1 \\ -j
+	\end{bmatrix}
+\end{align*}
+
+For $s = -2j$
+\begin{align*}
+	(sI - B)v &- \begin{bmatrix}
+		-2j & 2 \\ -2 & -2j
+	\end{bmatrix}v = \begin{bmatrix}
+	0 \\ 0
+	\end{bmatrix} \Rightarrow v = \begin{bmatrix}
+	1 \\ j
+	\end{bmatrix}
+\end{align*}
+
+\[
+J = \begin{bmatrix}
+	2j & 0 \\
+	0	& -2j
+\end{bmatrix}, \quad T = \begin{bmatrix}
+1 & 1 \\ -j & j
+\end{bmatrix}, \quad T^{-1} = {1\over2j} \begin{bmatrix}
+j & -1 \\ j & 1
+\end{bmatrix} = {1\over2} \begin{bmatrix}
+1 & j\\ 1 & -j
+\end{bmatrix}
+\]
+
+\begin{align*}
+	e^{Bt} &= {1\over2}\begin{bmatrix}
+		1 & 1 \\
+		-j & j
+	\end{bmatrix}\begin{bmatrix}
+	e^{2jt} & 0 \\
+	0 & e^{-2jt}
+	\end{bmatrix} \begin{bmatrix}
+	1 & j \\ 1 & -j
+	\end{bmatrix} \\
+	&= \begin{bmatrix}
+		\cos 2t & -\sin 2t \\
+		\sin 2t & \cos 2t
+	\end{bmatrix}
+\end{align*}
+
+\[
+y(t) = \begin{bmatrix}
+	\cos 2t & -\sin 2t \\
+	\sin 2t & \cos 2t
+\end{bmatrix}\begin{bmatrix}
+1 \\ 0
+\end{bmatrix} = \begin{bmatrix}
+\cos 2t \\ \sin 2t
+\end{bmatrix}
+\]
+
+Therefore 
+
+\[
+x(t) = \begin{bmatrix}
+	1 & 0 \\ 0 & 2
+\end{bmatrix}\begin{bmatrix}
+\cos 2t \\ \sin 2t
+\end{bmatrix} = \begin{bmatrix}
+\cos 2t & 0 \\ 0 & 2\sin2t
+\end{bmatrix}
+\]
+
+\vspace{4cm}
+\clearpage
+\section*{Exercise 26 \hfill {\normalsize (Supplementary)}}
+Consider the discrete-time system
+\[
+x(k+1)=Ax(k),\qquad
+A=\begin{bmatrix}0&-2\\[2pt]\tfrac12&0\end{bmatrix},\qquad
+x(0)=\begin{bmatrix}2\\0\end{bmatrix}.
+\]
+Find the eigenvalues and a complex eigenvector $v=p+jq$ for the eigenvalue
+with positive imaginary part. Using $P=[\,p\; -q\,]$, find the real block
+similar to $A$. Obtain a real closed-form expression for $x(k)$ and determine
+whether the response is periodic and whether it tends to zero.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{4cm}
+\clearpage
+\section*{Exercise 27 \hfill {\normalsize (Supplementary)}}
+Let
+\[
+A=\begin{bmatrix}
+-1&0&1\\
+0&-1&0\\
+0&0&-1
+\end{bmatrix}.
+\]
+Find the eigenvalue and its algebraic and geometric multiplicities. Construct
+a real Jordan basis and determine the real Jordan form of $A$. Then, for
+$x_{\mathrm c}(0)=x_{\mathrm d}(0)=\begin{bmatrix}0\\0\\1\end{bmatrix}$,
+find the responses of the continuous-time system $\dot x_{\mathrm c}=Ax_{\mathrm c}$
+and the discrete-time system $x_{\mathrm d}(k+1)=Ax_{\mathrm d}(k)$. Determine
+whether each response tends to zero and whether each is bounded.
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{5cm}
+\clearpage
+\section*{Exercise 28 \hfill {\normalsize (Supplementary)}}
+Suppose $A$ is a real $4\times4$ matrix and the vectors
+\[
+v_1=\begin{pmatrix}1\\-1\\1\\-1\end{pmatrix},\qquad
+v_2=\begin{pmatrix}1\\1\\1\\1\end{pmatrix},\qquad
+v_3=\begin{pmatrix}1\\j\\-1\\-j\end{pmatrix}
+\]
+are eigenvectors of $A$ corresponding to eigenvalues $-1$, $2$, and
+$-1+2j$, respectively. Find the real response $x(t)$ of $\dot x=Ax$ to
+\[
+x(0)=\begin{pmatrix}3\\-3\\-1\\-3\end{pmatrix}.
+\]
+Does this response tend to zero as $t\to\infty$?
+
+\subsection*{Solution}
+% 在這裡撰寫解答。
+
+\[
+\lambda_3 = \alpha + j\omega = -1 + 2j \Rightarrow \alpha = -1, \quad\omega = 2
+\]
+\[
+v_3 = u_3 + jp_3 = \begin{bmatrix}
+	1 \\ 0 \\ -1 \\ 0
+\end{bmatrix} + j \begin{bmatrix}
+	0 \\ 1 \\ 0 \\ -1
+\end{bmatrix}
+\]
+
+With magic 
+
+\[
+x(0) = 2v_1 - v_2  + 2u_3
+\]
+
+Then
+\[
+x_{v_1}(t) = e^{\lambda_1 t} v_1 = e^{-t} v_1 = \begin{bmatrix}
+	e^{-t} \\ - e^{-t} \\ e^{-t} \\ -e^{-t}
+\end{bmatrix}
+\]
+
+\[
+x_{v_2}(t) = e^{\lambda_2 t} v_2 = e^{2t} v_2 = \begin{bmatrix}
+	e^{2t} \\e^{2t} \\e^{2t} \\e^{2t} \\
+\end{bmatrix}
+\]
+
+\begin{align*}
+	x_{u_3}(t) &= \Re \left\{ e^{\lambda_3 t} v_3 \right\} \\
+	&= \Re \left\{ e^{(\alpha + j\omega)t} (u_3 + jp_3)\right\} \\
+	&= \Re \left\{ e^{\alpha t} (\cos \omega t + j\sin \omega t) (u + jp) \right\} \\
+	&= e^{\alpha t} \Re \left\{ u\cos \omega t - p\sin \omega t + j(p\cos \omega t + u\sin \omega t) \right\} \\
+	&=e^{\alpha t} (u_3\cos \omega t - p_3 \sin \omega t) \\
+	&= e^{-t} \cos 2t \begin{bmatrix}
+		1 \\ 0 \\ -1 \\ 0
+	\end{bmatrix} - e^{-t} \sin 2t \begin{bmatrix}
+	0 \\ 1 \\ 0 \\ -1
+	\end{bmatrix} = \begin{bmatrix}
+	e^{-t} \cos 2t \\
+	-e^{-t} \sin 2t \\
+	-e^{-t} \cos 2t \\
+	e^{-t} \sin 2t
+	\end{bmatrix}
+\end{align*}
+
+Finally 
+
+\begin{align*}
+	x(t) &= 2x_{v_1}(t) - x_{v_2}(t) + 2x_{u_3} (t) \\
+	&= \begin{bmatrix}
+		2e^{-t} - e^{2t} + 2e^{-t}\cos 2t \\
+		-2e^{-t} - e^{2t} - 2e^{-t}\sin 2t \\
+		2e^{-t} - e^{2t} - 2e^{-t} \cos 2t \\
+		-2e^{-t} - e^{2t} + 2e^{-t}\sin 2t 
+	\end{bmatrix}
+\end{align*}
+
+And trivially, 
+the response will not tend to $0$ as $t\to\infty$ due to $e^{2t}$
+
+\vspace{1cm}
+\section*{Exercise 28(A) \hfill {\normalsize (Supplementary)}}
+Suppose $A$ is a real $4\times4$ matrix and the vectors
+\[
+v_1=\begin{pmatrix}1\\-1\\1\\-1\end{pmatrix},\qquad
+v_2=\begin{pmatrix}1\\1\\1\\1\end{pmatrix},\qquad
+v_3=\begin{pmatrix}1\\j\\-1\\-j\end{pmatrix}
+\]
+are eigenvectors of $A$ corresponding to eigenvalues $-1$, $2$, and
+$-1+2j$, respectively. Find the real response $x(t)$ of $\dot x=Ax$ to
+\[
+x(0)=\begin{pmatrix}3\\-3\\-1\\-3\end{pmatrix}.
+\]
+Does this response tend to zero as $t\to\infty$?
+
+\subsection*{Solution}
+
+\[
+\because v_3 \in \mathbb C \text{ are eigen-pair of } A \quad \therefore \bar v_3 \text{ is also eigen-pair of }A \text{ with eigenvalue } \bar\lambda_3
+\]
+
+\[
+V_3 = v_3 + \bar v_3 = \begin{bmatrix}
+	1 \\ j \\ -1 \\ -j
+\end{bmatrix} + \begin{bmatrix}
+	1 \\ -j \\ -1 \\ j
+\end{bmatrix} = \begin{bmatrix}
+2 \\ 0 \\- 2 \\ 0
+\end{bmatrix}
+\]
+
+\[
+x(0) = \begin{bmatrix}
+	3 \\ -3 \\ -1 \\ -3
+\end{bmatrix} =\begin{bmatrix}
+ 2 \\ -2 \\ 2 \\ -2
+\end{bmatrix} - \begin{bmatrix}
+1 \\ 1 \\ 1 \\ 1
+\end{bmatrix} + \begin{bmatrix}
+2 \\ 0 \\ -2 \\ 0 
+\end{bmatrix}= 2v_1 - v_2 + \underbrace{V_3}_{v_3 + \bar v_3}
+\]
+
+\[
+x_{v_1}(t) = e^{-t}v_1 = \begin{bmatrix}
+	e^{-t} \\ -e^{-t} \\ e^{-t} \\ -e^{-t}
+\end{bmatrix}
+\]
+
+\[
+x_{v_2}(t) = e^{2t}v_2 = \begin{bmatrix}
+	e^{2t} \\ e^{2t}\\ e^{2t}\\e^{2t}
+\end{bmatrix}
+\]
+
+\[
+x_{v_3}(t) = e^{(-1 + 2j)t} v_3 = e^{-t}\begin{bmatrix}
+	\cos 2 t + j\sin 2 t \\
+	-\sin 2 t + j\cos 2 t \\
+	-\cos 2  t - j\sin 2 t \\
+	\sin 2 t - j\cos 2  t
+\end{bmatrix}
+\]
+
+\[
+x_{\bar v_3 }(t) = e^{(-1 - 2j)t} \begin{bmatrix}
+	1 \\ -j \\ -1 \\ j
+\end{bmatrix} = e^{-t} \begin{bmatrix}
+\cos 2 t - j\sin 2 t \\
+-\sin 2  t - j\cos2 t \\
+-\cos 2  t + j\sin 2 t \\
+\sin 2 t + j\cos 2 t
+\end{bmatrix}
+\]
+
+\[
+x_{V_3}(t) = x_{v_3}(t) + x_{\bar v_3}(t) = \begin{bmatrix}
+	2e^{-t} \cos 2t \\
+	-2e^{-t} \sin 2t \\
+	-2e^{-t} \cos 2t \\
+	2e^{-t} \sin 2t 
+\end{bmatrix}
+\]
+
+\begin{align*}
+	x(t) &= 2x_{v_1}(t) - x_{v_2}(t) + x_{V_3}(t) \\
+	&= \begin{bmatrix}
+		2e^{-t} -e^{2t} + 2e^{-t}\cos 2t \\
+		-2e^{-t} -e^{2t} -2e^{-t}\sin 2t \\
+		2e^{-t} - e^{2t} -2e^{-t} \cos 2t \\
+		-2e^{-t} - e^{2t} + 2e^{-t} \sin 2t
+	\end{bmatrix}
+\end{align*}
+
+
+
+\vspace{4cm}
+\clearpage
+\section*{Exercise 29 \hfill {\normalsize (Supplementary)}}
+Suppose $A$ is a real $4\times4$ matrix and the vectors
+\[
+v_1=\begin{pmatrix}1\\-1\\1\\-1\end{pmatrix},\qquad
+v_2=\begin{pmatrix}1\\1\\1\\1\end{pmatrix},\qquad
+v_3=\begin{pmatrix}1\\j\\-1\\-j\end{pmatrix}
+\]
+are eigenvectors of $A$ corresponding to eigenvalues $-2$, $1$, and
+$-1+j$, respectively. Find the real response $x(t)$ of $\dot x=Ax$ to
+\[
+x(0)=\begin{pmatrix}3\\3\\-1\\3\end{pmatrix}.
+\]
+Does this response tend to zero as $t\to\infty$?
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{4cm}
+\clearpage
+\section*{Exercise 30 \hfill {\normalsize (Supplementary)}}
+Suppose $A$ is a real $4\times4$ matrix and the vectors
+\[
+v_1=\begin{pmatrix}1\\-1\\1\\-1\end{pmatrix},\qquad
+v_2=\begin{pmatrix}1\\1\\1\\1\end{pmatrix},\qquad
+v_3=\begin{pmatrix}1\\j\\-1\\-j\end{pmatrix}
+\]
+are eigenvectors of $A$ corresponding to eigenvalues $-2$, $\tfrac12$, and
+$1+j$, respectively. Find the real response $x(k)$ of
+$x(k+1)=Ax(k)$ to
+\[
+x(0)=\begin{pmatrix}5\\1\\1\\3\end{pmatrix}.
+\]
+Is this response bounded?
+\subsection*{Solution}
+% 在這裡撰寫解答。
+
+\[
+v_3 = u_3 + jp_3 = \begin{bmatrix}
+	1 \\ 0 \\ -1 \\ 0
+\end{bmatrix} + j\begin{bmatrix}
+0  \\ 1 \\ 0 \\ -1
+\end{bmatrix}, \quad u_3 = \begin{bmatrix}
+1 \\ 0 \\ -1 \\ 0
+\end{bmatrix}, \quad p_3 = \begin{bmatrix}
+0 \\ 1 \\ 0 \\ -1
+\end{bmatrix}
+\]
+
+\begin{align*}
+	x(0) &= \begin{bmatrix}
+		5 \\ 1\\1\\3
+	\end{bmatrix} = {1\over2} v_1 + {5\over2}v_2 + 2u_3 - p_3
+\end{align*}
+
+\[
+x_{v_1}(k) = \lambda_1^k v_1 = (-2)^k \begin{bmatrix}
+	1 \\ -1 \\ 1\\ -1
+\end{bmatrix} = \begin{bmatrix}
+(-2)^k \\ - (-2)^k \\ (-2)^k \\ -(-2)^k
+\end{bmatrix}
+\]
+
+\[
+x_{v_2}(k) = \lambda_2^k v_2 = \left({1\over2}\right)^k\begin{bmatrix}
+	1 \\ 1\\1\\1
+\end{bmatrix} = \begin{bmatrix}
+\left({1\over2}\right)^k\\\left({1\over2}\right)^k\\\left({1\over2}\right)^k\\\left({1\over2}\right)^k
+\end{bmatrix}
+\]
+
+By
+\[
+x(k + 1) = Ax(k) \Leftrightarrow x(k) = \lambda^k x(0) \overset{\text{Let}}{=} (\rho e^{j\theta})^k (u + jp)
+\]
+\begin{align*}
+	x(k) &= \rho^k (\cos \theta k + j\sin \theta k) (u + jp) \\
+	&= \rho^k (u\cos (k\theta) - p\sin (k\theta)) + j\rho^k( p\cos(k\theta) + u\sin (k\theta)) \\
+	&\triangleq x_u(k) + jx_p(k)
+\end{align*}
+
+Therefore
+\[
+v_3 = 1 + j = \sqrt2 e^{j {\pi\over4}}, \quad \rho = \sqrt2, \quad\theta = {\pi\over4}
+\]
+\begin{align*}
+	x_{u_3}(k) &= \sqrt2^k \cos \left(k{\pi\over4}\right) \begin{bmatrix}
+		1 \\ 0 \\ -1 \\ 0
+	\end{bmatrix} - \sqrt2^k \sin \left(k{\pi\over4}\right)\begin{bmatrix}
+	0 \\ 1 \\ 0 \\ -1
+	\end{bmatrix} \\
+	&= \sqrt2^k \begin{bmatrix}
+	\cos \left({k\pi\over4}\right) \\
+	-\sin \left({k\pi\over4}\right) \\
+	-\cos \left({k\pi\over4}\right) \\
+	\sin \left({k\pi\over4}\right)
+	\end{bmatrix} \\ \\ 
+	x_{p_3}(k) &= \sqrt2^k \cos \left({k\pi\over4}\right)\begin{bmatrix}
+		0 \\ 1 \\ 0 \\ -1
+	\end{bmatrix} + \sqrt2^k \sin\left({k\pi\over4}\right)\begin{bmatrix}
+	1 \\ 0 \\ -1 \\ 0
+	\end{bmatrix} \\
+	&= \sqrt2^k \begin{bmatrix}
+		\sin\left({k\pi\over4}\right) \\
+		\cos \left({k\pi\over4}\right) \\
+		-\sin \left({k\pi\over4}\right) \\
+		-\cos \left({k\pi\over4}\right)
+	\end{bmatrix}
+\end{align*}
+
+Finally, 
+
+\begin{align*}
+	x(k) &= {1\over2} x_{v_1}(k) + {5\over2} x_{v_2}(k) + 2 x_{u_3}(k) - x_{p_3}(k) \\
+	&= 
+\end{align*}
+
+\vspace{4cm}
+\clearpage
+\section*{Exercise 31 \hfill {\normalsize (Supplementary)}}
+Suppose $A$ is a real $4\times4$ matrix and the vectors
+\[
+v_1=\begin{pmatrix}1\\-1\\1\\-1\end{pmatrix},\qquad
+v_2=\begin{pmatrix}1\\1\\1\\1\end{pmatrix},\qquad
+v_3=\begin{pmatrix}1\\j\\-1\\-j\end{pmatrix}
+\]
+are eigenvectors of $A$ corresponding to eigenvalues $\tfrac13$, $-1$, and
+$\tfrac12+\tfrac12j$, respectively. Find the real response $x(k)$ of
+$x(k+1)=Ax(k)$ to
+\[
+x(0)=\begin{pmatrix}1\\3\\-3\\3\end{pmatrix}.
+\]
+Does this response tend to zero? Is it bounded?
+\subsection*{Solution}
+% 在這裡撰寫解答。
+\vspace{4cm}
 \clearpage
 \end{document}
