@@ -33,16 +33,505 @@
 \date{}
 
 \begin{document}
-\maketitle
-\begin{center}Fall 2026\quad Due: Friday, Oct 31\end{center}
+	\maketitle
+	\begin{center}Fall 2026\quad Due: Friday, Nov 20\end{center}
+	
+	\section*{Exercise 1}
+	Obtain (by hand) the state response $x(\cdot)$ of each of the following systems due to a unit impulse input and the zero initial conditions. For each case, determine whether the response contains all the system modes.
+	
+	\subsection*{(a)}
+	\begin{align*}
+		\dot{x}_{1} &= -5x_{1}+2x_{2}+u \\
+		\dot{x}_{2} &= -12x_{1}+5x_{2}+u
+	\end{align*}
+	
+	\subsubsection*{Solution}
+	% 在這裡撰寫解答。
+	
+	\[
+	A = \begin{bmatrix}
+		-5 & 2 \\ -12 & 5
+	\end{bmatrix}, \quad \det (sI - A) = \begin{vmatrix}
+	s + 5 & -2  \\ 12 & s - 5
+	\end{vmatrix} = s^2 -25 + 24 = s^2 -1 = 0 \Rightarrow s = \pm 1
+	\]
+	
+	For $s = 1$
+	\begin{align*}
+		(sI - A)v &= \begin{bmatrix}
+			6 & -2 \\ 12 & -4
+		\end{bmatrix}v = \begin{bmatrix}
+		0\\0
+		\end{bmatrix} \Rightarrow v = \begin{bmatrix}
+		1 \\ 3
+		\end{bmatrix}
+	\end{align*}
+	
+	For $s =-1$
+	\[
+	(sI - A)v = \begin{bmatrix}
+		4 & -2 \\ 12 & -6
+	\end{bmatrix} v = \begin{bmatrix}
+	 0 \\ 0
+	\end{bmatrix} \Rightarrow v = \begin{bmatrix}
+	1 \\ 2
+	\end{bmatrix}
+	\]
+	
+	So that 
+	\[
+	T = \begin{bmatrix}
+		1 & 1\\ 3 & 2
+	\end{bmatrix}, \quad J = \begin{bmatrix}
+	1 & 0 \\ 0 & -1
+	\end{bmatrix}, \quad T^{-1} = - \begin{bmatrix}
+	2 & -1 \\ -3 & 1
+	\end{bmatrix} = \begin{bmatrix}
+	-2 & 1 \\ 3 & -1
+	\end{bmatrix}
+	\]
+	\begin{align*}
+		e^{At} &=T e^{Jt}T^{-1} =  \begin{bmatrix}
+	1 & 1 \\ 3 & 2			
+		\end{bmatrix} \begin{bmatrix}
+		e^{t} & 0 \\ 0 & e^{-t}
+		\end{bmatrix}\begin{bmatrix}
+		-2 & 1 \\ 3 & -1
+		\end{bmatrix} \\
+		&=\begin{bmatrix}
+			e^t & e^{-t} \\ 3e^t & 2e^{-t} 
+		\end{bmatrix}\begin{bmatrix}
+		-2 & 1 \\ 3 & -1
+		\end{bmatrix} = \begin{bmatrix}
+		-2e^t + 3e^{-t} & e^t - e^{-t} \\
+		-6e^t + 6e^{-t} & 3e^{t} -2e^{-t}
+		\end{bmatrix}
+	\end{align*}
+	\[
+	x(t) = e^{At} B = \begin{bmatrix}
+		-2e^t + 3e^{-t} & e^t - e^{-t} \\
+		-6e^t + 6e^{-t} & 3e^{t} -2e^{-t}
+	\end{bmatrix}\begin{bmatrix}
+	1\\1
+	\end{bmatrix} = \begin{bmatrix}
+		-e^t + 2e^{-t} \\
+		-3e^t + 4e^{-t}
+ 	\end{bmatrix}
+	\]	
+	Yes, the response contains all the system modes ($e^t$ and $e^{-t}$).
+	
+	\subsection*{(b)}
+	\begin{align*}
+		\dot{x}_{1} &= -5x_{1}+2x_{2}+u \\
+		\dot{x}_{2} &= -12x_{1}+5x_{2}+2u
+	\end{align*}
+	
+	\subsubsection*{Solution}
+	% 在這裡撰寫解答。
+	
+	\[
+	B = \begin{bmatrix}
+		1 \\ 2
+	\end{bmatrix} \Rightarrow \lambda_1 = -1 \Rightarrow x(t) = e^{\lambda_1 t} B = \begin{bmatrix}
+	e^{-t} \\ 2e^{-t}
+	\end{bmatrix}
+	\]
+	No, the response only contains the mode $e^{-t}$ (the mode $e^t$ is missing).
+	\subsection*{(c)}
+	\begin{align*}
+		\dot{x}_{1} &= -5x_{1}+2x_{2}+u \\
+		\dot{x}_{2} &= -12x_{1}+5x_{2}+3u
+	\end{align*}
+	
+	\subsubsection*{Solution}
+	% 在這裡撰寫解答。
+	
+	\[
+	B = \begin{bmatrix}
+		1 \\ 3
+	\end{bmatrix} \Rightarrow \lambda_2 = 1 \Rightarrow x(t) = e^{\lambda_2 t} B = \begin{bmatrix}
+	e^{t} \\ 3e^{t}
+	\end{bmatrix}
+	\]
+	
+	No, the response only contains the mode $e^{t}$ (the mode $e^{-t}$ is missing).
+	\section*{Exercise 2}
+	Consider the system with input $u$, output $y$, and state variables $x_{1},\dots,x_{4}$ described by
+	\begin{align*}
+		\dot{x}_{1} &= -x_{1} \\
+		\dot{x}_{2} &= x_{1}-2x_{2} \\
+		\dot{x}_{3} &= x_{1}-3x_{3}+u \\
+		\dot{x}_{4} &= x_{1}+x_{2}+x_{3}+x_{4} \\
+		y &= x_{3}
+	\end{align*}
+	Obtain (by hand) an expression for the impulse response of this system. Does it contain all the state space modes?
+	
+	\subsubsection*{Solution}
+	
+	\[
+	A = \begin{bmatrix}
+		-1 & 0 & 0 & 0 \\
+		1 & -2 & 0 & 0 \\
+		1 & 0 & -3 & 0 \\
+		1 & 1 & 1 & 1
+	\end{bmatrix}, \quad B = \begin{bmatrix}
+	0 \\ 0 \\ 1 \\ 0
+	\end{bmatrix}, \quad C = \begin{bmatrix}	
+	0 & 0 & 1 & 0 
+	\end{bmatrix}
+	\]
+	\[
+	\det(sI - A) = \begin{vmatrix}
+		s + 1 & 0 & 0 & 0 \\
+		-1 & s + 2 & 0 & 0 \\
+		-1 & 0 & s + 3 & 0 \\
+		-1 & -1 & -1 & s -1 
+	\end{vmatrix} = (s + 1)(s +2 )(s+3)(s-1)  =0
+	\]
+	\[
+	s = -1 \lor -2 \lor -3 \lor 1 \Rightarrow \text{state space mode : } e^{-t}, e^{-2t}, e^{-3t}, e^t
+	\]
+	
+	For a unit impulse input $u(t)=\delta(t)$ and zero initial conditions, the state jump is
+	\[
+	x(0^+) - x(0^-) = B \Rightarrow x(0^+) = B = \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix}.
+	\]
+	For $t>0$, $u(t)=0$. Therefore,
+	\begin{align*}
+	\dot{x}_1 &= -x_1, & x_1(0^+) &= 0 \Rightarrow x_1(t)=0, \\
+	\dot{x}_2 &= x_1-2x_2, & x_2(0^+) &= 0 \Rightarrow x_2(t)=0, \\
+	\dot{x}_3 &= x_1-3x_3, & x_3(0^+) &= 1 \Rightarrow x_3(t)=e^{-3t}.
+	\end{align*}
+	Since $y=x_3$, the impulse response is
+	\[
+	g(t)=y(t)=e^{-3t}, \quad t>0.
+	\]
+	
+	The output impulse response contains only the mode $e^{-3t}$, not all the state space modes. The modes $e^{-t}$ and $e^{-2t}$ are not excited, while $e^t$ appears in $x_4(t)$ but not in the output $y=x_3$.
+	\section*{Exercise 3}
+	Consider an LTI system described by
+	\begin{align*}
+		\dot{x}_{1} &= x_{2} \\
+		\dot{x}_{2} &= -2x_{1}-3x_{2}+u \\
+		y &= -x_{1}-3x_{2}+u
+	\end{align*}
+	Is there a persistent input (does not go to zero) $u$ for which the corresponding output always goes to zero regardless of initial conditions? If answer is yes provide an example.
+	
+	\subsubsection*{Solution}
+	% 在這裡撰寫解答。
+	
+	\[
+	A = \begin{bmatrix}
+		0 & 1  \\ -2 & -3
+	\end{bmatrix}, \quad B = \begin{bmatrix}
+	0 \\ 1
+	\end{bmatrix}, \quad C = \begin{bmatrix}
+	-1 & -3
+	\end{bmatrix}, \quad D = 1
+	\]
+	\[
+	\det (sI - A) = \begin{vmatrix}
+		s & -1 \\ 2 & s + 3
+	\end{vmatrix} = (s + 1)(s + 2) = 0 \Rightarrow s = -1 \lor -2
+	\]
+	Because both the real part of the eigenvalue are less than $0$, hence, the system is asymptotically stable.
+	
+	\begin{align*}
+		\hat{G}(\eta) &= C(\eta I - A)^{-1}B + D = \begin{bmatrix}
+			-1 & -3
+		\end{bmatrix} \begin{bmatrix}
+			\eta & -1 \\ 2 & \eta + 3
+		\end{bmatrix}^{-1} \begin{bmatrix}
+			0 \\ 1
+		\end{bmatrix} + 1 \\
+		&= \frac{1}{(\eta + 1)(\eta + 2)}\begin{bmatrix}
+			-1 & -3
+		\end{bmatrix} \begin{bmatrix}
+			\eta + 3 & 1 \\ -2 & \eta 
+		\end{bmatrix} \begin{bmatrix}
+			0 \\ 1
+		\end{bmatrix} + 1 \\
+		&= \frac{1}{(\eta + 1)(\eta + 2)} \begin{bmatrix}
+			-1 & -3
+		\end{bmatrix}\begin{bmatrix}
+			1 \\ \eta
+		\end{bmatrix} + 1 \\
+		&= \frac{-3\eta - 1}{(\eta + 1)(\eta + 2)} + 1 = \frac{\eta^2 + 1}{(\eta + 1)(\eta + 2)} \overset{\text{Let}}{=} 0  \\ \Rightarrow \eta &= \pm j
+	\end{align*}
 
-\section*{Exercise 1}
-Obtain (by hand) the state response x(·) of each of the following systems due to
-a unit impulse input and the zero initial conditions. For each case, determine whether the
-response contains all the system modes.
-\subsection*{Solution}
-% 在這裡撰寫解答。
+	Therefore, For $u(t) = \sin t$ is the input that won't go to zero will cause output $y$ becoming to zero with time going.
+	
+	\section*{Exercise 4}
+	Determine (by hand) whether each of the following systems is asymptotically stable, stable, or unstable.
+	
+	\subsection*{(a)}
+	\begin{align*}
+		\dot{x}_{1} &= -x_{1}+2001x_{2} \\
+		\dot{x}_{2} &= -x_{1}
+	\end{align*}
+	
+	\subsubsection*{Solution}
+	% 在這裡撰寫解答。
+	
+	\[
+	A = \begin{bmatrix}
+		-1 & 2001 \\ -1 & 0
+	\end{bmatrix}
+	\]
+	\[
+	\det(sI - A) = \begin{vmatrix}
+		s + 1 & -2001 \\ 1 & s
+	\end{vmatrix} = s^2 + s + 2001 = 0 \Rightarrow s = {-1 \pm j\sqrt{8003} \over 2}
+	\]
+	Asymptotically stable due to the real part of each eigenvalue are all negative.
+	
+	\subsection*{(b)}
+	\begin{align*}
+		\dot{x}_{1} &= -x_{1} \\
+		\dot{x}_{2} &= -x_{2}
+	\end{align*}
+	\subsubsection*{Solution}
+	% 在這裡撰寫解答。
+	\[
+	A = \begin{bmatrix}
+		-1 & 0 \\0 & -1 
+	\end{bmatrix}	
+	\]
+	\[
+	\det (sI - A) = \begin{vmatrix}
+		s + 1 & 0 \\ 0 & s+ 1
+	\end{vmatrix} = (s + 1)^2 = 0 \Rightarrow s = -1 \lor -1
+	\]
+	AM of $s = -1$ is $2$
+	
+	\[
+	(sI - A) v= \begin{bmatrix}
+		0 & 0 \\ 0 & 0
+	\end{bmatrix}v = 0 \Rightarrow v = \begin{bmatrix}
+	1 \\ 0
+	\end{bmatrix} \lor \begin{bmatrix}
+	0 \\ 1
+	\end{bmatrix}
+	\]
+	Hence, the GM of $s = -1$ is also $2$. So that matrix $A$ is nondefective.
+	
+	And this system is asymptotically stable.
+	
+	
+	\subsection*{(c)}
+	\begin{align*}
+		\dot{x}_{1} &= jx_{1}+x_{2} \\
+		\dot{x}_{2} &= jx_{2}
+	\end{align*}
+	
+	\subsubsection*{Solution}
+	% 在這裡撰寫解答。
+	
+	\[
+	A = \begin{bmatrix}
+		 j & 1 \\ 0 & j
+	\end{bmatrix}
+	\]
+	\[
+	\det (sI - A) = \begin{vmatrix}
+		s - j & -1 \\ 0 & s - j
+	\end{vmatrix} = (s -j)^2 = 0 \Rightarrow s = j \lor j
+	\]
+	Due to the real parts of each eigenvalue are $0$, so need to check the $A$ whether nondefective first.
+	
+	the AM of $s = j$ is 2 
+	\[(sI - A)v = 
+	\begin{bmatrix}
+		0 & 1 \\ 0 & 0 
+	\end{bmatrix}v = 0 \Rightarrow v = \begin{bmatrix}
+	1 \\0
+	\end{bmatrix}
+	\]
+	the GM of $s = j$ is 1
+	
+	Since $A$ is defective, this system is unstable.
+	
+	\subsection*{(d)}
+	\begin{align*}
+		x_{1}(k+1) &= -2x_{1}(k) \\
+		x_{2}(k+1) &= 0.5x_{2}(k)
+	\end{align*}
+	
+	\subsubsection*{Solution}
+	% 在這裡撰寫解答。
+	\[
+	A = \begin{bmatrix}
+		-2 & 0 \\ 0 & 0.5
+	\end{bmatrix}
+	\]
+	\[
+	\det (sI - A) = \begin{vmatrix}
+		s +2 & 0 \\ 0 & s-0.5
+	\end{vmatrix} = (s+2)(s - 0.5) = 0 \Rightarrow s = -2 \lor 0.5
+	\]
+	
+	Since one of the eigenvalues has an absolute value greater than 1 (|-2| = 2 > 1), the system is unstable.
+	
+	
+	\section*{Exercise 5}
+	Using linearization determine (if possible) the stability properties of each of the following systems about their corresponding specified equilibrium solution $q^{e}$. If not possible, provide a reason.
+	
+	\subsection*{(a)}
+	\[
+	\ddot{q} + (\dot{q}-1)|\dot{q}-1| + 2\sin q = 0
+	\]
+	and $q^{e}=\pi/6$.
+	
+	
+	
+	\subsubsection*{Solution}
+	% 在這裡撰寫解答。
+	
+	Let $x = \begin{bmatrix}
+		x_1 \\ x_2
+	\end{bmatrix} = \begin{bmatrix}
+	q \\ \dot q
+	\end{bmatrix} \Rightarrow \dot x = \begin{bmatrix}
+	\dot q \\ \ddot q
+	\end{bmatrix} = \begin{bmatrix}
+	x_2 \\ \ddot q
+	\end{bmatrix}  = \begin{bmatrix}
+	x_2 \\ -(x_2 - 1) | x_2 - 1 | -2\sin x_1
+	\end{bmatrix} := F(x)$	
+	\[
+	q^e = {\pi\over6} \Rightarrow x^e = \begin{bmatrix}
+		{\pi/6} \\ 0
+	\end{bmatrix}
+	\]
+	\begin{align*}
+	A &= {\partial F \over \partial x}\bigg|_{x = x^e} = \begin{bmatrix}
+	{\partial F_1 \over \partial x_1} & {\partial F_1 \over \partial x_2 } \\ 
+	{\partial F_2 \over \partial x_1} & {\partial F_2 \over \partial x_2}	
+	\end{bmatrix} \\ 
+	&= \begin{bmatrix}
+		0 & 1 \\ -2\cos x_1 & -2|x_2 -1|
+	\end{bmatrix}\bigg|_{x = x^e} = \begin{bmatrix}
+	0 & 1 \\ -\sqrt3 & -2
+	\end{bmatrix}
+	\end{align*}
+	
+	\[
+	\det (sI - A) = \begin{vmatrix}
+		s & -1 \\ \sqrt 3 & s + 2
+	\end{vmatrix} = s^2 + 2s + \sqrt3 = 0 \Rightarrow  s = { -2 \pm \sqrt{4- 4\sqrt3} \over 2}
+	\]
+	
+	Since the real parts of all eigenvalue are less than 0, the system is asymptotically stable.
+	
+		
+	\subsection*{(b)}
+	\begin{align*}
+		\dot{q}_{1} &= -e^{q_{1}}q_{2}-q_{1}^{3} \\
+		\dot{q}_{2} &= -q_{1}\cos q_{2}
+	\end{align*}
+	and $q^{e}=\begin{bmatrix} 0 & 0 \end{bmatrix}'$.
+	\subsubsection*{Solution}
+	
+	\[
+	\dot{q} = F(q) = \begin{bmatrix}
+		-e^{q_1}q_2 - q_1^3 \\
+		-q_1\cos q_2
+	\end{bmatrix}
+	\]
+	\begin{align*}
+		A &= \frac{\partial F}{\partial q}\bigg|_{q = q^e} \\
+		&= \begin{bmatrix}
+			-e^{q_1}q_2 - 3q_1^2 & -e^{q_1} \\
+			-\cos q_2 & q_1\sin q_2
+		\end{bmatrix}\bigg|_{q = \begin{bmatrix} 0 & 0 \end{bmatrix}'} \\
+		&= \begin{bmatrix}
+			0 & -1 \\
+			-1 & 0
+		\end{bmatrix}
+	\end{align*}
+	\[
+	\det(sI - A) = \begin{vmatrix}
+		s & 1 \\
+		1 & s
+	\end{vmatrix} = s^2 - 1 = 0 \Rightarrow s = \pm 1
+	\]
+	Since the linearized matrix $A$ has an eigenvalue with a strictly positive real part ($s = 1 > 0$), the nonlinear system is unstable about the equilibrium point $q^e = \begin{bmatrix} 0 & 0 \end{bmatrix}'$
 
-
-
+	
+	
+	
+	
+	
+	
+	
+	\subsection*{(c)}
+	\begin{align*}
+		\dot{q}_{1} &= q_{2} \\
+		\dot{q}_{2} &= \sin q_{1}
+	\end{align*}
+	and $q^{e}=\begin{bmatrix} 0 & 0 \end{bmatrix}'$.
+	
+	\subsubsection*{Solution}
+	% 在這裡撰寫解答。
+	\[
+	\dot q = F(q) = \begin{bmatrix}
+		q_2 \\ \sin q_1
+	\end{bmatrix}
+	\]
+	\begin{align*}
+		A &= {\partial F \over \partial q}\bigg|_{q = q^e} \\
+		&= \begin{bmatrix}
+			0 & 1 \\ \cos q_1 & 0
+		\end{bmatrix} \bigg|_{q = q^e} = \begin{bmatrix}
+		 	0 & 1 \\ 1 & 0
+		 \end{bmatrix}
+	\end{align*}
+	\[
+	\det (sI - A) = \begin{vmatrix}
+		s & -1 \\ -1 & s 
+	\end{vmatrix} = s^2 - 1 = 0 \Rightarrow s = \pm 1
+	\]
+	Since $1 > 0$,  the system is unstable.
+	
+	\section*{Exercise 6}
+	Determine the stability properties of the following system about the zero solution.
+	\begin{align}
+		x_{1}(k+1) &= x_{1}(k)^{3}+\sin(x_{2}(k)) \\
+		x_{2}(k+1) &= -12\cos(x_{2}(k))x_{1}(k)+x_{2}(k)^{3}
+	\end{align}
+	
+	\subsubsection*{Solution}
+	% 在這裡撰寫解答。
+	
+	
+	\[
+	F(x) = \begin{bmatrix}
+		x_1(k)^3 + \sin (x_2(k)) \\
+		-12\cos(x_2(k))x_1(k) + x_2(k)^3
+	\end{bmatrix}
+	\]
+	\begin{align*}
+		A &= {\partial F \over \partial x}\bigg|_{x = x^e} \\
+		&= \begin{bmatrix}
+			3x_1^2 & \cos (x_2) \\
+			-12\cos(x_2) & 12x_1(k)\sin(x_2) + 3x_2^2
+		\end{bmatrix}\bigg|_{x = x^e} \\
+		&= \begin{bmatrix}
+			0 & 1 \\ -12 & 0
+		\end{bmatrix}
+	\end{align*}
+	
+	\[
+	\det(sI - A) = \begin{vmatrix}
+		s & -1  \\ 12 &s
+	\end{vmatrix} = s^2 + 12 = 0 \Rightarrow s = \pm j\sqrt{12}
+	\]
+	
+	\[
+	\because \left|	\lambda \right| = |\pm j\sqrt{12}| = \sqrt{12} \approx 3.464 > 1
+	\]
+	\[
+	\therefore \text{this discrete system is unstable}
+	\]
+	
 \end{document}
